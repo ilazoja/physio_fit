@@ -1,0 +1,1 @@
+Any sort of frontend calculations needed (dates, currency, total amount in cart)

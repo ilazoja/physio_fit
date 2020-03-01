@@ -1,0 +1,1 @@
+enum EventMode { BOOKED, SOLD_OUT, BOOK_NOW }

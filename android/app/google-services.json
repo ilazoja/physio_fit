@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "170009661959",
+    "firebase_url": "https://physiotracker.firebaseio.com",
+    "project_id": "physiotracker",
+    "storage_bucket": "physiotracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170009661959:android:b2bb4d74b7ce89364850a2",
+        "android_client_info": {
+          "package_name": "com.example.physio_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170009661959-bp3kd8tpcahgorkj77r1pb236b08irf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBretol6Pgar96EoVDL0WwoxCKErmo1UeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170009661959-bp3kd8tpcahgorkj77r1pb236b08irf0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "170009661959-1kbbemp4bo21o7djq2ccufcah9qgl7ja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.physiotracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

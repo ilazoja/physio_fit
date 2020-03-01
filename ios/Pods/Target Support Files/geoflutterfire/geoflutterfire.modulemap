@@ -1,0 +1,6 @@
+framework module geoflutterfire {
+  umbrella header "geoflutterfire-umbrella.h"
+
+  export *
+  module * { export * }
+}

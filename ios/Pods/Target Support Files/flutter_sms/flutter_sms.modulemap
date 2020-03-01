@@ -1,0 +1,6 @@
+framework module flutter_sms {
+  umbrella header "flutter_sms-umbrella.h"
+
+  export *
+  module * { export * }
+}

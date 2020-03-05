@@ -15,7 +15,7 @@ class Routes extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverlaySupport(
       child: MaterialApp(
-        title: 'KiQBack',
+        title: 'PhysioTracker',
         debugShowCheckedModeBanner: false,
         home: MyHome(),
         theme: themeData,

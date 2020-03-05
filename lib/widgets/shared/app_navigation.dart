@@ -5,9 +5,13 @@ import 'package:physio_tracker_app/widgets/navDrawer/navigation_drawer.dart';
 import 'package:physio_tracker_app/widgets/shared/app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../services/cloud_database.dart';
+import 'package:physio_tracker_app/models/user.dart';
 import '../../screens/account/index.dart';
 import '../../screens/connections/index.dart';
 import '../../screens/explore/exploreProviderWrapper.dart';
+import '../../screens/physio_home/physioHomeProviderWrapper.dart';
 import '../../screens/favourites/index.dart';
 import '../../screens/planner/index.dart';
 
@@ -20,6 +24,7 @@ class _AppNavState extends State<AppNavigation> {
   TextEditingController exploreTextController;
   TextEditingController favouriteTextController;
   TextEditingController plannerTextController;
+  bool isUser;
 
   int _selectedIndex = 0;
 
@@ -54,7 +59,23 @@ class _AppNavState extends State<AppNavigation> {
 
     const int explorePageIndex = 0;
     const int accountPageIndex = 4;
-
+    dynamic user;
+    if (_user != null) {
+      Firestore.instance
+          .collection('users')
+          .document(_user.uid)
+          .get()
+          .then((DocumentSnapshot ds) {
+            // use ds as a snapshot
+            final data = ds.data;
+            print(data);
+            if (data['email'] == null) {
+              isUser = false;
+            } else {
+              isUser = true;
+            }
+      });
+    }
     final PreferredSize appBar = PreferredSize(
       preferredSize: Size.fromHeight(50),
       child: AppBar(
@@ -73,11 +94,10 @@ class _AppNavState extends State<AppNavigation> {
       ),
     );
 
-    return Scaffold(
+    return isUser ? Scaffold(
       resizeToAvoidBottomInset : false,
-      drawer: NavigationDrawer(),
       appBar:
-          _selectedIndex == accountPageIndex ? null : appBar,
+      _selectedIndex == accountPageIndex ? null : appBar,
       body: <Widget>[
         ExploreProviderWrapper(
           textController: exploreTextController,
@@ -108,6 +128,35 @@ class _AppNavState extends State<AppNavigation> {
         onTap: _onBarItemTap,
         currentIndex: _selectedIndex,
       ),
+    ) : Scaffold(
+      resizeToAvoidBottomInset : false,
+      appBar:
+      _selectedIndex == 3 ? null : appBar,
+      body: <Widget>[
+        PhysioHomeProvider(
+          textController: exploreTextController,
+        ),
+        Favourites(textController: favouriteTextController),
+        Connections(),
+        Account(),
+      ].elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).appBarTheme.color,
+        unselectedItemColor: Theme.of(context).primaryColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              title: Text('Home - Physio'), icon: Icon(Icons.explore)),
+          BottomNavigationBarItem(
+              title: Text('Results'), icon: Icon(Icons.show_chart)),
+          BottomNavigationBarItem(
+              title: Text('Messages'), icon: Icon(Icons.message)),
+          BottomNavigationBarItem(
+              title: Text('Options'), icon: Icon(Icons.settings))
+        ],
+        onTap: _onBarItemTap,
+        currentIndex: _selectedIndex,
+      ),
     );
   }
 
@@ -125,6 +174,7 @@ class _AppNavState extends State<AppNavigation> {
     exploreTextController = TextEditingController();
     favouriteTextController = TextEditingController();
     plannerTextController = TextEditingController();
+    isUser = false;
   }
 
   void _onBarItemTap(int value) {

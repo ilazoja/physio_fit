@@ -105,8 +105,6 @@ class _PatientStreamBuilder extends State<PatientStreamBuilder> {
     }
 
     List<User> _allPatients = widget.patients;
-    print("HELLO");
-    print(_allPatients);
     return _allPatients;
   }
 

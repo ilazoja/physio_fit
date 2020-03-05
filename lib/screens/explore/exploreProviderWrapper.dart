@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/services/cloud_database.dart';
-import 'package:physio_tracker_app/models/event.dart';
-import 'package:physio_tracker_app/screens/explore/explore.dart'; 
- 
+import 'package:physio_tracker_app/models/exercise.dart';
+import 'package:physio_tracker_app/screens/explore/explore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class ExploreProviderWrapper extends StatelessWidget {
@@ -12,7 +12,8 @@ class ExploreProviderWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  StreamProvider<List<Event>>.value(value: CloudDatabase.streamUpcommingEvents(),
+    final FirebaseUser _user = Provider.of<FirebaseUser>(context);
+    return  StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamExercisesById(_user.uid),
             child: Explore(textController: textController,),);
   }
 }

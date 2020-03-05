@@ -74,13 +74,6 @@ class _PatientDetailsState extends State<PatientDetails> {
               ? 'Current Exercises'
               : copy.searchResultSubHeading),
           allPatients,
-          AddExerciseButton(
-            callback: () {
-              setState(() {
-                showMoreButtonPressed = true;
-              });
-            },
-            buttonText: 'More Events')
         ]));
   }
 

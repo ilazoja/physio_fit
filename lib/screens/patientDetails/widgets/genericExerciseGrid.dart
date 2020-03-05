@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/models/user.dart';
+import 'package:physio_tracker_app/widgets/login/loginDialog.dart';
+import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseButton.dart';
+import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseDialog.dart';
 import 'exerciseBox.dart';
 
 class GenericExerciseGrid extends StatefulWidget {
@@ -33,6 +36,13 @@ class _GenericExerciseGridState extends State<GenericExerciseGrid> {
         ));
       }
     }
+
+    eventBoxes.add(AddExerciseButton(
+        buttonText: "Add Exercise",
+        callback: () {
+            ExerciseDialog(context);
+        },
+    ));
 
     return eventBoxes;
   }

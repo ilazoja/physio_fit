@@ -72,7 +72,7 @@ String firstSubheading = 'Events you may be interested in';
 String secondSubheading = 'Popular events near you';
 String thirdSubheading = 'Almost sold out events';
 String fourthSubHeading = 'Recently sold out events near you';
-String allEventsSubHeading = 'All Exercises';
+String allEventsSubHeading = 'My Exercises';
 String allPatientsSubHeading = 'All Patients';
 String searchResultSubHeading = 'Search Results';
 
@@ -119,6 +119,11 @@ String phoneTitle = 'Phone Number';
 String phoneLengthError = 'Phone Number is invalid';
 String dobInputHint = 'DD/MM/YYYY';
 String typeInputHint = 'Physiotherapist OR Patient';
+String exerciseNameHint = 'Flexion/Adduction/Squat';
+String exerciseFrequencyHint = 'How many days per week?';
+String exerciseSetHint = '# of Sets';
+String exerciseRepsHint = '# of Reps';
+
 String dobTitle = 'Date of Birth';
 String dobEmptyError = "Date of Birth can't be empty";
 String dobEnterHint = 'Enter Date of Birth';

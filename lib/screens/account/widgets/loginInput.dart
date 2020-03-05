@@ -92,6 +92,14 @@ class LoginInput extends StatelessWidget {
         return copy.dobInputHint;
       case LoginInputType.TYPE:
         return copy.typeInputHint;
+      case LoginInputType.EXERCISENAME:
+        return copy.exerciseNameHint;
+      case LoginInputType.EXERCISEFREQUENCY:
+        return copy.exerciseFrequencyHint;
+      case LoginInputType.EXERCISESETS:
+        return copy.exerciseSetHint;
+      case LoginInputType.EXERCISEREPS:
+        return copy.exerciseRepsHint;
     }
   }
 
@@ -111,6 +119,14 @@ class LoginInput extends StatelessWidget {
         return Icons.cake;
       case LoginInputType.TYPE:
         return Icons.person;
+      case LoginInputType.EXERCISENAME:
+        return Icons.accessibility_new;
+      case LoginInputType.EXERCISEFREQUENCY:
+        return Icons.access_time;
+      case LoginInputType.EXERCISESETS:
+        return Icons.sort;
+      case LoginInputType.EXERCISEREPS:
+        return Icons.donut_large;
     }
   }
 
@@ -145,6 +161,14 @@ class LoginInput extends StatelessWidget {
         return TextInputType.datetime;
       case LoginInputType.TYPE:
         return TextInputType.text;
+      case LoginInputType.EXERCISEFREQUENCY:
+        return TextInputType.datetime;
+      case LoginInputType.EXERCISEREPS:
+        return TextInputType.number;
+      case LoginInputType.EXERCISESETS:
+        return TextInputType.number;
+      case LoginInputType.EXERCISENAME:
+        return TextInputType.text;
     }
   }
 
@@ -175,4 +199,4 @@ class LoginInput extends StatelessWidget {
   }
 }
 
-enum LoginInputType { EMAIL, PASSWORD, FNAME, LNAME, DOB, PHONE, TYPE }
+enum LoginInputType { EMAIL, PASSWORD, FNAME, LNAME, DOB, PHONE, TYPE, EXERCISENAME, EXERCISEFREQUENCY, EXERCISEREPS, EXERCISESETS }

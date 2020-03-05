@@ -7,6 +7,7 @@ import 'package:physio_tracker_app/screens/explore/widgets/filter/priceRangeFilt
 import 'package:physio_tracker_app/screens/explore/widgets/genericEventGrid.dart';
 import 'package:physio_tracker_app/screens/explore/widgets/horizontalScroll/horizontalScrollingEvents.dart';
 import 'package:physio_tracker_app/screens/explore/widgets/exercisesStreamBuilder.dart';
+import 'package:physio_tracker_app/screens/physio_home/widgets/patientStreamBuilder.dart';
 import 'package:physio_tracker_app/screens/explore/widgets/horizontalScroll/setPreferencesBox.dart';
 import 'package:physio_tracker_app/services/cloud_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,13 +79,13 @@ class _PhysioHomeState extends State<PhysioHome> {
             location.locationPermissionSet) ||
         (PriceRangeFilter.values != PriceRangeFilter.defaultValues);
 
-    final ExercisesStreamBuilder allEventsStream = ExercisesStreamBuilder(
+    final PatientStreamBuilder allPatients = PatientStreamBuilder(
       widget.textController,
       showLess: (showMoreButtonPressed == false) &&
           (widget.showSubsections == true) &&
           (anyFilterSet == false),
     );
-
+    print(allPatients);
     final bool showAllEventsButton = (showMoreButtonPressed == false) &&
         (widget.showSubsections == true) &&
         (ExercisesStreamBuilder.numEvents > 4) &&
@@ -97,15 +98,10 @@ class _PhysioHomeState extends State<PhysioHome> {
           const SliverPadding(
             padding: EdgeInsets.only(top: 15),
           ),
-          if (widget.showSubsections && anyFilterSet == false) ...<Widget>[
-            ...getPreferenceWidgets(),
-            createSubHeading(copy.secondSubheading),
-            GenericEventGrid(events: getPopularEvents()),
-          ],
           createSubHeading(!widget.issearching
-              ? copy.allEventsSubHeading
+              ? copy.allPatientsSubHeading
               : copy.searchResultSubHeading),
-          allEventsStream,
+          allPatients,
           if (showAllEventsButton) ...<Widget>[
             SliverToBoxAdapter(
                 child: MoreEventsButton(
@@ -166,17 +162,6 @@ class _PhysioHomeState extends State<PhysioHome> {
     return allEvents.sublist(0, min(allEvents.length, 4));
   }
 
-  List<Exercise> getAlmostSoldOutEvents() {
-    List<Exercise> allEvents = widget.eventsBasedOnLocation;
-    return allEvents.sublist(0, min(allEvents.length, 4));
-  }
 
-  List<Exercise> getRecentlySoldOutEvents() {
-    List<Exercise> allEvents = CloudDatabase.getCurrentEventsInProximity(includeSoldOut: true, includeMultiDates: false);
-    if (allEvents == null) {
-      return <Exercise>[];
-    }
 
-    return allEvents.sublist(0, min(allEvents.length, 4));
-  }
 }

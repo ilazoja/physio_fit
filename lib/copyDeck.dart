@@ -72,6 +72,7 @@ String secondSubheading = 'Popular events near you';
 String thirdSubheading = 'Almost sold out events';
 String fourthSubHeading = 'Recently sold out events near you';
 String allEventsSubHeading = 'All Exercises';
+String allPatientsSubHeading = 'All Patients';
 String searchResultSubHeading = 'Search Results';
 
 // Planner Page

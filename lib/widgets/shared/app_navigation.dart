@@ -68,7 +68,6 @@ class _AppNavState extends State<AppNavigation> {
           .then((DocumentSnapshot ds) {
             // use ds as a snapshot
             final data = ds.data;
-            print(data);
             if (data['email'] == null) {
               isUser = false;
             } else {
@@ -133,7 +132,7 @@ class _AppNavState extends State<AppNavigation> {
       appBar:
       _selectedIndex == 3 ? null : appBar,
       body: <Widget>[
-        PhysioHomeProvider(
+        PhysioHomeProviderWrapper(
           textController: exploreTextController,
         ),
         Favourites(textController: favouriteTextController),

@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
-import 'package:physio_tracker_app/screens/explore/widgets/genericEventGrid.dart';
+import 'package:physio_tracker_app/models/user.dart';
+import 'package:physio_tracker_app/models/physiotherapist.dart';
+import 'package:physio_tracker_app/screens/physio_home/widgets/genericPatientGrid.dart';
 import 'package:physio_tracker_app/services/cloud_database.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,7 @@ class PatientStreamBuilder extends StatefulWidget {
   final TextEditingController _textController;
   static _PatientStreamBuilder streamBuilderState;
   static int numEvents = 0;
-  List<Exercise> eventsUsed;
+  List<User> patients;
   bool showLess;
 
   @override
@@ -52,12 +54,12 @@ class _PatientStreamBuilder extends State<PatientStreamBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Exercise> filteredEvents = _getFilteredEvents(context);
-    if (filteredEvents != null && filteredEvents.isNotEmpty) {
-      PatientStreamBuilder.numEvents = filteredEvents.length;
+    final List<User> filteredPatients = _getFilteredEvents(context);
+    if (filteredPatients != null && filteredPatients.isNotEmpty) {
+      PatientStreamBuilder.numEvents = filteredPatients.length;
     }
-    print(filteredEvents);
-    if (filteredEvents.isEmpty) {
+    print(filteredPatients);
+    if (filteredPatients == null) {
       return SliverToBoxAdapter(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -73,30 +75,39 @@ class _PatientStreamBuilder extends State<PatientStreamBuilder> {
           ));
     }
 
-    return GenericEventGrid(
-      events: !widget.showLess
-          ? filteredEvents
-          : filteredEvents.sublist(0, min(filteredEvents.length, 4)),
+
+
+    return GenericPatientGrid(
+      users: !widget.showLess
+          ? filteredPatients
+          : filteredPatients.sublist(0, min(filteredPatients.length, 4)),
     );
   }
 
-  List<Exercise> _getFilteredEvents(BuildContext context) {
-    if (widget.eventsUsed == null) {
-      widget.eventsUsed = Provider.of<List<Exercise>>(context);
+  List _buildList(int count) {
+    List<Widget> listItems = List();
+
+    for (int i = 0; i < count; i++) {
+      listItems.add(new Padding(padding: new EdgeInsets.all(20.0),
+          child: new Text(
+              'Item ${i.toString()}',
+              style: new TextStyle(fontSize: 25.0)
+          )
+      ));
     }
 
-    List<Exercise> _allEvents = widget.eventsUsed;
+    return listItems;
+  }
 
-    if (_allEvents != null) {
-      if (LocationSwitch.enableLocationFilter) {
-        _allEvents = CloudDatabase.getCurrentEventsInProximity
-          (includeSoldOut: true, includeMultiDates: true);
-      }
-
-      final List<Exercise> _filteredEvents = Filter.filterEvents(_allEvents);
-      return _filteredEvents;
+  List<User> _getFilteredEvents(BuildContext context) {
+    if (widget.patients == null) {
+      widget.patients = Provider.of<List<User>>(context);
     }
-    return <Exercise>[];
+
+    List<User> _allPatients = widget.patients;
+    print("HELLO");
+    print(_allPatients);
+    return _allPatients;
   }
 
   bool _likeFunction(String dataText, String searchText) {

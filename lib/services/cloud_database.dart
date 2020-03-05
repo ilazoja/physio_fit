@@ -302,9 +302,6 @@ class CloudDatabase {
   }
 
   static Stream<List<Exercise>> streamEventsFromMultiDateKey(String multiDateKey) {
-    print(_db
-        .collection('exercises')
-        .snapshots());
     return _db
         .collection('exercises')
         .snapshots()
@@ -320,6 +317,16 @@ class CloudDatabase {
             (QuerySnapshot list) => list.documents
             .map((DocumentSnapshot doc) => Exercise.fromFireStore(doc))
             .toList());
+  }
+
+  static Stream<List<Exercise>> streamExercisesById(String id) {
+    return _db
+        .collection('exercises')
+        .where('patientId', isEqualTo: id)
+        .snapshots()
+        .map((QuerySnapshot list) => list.documents
+        .map((DocumentSnapshot snap) => Exercise.fromFireStore(snap))
+        .toList());
   }
 
   static Stream<List<Event>> streamUpcommingEvents() {

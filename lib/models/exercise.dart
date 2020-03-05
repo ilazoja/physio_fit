@@ -9,6 +9,8 @@ class Exercise {
         this.name,
         this.date,
         this.repetitions,
+        this.type,
+        this.patientId,
       });
 
   factory Exercise.fromFireStore(DocumentSnapshot doc) {
@@ -19,7 +21,9 @@ class Exercise {
         imageSrc: '',
         date: data['date'].toDate(),
         name: data['Description'],
-        repetitions: data['Repetitions']);
+        repetitions: data['Repetitions'],
+        type: data['type'],
+        patientId: data['userId']);
   }
 
   final String id;
@@ -27,4 +31,6 @@ class Exercise {
   final String name;
   final DateTime date;
   final int repetitions;
+  final String type;
+  final String patientId;
 }

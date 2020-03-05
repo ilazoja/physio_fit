@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/screens/eventDetails/index.dart';
+import 'package:physio_tracker_app/screens/patientDetails/providerWrapper/patientDetailsProviderWrapper.dart';
 import 'package:intl/intl.dart';
 
 class PatientBox extends StatelessWidget {
@@ -36,6 +37,10 @@ class PatientBox extends StatelessWidget {
       child: ListTile(
         title: Text(user.displayName),
         subtitle: Text(user.dob.toString()),
+        onTap: () {
+          Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
+              pageRoute: PatientDetailsProviderWrapper(user: user)));
+        },
       ),
     );
   }

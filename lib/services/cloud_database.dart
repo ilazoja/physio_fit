@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:physio_tracker_app/dbKeys.dart' as db_key;
 import 'package:physio_tracker_app/models/announcement.dart';
+import 'package:physio_tracker_app/models/physiotherapist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/convo.dart';
 import '../models/event.dart';
@@ -375,13 +376,25 @@ class CloudDatabase {
         .map((DocumentSnapshot snap) => User.fromMap(snap.data));
   }
 
+
+  static Stream<List<User>> streamPatients(String id) {
+    return _db
+        .collection('users')
+        .where('physiotherapistId', isEqualTo: id)
+        .snapshots()
+        .map((QuerySnapshot list) => list.documents
+        .map((DocumentSnapshot snap) => User.fromMap(snap.data))
+        .toList());
+
+  }
+
   static Stream<List<User>> streamUsers() {
     return _db
         .collection('users')
         .snapshots()
         .map((QuerySnapshot list) => list.documents
-            .map((DocumentSnapshot snap) => User.fromMap(snap.data))
-            .toList())
+        .map((DocumentSnapshot snap) => User.fromMap(snap.data))
+        .toList())
         .handleError((dynamic e) {
       print(e);
     });

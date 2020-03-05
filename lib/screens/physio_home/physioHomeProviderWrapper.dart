@@ -5,7 +5,7 @@ import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/models/user.dart';
 import 'package:physio_tracker_app/screens/explore/explore.dart';
 import 'package:physio_tracker_app/screens/physio_home/physioHome.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class PhysioHomeProviderWrapper extends StatelessWidget {
@@ -14,7 +14,10 @@ class PhysioHomeProviderWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  StreamProvider<List<User>>.value(value: CloudDatabase.streamUsers(),
+    final FirebaseUser _user = Provider.of<FirebaseUser>(context);
+    print("WOO");
+    print(_user.uid);
+    return  StreamProvider<List<User>>.value(value: CloudDatabase.streamPatients(_user.uid),
       child: PhysioHome(textController: textController,),);
   }
 }

@@ -32,9 +32,11 @@ class PatientBox extends StatelessWidget {
     final bool _loggedIn = _currUser != null;
     const double favouriteButtonSize = 20.0;
 
-    return ListTile(
-      title: Text(user.displayName),
-      subtitle: Text(user.dob.toString()),
+    return Card(
+      child: ListTile(
+        title: Text(user.displayName),
+        subtitle: Text(user.dob.toString()),
+      ),
     );
   }
 }

@@ -65,6 +65,7 @@ String filterDrawerHeading2 = 'Categories';
 
 // Search Bar
 String searchBarPlaceholder = 'Search Exercises';
+String searchPatients = 'Search Patients';
 
 // Explore Page
 String firstSubheading = 'Events you may be interested in';

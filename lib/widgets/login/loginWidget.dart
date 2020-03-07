@@ -73,7 +73,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   List<Widget> getChildren(double sizeHeight) {
     List<Widget> children = [];
-    children.add(KiqbackLogo(sizeHeight * 0.03, 0.0, 0.0, 0.0));
     children.add(Padding(padding: EdgeInsets.all(sizeHeight * 0.005)));
     switch (formMode) {
       case FormMode.LOGIN:

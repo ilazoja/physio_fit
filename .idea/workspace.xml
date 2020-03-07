@@ -5,36 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="882d0c39-e683-4302-8ce6-fe547a46fa28" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/screens/eventDetails/widgets/performExercise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/.filecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/app.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/kernel_snapshot.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/kernel_snapshot.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/kernel_snapshot.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/d581f826f754d26100777bf31c7e2d80/kernel_snapshot.stamp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/4.10.2/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/mergeDebugAssets/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/mergeDebugAssets/out/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/app.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/app.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/exercise.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/exercise.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/eventDetails/eventDetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/eventDetails/eventDetails.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsHeading.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsHeading.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsItems.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsItems.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/explore/explore.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/explore/explore.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/explore/widgets/eventBox.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/explore/widgets/eventBox.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/cloud_database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/cloud_database.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/login/loginWidget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/login/loginWidget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,24 +23,74 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsItems.dart">
+        <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/widgets/performExercise.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="79" column="40" selection-start-line="79" selection-start-column="40" selection-end-line="79" selection-end-column="40" />
+            <state relative-caret-position="255">
+              <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
               <folding>
-                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="595">
+              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/widgets/performExercise.dart">
+        <entry file="file://$PROJECT_DIR$/lib/widgets/login/loginWidget.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+            <state relative-caret-position="109">
+              <caret line="75" selection-start-line="75" selection-end-line="75" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="107">
+              <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/copyDeck.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="107" column="24" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/images/kiqback_logo.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/screens/account/editProfile.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,42 +106,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/widgets/events/plannerListItem.dart">
+        <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/widgets/addExerciseWidget.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="133" column="47" lean-forward="true" selection-start-line="127" selection-start-column="23" selection-end-line="133" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/physio_home/physioHome.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-end-line="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/patientDetails.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
+            <state relative-caret-position="143">
+              <caret line="58" column="27" lean-forward="true" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/explore/explore.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="192" column="11" selection-start-line="192" selection-start-column="11" selection-end-line="195" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,31 +120,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/screens/account/account.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="120" selection-start-line="120" selection-end-line="124" selection-end-column="34" />
+            <state relative-caret-position="133">
+              <caret line="123" column="57" lean-forward="true" selection-start-line="123" selection-start-column="57" selection-end-line="123" selection-end-column="57" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/widgets/addExerciseButton.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="3" lean-forward="true" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/eventDetails.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="87" selection-start-line="87" selection-end-line="158" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -163,19 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>assets/</find>
-      <find>circ</find>
-      <find>backgroundImage</find>
-      <find>assets/image</find>
-      <find>imageone</find>
-      <find>imageLocation</find>
-      <find>desc</find>
-      <find>des</find>
-      <find>imag</find>
-      <find>button</find>
-      <find>imageUrl</find>
-      <find>addexer</find>
-      <find>.add</find>
       <find>name</find>
       <find>AddExerciseButton</find>
       <find>addexercisebutt</find>
@@ -193,6 +150,19 @@
       <find>autosize</find>
       <find>AutoSizeText</find>
       <find>auto</find>
+      <find>eventdetails</find>
+      <find>print(ex</find>
+      <find>kiqback_logo</find>
+      <find>signOutText</find>
+      <find>_signOutUser</find>
+      <find>sign ou</find>
+      <find>login</find>
+      <find>email</find>
+      <find>invalidEmail</find>
+      <find>pass</find>
+      <find>passwordInputHint</find>
+      <find>getHintText</find>
+      <find>logininput.dart</find>
     </findStrings>
     <replaceStrings>
       <replace>exercisesstreambuilde</replace>
@@ -244,7 +214,6 @@
         <option value="$PROJECT_DIR$/lib/screens/patientDetails/widgets/addExerciseDialog.dart" />
         <option value="$PROJECT_DIR$/lib/copyDeck.dart" />
         <option value="$PROJECT_DIR$/lib/screens/explore/exploreProviderWrapper.dart" />
-        <option value="$PROJECT_DIR$/lib/widgets/login/loginWidget.dart" />
         <option value="$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart" />
         <option value="$PROJECT_DIR$/lib/screens/explore/explore.dart" />
         <option value="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsHeading.dart" />
@@ -258,6 +227,7 @@
         <option value="$PROJECT_DIR$/lib/screens/eventDetails/widgets/eventDetailsItems.dart" />
         <option value="$PROJECT_DIR$/lib/screens/physio_home/physioHome.dart" />
         <option value="$PROJECT_DIR$/lib/screens/eventDetails/widgets/performExercise.dart" />
+        <option value="$PROJECT_DIR$/lib/widgets/login/loginWidget.dart" />
       </list>
     </option>
   </component>
@@ -318,30 +288,7 @@
               <item name="physio_tracker_app" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="eventDetails" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="physio_tracker_app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="physio_tracker_app" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="eventDetails" type="462c0819:PsiDirectoryNode" />
-              <item name="widgets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="physio_tracker_app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="physio_tracker_app" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="patientDetails" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="physio_tracker_app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="physio_tracker_app" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="patientDetails" type="462c0819:PsiDirectoryNode" />
-              <item name="widgets" type="462c0819:PsiDirectoryNode" />
+              <item name="account" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -409,7 +356,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.24362417" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.24362417" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -419,7 +366,7 @@
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.3286119" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.49932885" weight="0.4957507" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.49932885" visible="true" weight="0.4957507" />
       <window_info anchor="bottom" id="Logcat" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="TODO" order="3" weight="0.3286119" />
       <window_info anchor="bottom" id="Android Profiler" order="4" show_stripe_button="false" />
@@ -502,13 +449,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/screens/explore/widgets/moreEventsButton.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/widgets/login/loginButton.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -587,29 +527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/widgets/login/loginWidget.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="55" column="40" selection-start-line="55" selection-start-column="40" selection-end-line="55" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="80" column="34" lean-forward="true" selection-start-line="80" selection-start-column="34" selection-end-line="80" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/images/kiqback_logo.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/screens/physio_home/physioHomeProviderWrapper.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
@@ -648,16 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -758,13 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/widgets/addExerciseWidget.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="22" column="27" selection-start-line="22" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/screens/explore/widgets/eventBox.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-144">
@@ -789,13 +689,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-148">
           <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/copyDeck.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="143" column="22" selection-start-line="143" selection-start-column="7" selection-end-line="143" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -846,16 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/screens/account/account.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="120" selection-start-line="120" selection-end-line="124" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/patientDetails.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
@@ -889,10 +772,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/widgets/performExercise.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        <state relative-caret-position="255">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="15" column="22" lean-forward="true" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/images/kiqback_logo.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/screens/account/account.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="123" column="57" lean-forward="true" selection-start-line="123" selection-start-column="57" selection-end-line="123" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/screens/account/editProfile.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/screens/patientDetails/widgets/addExerciseWidget.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="58" column="27" lean-forward="true" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/copyDeck.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="107" column="24" selection-start-line="107" selection-start-column="7" selection-end-line="107" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/screens/account/widgets/loginInput.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/widgets/login/loginWidget.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

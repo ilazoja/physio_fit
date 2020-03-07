@@ -113,15 +113,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         break;
     }
 
-    children.add(Padding(
-      padding: EdgeInsets.symmetric(vertical: sizeHeight * 0.02),
-      child: SecondaryLoginButton(
-          formMode: formMode,
-          callback: () => _changeFormButtons(formMode == FormMode.LOGIN
-              ? FormMode.CREATE_ACCOUNT
-              : FormMode.LOGIN)),
-    ));
-
     if (formMode != FormMode.FORGOT_PASSWORD) {
       children.add(
         ForgotPasswordButton(

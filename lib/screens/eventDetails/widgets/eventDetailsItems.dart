@@ -11,18 +11,19 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:physio_tracker_app/widgets/events/getIconAndHeadingRow.dart';
 import 'package:physio_tracker_app/widgets/events/getItemTextRow.dart';
+import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseButton.dart';
+import 'performExercise.dart';
 
 import '../../../copyDeck.dart' as copy;
-import '../../../models/event.dart';
+import '../../../models/exercise.dart';
 import '../../../models/user.dart';
 
 class EventDetailsItems extends StatelessWidget {
   EventDetailsItems(
-      {Key key, @required this.event, @required this.cancelByDate})
+      {Key key, @required this.exercise })
       : super(key: key);
 
-  final Event event;
-  final DateTime cancelByDate;
+  final Exercise exercise;
   BuildContext context;
   ScaffoldState scaffoldState;
 
@@ -33,90 +34,35 @@ class EventDetailsItems extends StatelessWidget {
     final User _hostUser = Provider.of<User>(context);
     final FirebaseUser firebaseUser = Provider.of<FirebaseUser>(context);
 
-    if (event != null && _hostUser != null) {
+    if (_hostUser != null) {
       final bool isHost =
           firebaseUser != null && firebaseUser.uid == _hostUser.id;
-      final String _contactType = _getContactType(event.hostContact);
 
       final List<Widget> listViewItems = <Widget>[];
 
-      if (!event.eventCancelled) {
+      if (exercise != null) {
         listViewItems.add(Wrap(runSpacing: 4.5, children: <Widget>[
-          _getIconAndText(Icons.location_city, event.city, context),
+          _getIconAndText(Icons.location_city, 'Name: ' + exercise.name, context),
           _getIconAndText(
-              Icons.category,
-              (event.categories.toString())
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''),
+              Icons.accessibility,
+              'Sets: ' + exercise.sets.toString(),
+              context),
+          _getIconAndText(
+              Icons.accessibility,
+              'Repetitions: ' + exercise.repetitions.toString(),
               context),
           _getIconAndText(Icons.calendar_today,
-              DateFormat.yMMMMd('en_US').add_jm().format(event.date), context)
+              'Date: ' + exercise.date.toString(), context),
+          _getIconAndText(
+              Icons.category,
+              'Type: ' + exercise.type,
+              context),
         ]));
 
-        // Event Duration
-        if (event.duration != null) {
-          listViewItems.add(const Padding(padding: EdgeInsets.all(4.5 / 2)));
-          listViewItems
-              .add(_getIconAndText(Icons.timer, getDurationFormat(), context));
-        }
+        // Event Durati
 
         listViewItems.add(const Padding(padding: EdgeInsets.all(15)));
 
-        listViewItems.add(isHost &&
-                event.guestIds != null &&
-                event.guestIds.isNotEmpty
-            ? _getRowAndAction(
-                Icons.announcement, copy.broadcastText, context, _displayDialog)
-            : Container());
-
-        // Host Name / Message your Guests
-        listViewItems.add(isHost
-            ? Container()
-            : GetIconAndHeadingRow(
-                headingIcon: Icons.perm_identity,
-                headingText: copy.hostText(_hostUser.displayName)));
-
-        // Host Bio
-        listViewItems.add(isHost
-            ? Container()
-            : GetItemTextRow(bodyText: _hostUser.biography));
-
-        // Host Contact
-        listViewItems.add(isHost
-            ? Container()
-            : contactHostRow(context, firebaseUser, _hostUser, _contactType));
-
-        listViewItems.add(_getDivider());
-
-        // Event Description
-        listViewItems.add(GetIconAndHeadingRow(
-            headingIcon: Icons.description, headingText: copy.descriptionText));
-        listViewItems.add(GetItemTextRow(bodyText: event.description));
-
-        // Event Address
-        listViewItems.add(GetIconAndHeadingRow(
-            headingIcon: Icons.location_on, headingText: copy.locationText));
-        listViewItems.add(GetItemTextRow(bodyText: event.address));
-
-        // Event Capacity
-        listViewItems.add(GetIconAndHeadingRow(
-            headingIcon: Icons.add_circle, headingText: copy.capacityText));
-        listViewItems.add(GetItemTextRow(bodyText: event.capacity.toString()));
-
-        // Event Guest List
-        if (event.guestIds.isEmpty) {
-          listViewItems.add(GetIconAndHeadingRow(
-            headingIcon: Icons.people,
-            headingText: copy.guestText(event.guestIds.length),
-          ));
-        } else {
-          listViewItems.add(_getRowAndAction(
-              Icons.people,
-              copy.guestText(event.guestIds.length),
-              context,
-              guestListCallBack));
-        }
-        listViewItems.add(const Padding(padding: EdgeInsets.all(8)));
 
 //      //reviews
 //      if (event.reviews.isNotEmpty) {
@@ -126,44 +72,13 @@ class EventDetailsItems extends StatelessWidget {
 //          listViewItems.add(_getItemTextRow(_review, context));
 //        }
 //      }
-
-        listViewItems.add(_getDivider());
-
-        // Event Additional Info
-        if (event.additionalInfo.isNotEmpty) {
-          listViewItems.add(GetIconAndHeadingRow(
-              headingIcon: Icons.transfer_within_a_station,
-              headingText: copy.requirementsText));
-          for (String requirement in event.additionalInfo) {
-            listViewItems.add(GetItemTextRow(bodyText: requirement));
-          }
-        }
-        print(cancelByDate);
-
-        // Event Cancellation
-        listViewItems.add(GetIconAndHeadingRow(
-            headingIcon: Icons.cancel, headingText: copy.cancellationPolicy));
-        listViewItems.add(GetItemTextRow(
-            bodyText: copy.cancelBy +
-                DateFormat.yMMMMd('en_US').add_jm().format(cancelByDate)));
-
-        if (event.cancellationPolicy.isNotEmpty) {
-          listViewItems.add(GetItemTextRow(bodyText: event.cancellationPolicy));
-        } else {
-          listViewItems.add(GetItemTextRow(
-            bodyText: copy.noCancellationPolicy,
-          ));
-        }
-      } else {
-        listViewItems.add(_getCancelledEvent());
-        if (firebaseUser != null && firebaseUser.uid != _hostUser.id) {
-          listViewItems.add(GetIconAndHeadingRow(
-              headingIcon: Icons.perm_identity,
-              headingText: _hostUser.displayName));
-          listViewItems.add(Padding(padding: EdgeInsets.all(5)));
-          listViewItems.add(
-              contactHostRow(context, firebaseUser, _hostUser, _contactType));
-        }
+        listViewItems.add(AddExerciseButton(
+            buttonText: "Start Exercise",
+            callback: () {
+              Navigator.of(context, rootNavigator: true)
+                  .push<dynamic>(DefaultPageRoute<dynamic>(
+                  pageRoute: PerformExercise(buttonText: "Perform Exercise", callback: (){},)));
+            }),);
       }
 
       return Container(
@@ -177,6 +92,7 @@ class EventDetailsItems extends StatelessWidget {
     }
   }
 
+  /*
   Widget contactHostRow(BuildContext context, FirebaseUser firebaseUser,
       User _hostUser, String _contactType) {
     return Padding(
@@ -204,9 +120,9 @@ class EventDetailsItems extends StatelessWidget {
       ),
     );
   }
-
+*/
   String getDurationFormat() {
-    final Duration duration = Duration(hours: event.duration.toInt());
+    final Duration duration = Duration(hours: exercise.repetitions.toInt());
     String sDuration = '';
     if (duration.inDays == 1) {
       sDuration = '${duration.inDays} day';
@@ -237,10 +153,15 @@ class EventDetailsItems extends StatelessWidget {
     return sDuration;
   }
 
+  /*
+
   void guestListCallBack() {
     Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
         pageRoute: GuestListProviderWrapper(eventId: event.id)));
   }
+  */
+
+  /*
 
   Future<void> _displayDialog() async {
     return showDialog<dynamic>(
@@ -249,7 +170,7 @@ class EventDetailsItems extends StatelessWidget {
           return AnnouncementDialog(event: event, scaffoldState: scaffoldState);
         });
   }
-
+*/
   String _getContactType(String hostContact) {
     if (_isNumeric(hostContact)) {
       return 'tel://';

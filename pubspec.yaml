@@ -120,6 +120,9 @@ flutter:
     - assets/images/fitness.jpeg
     - assets/images/beauty.jpeg
     - assets/images/default.jpg
+    - assets/images/squats.png
+    - assets/images/hip_adduction.png
+    - assets/images/knee_flexion_extension.jpg
     - assets/illustrations/onboardingScreen1.svg
     - assets/illustrations/onboardingScreen2.svg
     - assets/illustrations/onboardingScreen3.svg

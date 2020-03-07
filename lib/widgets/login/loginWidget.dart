@@ -53,7 +53,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           position: DecorationPosition.background,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/login_background.jpg'),
+                  image: AssetImage(''),
                   fit: BoxFit.cover)),
           child: Form(
             key: formKey,

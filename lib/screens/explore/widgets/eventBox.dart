@@ -23,6 +23,9 @@ class EventBox extends StatelessWidget {
   final Exercise exercise;
   final bool setSmall;
   bool detailsPage;
+  static const String squat = 'assets/images/squats.png';
+  static const String flexion = 'assets/images/knee_flexion_extension.jpg';
+  static const String adduction = 'assets/images/hip_adduction.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,19 @@ class EventBox extends StatelessWidget {
     final FirebaseUser _currUser = Provider.of<FirebaseUser>(context);
     final bool _loggedIn = _currUser != null;
     const double favouriteButtonSize = 20.0;
+
+
+
+    String imageurl = "";
+    if (exercise.type.toLowerCase() == "squat") {
+      imageurl = squat;
+    }
+    else if (exercise.type.toLowerCase() == "flexion") {
+      imageurl = flexion;
+    }
+    else {
+      imageurl = adduction;
+    }
 
     return Card(
       elevation: 0,
@@ -57,17 +73,7 @@ class EventBox extends StatelessWidget {
                 Container(
                   height: setSmall ? 200 : 150,
                   width: MediaQuery.of(context).size.width,
-                  child: CachedNetworkImage(
-                    imageUrl: exercise.imageSrc,
-                    placeholder: (BuildContext context, String url) =>
-                        const Center(
-                            heightFactor: 0.4,
-                            child: CircularProgressIndicator()),
-                    errorWidget:
-                        (BuildContext context, String url, Object error) =>
-                            Icon(Icons.error),
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image(image: AssetImage(imageurl))
                 ),
                 !detailsPage
                     ? Container(

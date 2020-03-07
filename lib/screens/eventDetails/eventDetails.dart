@@ -25,7 +25,7 @@ class EventDetails extends StatefulWidget {
 
 class _EventDetailsState extends State<EventDetails>
     with TickerProviderStateMixin {
-  Event _event;
+  Exercise _exercise;
   bool _loggedIn;
   bool _hostingEvent;
   FirebaseUser _user;
@@ -33,6 +33,11 @@ class _EventDetailsState extends State<EventDetails>
   Animation<Color> _colorTween, _colorTweenTitle;
   double _elevation = 0.0;
   DateTime cancelByDate;
+
+  static const String squat = 'assets/images/squats.png';
+  static const String flexion = 'assets/images/knee_flexion_extension.jpg';
+  static const String adduction = 'assets/images/hip_adduction.jpg';
+
 
   @override
   void initState() {
@@ -61,19 +66,25 @@ class _EventDetailsState extends State<EventDetails>
 
   @override
   Widget build(BuildContext context) {
-    _event = Provider.of<Event>(context);
+    _exercise = Provider.of<Exercise>(context);
     _user = Provider.of<FirebaseUser>(context);
     final List<dynamic> _allImages = <dynamic>[];
-    if (_event != null) {
+    print("PATIENT");
+    print(_exercise.type);
+    String imageUrl = "";
+    if (_exercise != null) {
       _loggedIn = _user != null;
-      _hostingEvent = _loggedIn && _event.hostId == _user.uid;
-      cancelByDate = _event.daysCancelBy == null
-          ? _event.date
-          : _event.date.subtract(Duration(days: _event.daysCancelBy.toInt()));
-      _allImages.add(_event.imageSrc);
-      if (_event.multiImageSrc != null) {
-        _allImages.addAll(_event.multiImageSrc);
+      cancelByDate = _exercise.date;
+      if (_exercise.type.toLowerCase() == "squat") {
+        imageUrl = squat;
       }
+      else if (_exercise.type.toLowerCase() == "flexion") {
+        imageUrl = flexion;
+      }
+      else {
+        imageUrl = adduction;
+      }
+      print(_allImages);
       return Scaffold(
           body: Stack(
         children: <Widget>[
@@ -85,33 +96,12 @@ class _EventDetailsState extends State<EventDetails>
                     padding: const EdgeInsets.only(bottom: 15.0),
                     physics: const ClampingScrollPhysics(),
                     children: <Widget>[
-                      CarouselWrapper(
-                          images: _allImages,
-                          child: _getImageOverlayText(),
-                          containerHeight:
-                              (MediaQuery.of(context).size.height) / 1.9),
+                      Image(image: AssetImage(imageUrl)),
                       StreamProvider<User>.value(
-                        value: CloudDatabase.streamUserById(_event.hostId),
+                        value: CloudDatabase.streamUserById(_user.uid),
                         child: EventDetailsItems(
-                            event: _event, cancelByDate: cancelByDate),
+                            exercise: _exercise),
                       ),
-                      _event.multiDateKey != null && !_hostingEvent
-                          ? StreamBuilder<List<Exercise>>(
-                              stream:
-                                  CloudDatabase.streamEventsFromMultiDateKey(
-                                      _event.multiDateKey),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<List<Exercise>> snapshot) {
-                                if (!snapshot.hasData) {
-                                  return Container();
-                                }
-                                final List<Exercise> otherDateEvents =
-                                    snapshot.data;
-                                return MoreDateEventsScrolling(
-                                    exercises: otherDateEvents,
-                                    currentEventDate: _event.date);
-                              })
-                          : Container(),
                       const Padding(padding: EdgeInsets.only(bottom: 60))
                     ]),
                 Positioned(
@@ -146,7 +136,7 @@ class _EventDetailsState extends State<EventDetails>
                                       ),
                                       Expanded(
                                         child: AutoSizeText(
-                                          _event.title,
+                                          _exercise.name,
                                           maxLines: 1,
                                           minFontSize: 20,
                                           overflow: TextOverflow.clip,
@@ -164,24 +154,7 @@ class _EventDetailsState extends State<EventDetails>
                             ])))
               ],
             ),
-          ),
-          _event.eventCancelled
-              ? Container()
-              : Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 16.0, right: 16.0, bottom: 30),
-                      width: MediaQuery.of(context).size.width,
-                      child: StreamProvider<User>.value(
-                          value: CloudDatabase.streamUserById(_event.hostId),
-                          child: EventDetailsButton(
-                            event: _event,
-                            user: _user,
-                            loggedIn: _loggedIn,
-                            hostingEvent: _hostingEvent,
-                            cancelByDate: cancelByDate
-                          ))))
+          )
         ],
       ));
     } else {
@@ -201,11 +174,11 @@ class _EventDetailsState extends State<EventDetails>
           _loggedIn
               ? StreamProvider<User>.value(
                   value: CloudDatabase.streamUser(_user.uid),
-                  child: EventDetailsHeading(event: _event),
+                  child: EventDetailsHeading(exercise: _exercise),
                 )
-              : EventDetailsHeading(event: _event),
+              : EventDetailsHeading(exercise: _exercise),
           AutoSizeText(
-            '\$' + _event.price.toStringAsFixed(2),
+             _exercise.name,
             style: Theme.of(context)
                 .textTheme
                 .display4

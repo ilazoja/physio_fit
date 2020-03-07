@@ -127,13 +127,6 @@ class _ExploreState extends State<Explore> {
           const SliverPadding(
             padding: EdgeInsets.only(top: 15),
           ),
-          if (widget.showSubsections && anyFilterSet == false) ...<Widget>[
-            ...getPreferenceWidgets(),
-            createSubHeading(copy.secondSubheading),
-            GenericEventGrid(events: getPopularEvents()),
-            ...getAlmostSoldOutWidgets(),
-            ...getRecentlySoldOutWidgets(),
-          ],
           createSubHeading(!widget.issearching
               ? copy.allEventsSubHeading
               : copy.searchResultSubHeading),

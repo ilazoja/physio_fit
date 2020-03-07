@@ -376,6 +376,7 @@ class CloudDatabase {
   }
 
   static Stream<User> streamUserById(String id) {
+    print(id);
     return _db
         .collection('users')
         .document(id)

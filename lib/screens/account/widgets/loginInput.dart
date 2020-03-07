@@ -73,6 +73,14 @@ class LoginInput extends StatelessWidget {
         return copy.dobEmptyError;
       case LoginInputType.TYPE:
         return copy.dobEmptyError;
+      case LoginInputType.EXERCISEFREQUENCY:
+        return copy.dobEmptyError;
+      case LoginInputType.EXERCISEREPS:
+        return copy.dobEmptyError;
+      case LoginInputType.EXERCISESETS:
+        return copy.dobEmptyError;
+      case LoginInputType.EXERCISENAME:
+        return copy.dobEmptyError;
     }
   }
 

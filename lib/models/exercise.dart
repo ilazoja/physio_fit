@@ -10,6 +10,7 @@ class Exercise {
         this.date,
         this.repetitions,
         this.type,
+        this.sets,
         this.patientId,
       });
 
@@ -20,9 +21,10 @@ class Exercise {
         id: doc.documentID,
         imageSrc: '',
         date: data['date'].toDate(),
-        name: data['Description'],
+        name: data['Name'],
         repetitions: data['Repetitions'],
         type: data['type'],
+        sets: data['Sets'],
         patientId: data['userId']);
   }
 
@@ -31,6 +33,7 @@ class Exercise {
   final String name;
   final DateTime date;
   final int repetitions;
+  final int sets;
   final String type;
   final String patientId;
 }

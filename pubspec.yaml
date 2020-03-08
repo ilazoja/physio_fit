@@ -58,7 +58,9 @@ dependencies:
   permission_handler: ^4.0.0
   contacts_service: ^0.3.10
   flutter_sms: ^1.1.0
-
+  day_selector: ^1.0.0
+  multiselect_formfield: ^0.1.2
+  flutter_cupertino_date_picker: ^1.0.12
 dev_dependencies:
   flutter_test:
     sdk: flutter

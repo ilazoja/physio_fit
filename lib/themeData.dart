@@ -32,7 +32,7 @@ final ThemeData themeData = ThemeData(
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
       buttonColor: accent,
-      disabledColor: accent.withOpacity(0.4),
+      disabledColor: Colors.white,
     ),
     dividerColor: accent,
     textTheme: const TextTheme(

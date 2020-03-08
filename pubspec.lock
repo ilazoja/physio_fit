@@ -148,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  day_selector:
+    dependency: "direct main"
+    description:
+      name: day_selector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   dots_indicator:
     dependency: "direct main"
     description:
@@ -237,6 +244,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.10"
+  flutter_cupertino_date_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_cupertino_date_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.12"
   flutter_cupertino_localizations:
     dependency: transitive
     description:
@@ -455,6 +469,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.6.1"
+  multiselect_formfield:
+    dependency: "direct main"
+    description:
+      name: multiselect_formfield
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   overlay_support:
     dependency: "direct main"
     description:

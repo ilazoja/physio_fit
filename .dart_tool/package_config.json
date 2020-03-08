@@ -128,6 +128,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "day_selector",
+      "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/day_selector-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "dots_indicator",
       "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/dots_indicator-0.0.5+1",
       "packageUri": "lib/",
@@ -204,6 +210,12 @@
       "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_calendar_carousel-1.4.10",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_cupertino_date_picker",
+      "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cupertino_date_picker-1.0.12",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
     },
     {
       "name": "flutter_cupertino_localizations",
@@ -396,6 +408,12 @@
       "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/multi_image_picker-4.6.1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "multiselect_formfield",
+      "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/multiselect_formfield-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "overlay_support",
@@ -614,7 +632,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-03-07T07:56:16.642399Z",
+  "generated": "2020-03-08T00:35:59.694282Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

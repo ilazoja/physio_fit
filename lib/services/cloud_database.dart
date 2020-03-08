@@ -72,7 +72,7 @@ class CloudDatabase {
   }
 
   static void createNewCollectionItem(
-      {String collection, Map<String, dynamic> map}) {
+      String collection, Map<String, dynamic> map) {
     Firestore.instance.runTransaction((Transaction transaction) {
       Firestore.instance.collection(collection).add(map);
       return;

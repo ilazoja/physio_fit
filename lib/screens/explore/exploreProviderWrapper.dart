@@ -13,7 +13,11 @@ class ExploreProviderWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseUser _user = Provider.of<FirebaseUser>(context);
-    return  StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamExercisesById(_user.uid),
+    String uid = "";
+    if (_user != null) {
+      uid = _user.uid;
+    }
+    return  StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamExercisesById(uid),
             child: Explore(textController: textController,),);
   }
 }

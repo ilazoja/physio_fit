@@ -15,7 +15,11 @@ class PhysioHomeProviderWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseUser _user = Provider.of<FirebaseUser>(context);
-    return  StreamProvider<List<User>>.value(value: CloudDatabase.streamPatients(_user.uid),
+    String uid = "";
+    if (_user != null) {
+      uid = _user.uid;
+    }
+    return  StreamProvider<List<User>>.value(value: CloudDatabase.streamPatients(uid),
       child: PhysioHome(textController: textController,),);
   }
 }

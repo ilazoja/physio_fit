@@ -218,11 +218,25 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.11"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_blue:
+    dependency: "direct main"
+    description:
+      name: flutter_blue
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.3+1"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -522,6 +536,13 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,25 @@
 #include <memory>
 #include <utility>
 
+#include "Firestore/core/src/firebase/firestore/api/document_reference.h"
+#include "Firestore/core/src/firebase/firestore/api/document_snapshot.h"
+#include "Firestore/core/src/firebase/firestore/api/query_core.h"
+#include "Firestore/core/src/firebase/firestore/api/query_snapshot.h"
 #include "Firestore/core/src/firebase/firestore/api/settings.h"
 #include "Firestore/core/src/firebase/firestore/auth/credentials_provider.h"
 #include "Firestore/core/src/firebase/firestore/core/database_info.h"
 #include "Firestore/core/src/firebase/firestore/core/event_manager.h"
+#include "Firestore/core/src/firebase/firestore/core/query_listener.h"
+#include "Firestore/core/src/firebase/firestore/core/sync_engine.h"
 #include "Firestore/core/src/firebase/firestore/core/view.h"
+#include "Firestore/core/src/firebase/firestore/local/index_free_query_engine.h"
+#include "Firestore/core/src/firebase/firestore/local/leveldb_opener.h"
 #include "Firestore/core/src/firebase/firestore/local/leveldb_persistence.h"
+#include "Firestore/core/src/firebase/firestore/local/local_documents_view.h"
 #include "Firestore/core/src/firebase/firestore/local/local_serializer.h"
+#include "Firestore/core/src/firebase/firestore/local/local_store.h"
 #include "Firestore/core/src/firebase/firestore/local/memory_persistence.h"
+#include "Firestore/core/src/firebase/firestore/local/query_result.h"
 #include "Firestore/core/src/firebase/firestore/model/database_id.h"
 #include "Firestore/core/src/firebase/firestore/model/document_set.h"
 #include "Firestore/core/src/firebase/firestore/model/mutation.h"
@@ -50,18 +61,22 @@ namespace core {
 
 using api::DocumentReference;
 using api::DocumentSnapshot;
+using api::DocumentSnapshotListener;
 using api::ListenerRegistration;
 using api::QuerySnapshot;
+using api::QuerySnapshotListener;
 using api::Settings;
 using api::SnapshotMetadata;
 using auth::CredentialsProvider;
 using auth::User;
 using firestore::Error;
-using local::LevelDbPersistence;
+using local::IndexFreeQueryEngine;
+using local::LevelDbOpener;
 using local::LocalSerializer;
 using local::LocalStore;
 using local::LruParams;
 using local::MemoryPersistence;
+using local::QueryResult;
 using model::DatabaseId;
 using model::Document;
 using model::DocumentKeySet;
@@ -151,18 +166,10 @@ void FirestoreClient::Initialize(const User& user, const Settings& settings) {
   // more work) since external write/listen operations could get queued to run
   // before that subsequent work completes.
   if (settings.persistence_enabled()) {
-    auto maybe_data_dir = LevelDbPersistence::AppDataDirectory();
-    HARD_ASSERT(maybe_data_dir.ok(),
-                "Failed to find the App data directory for the current user.");
+    LevelDbOpener opener(database_info_);
 
-    Path dir = LevelDbPersistence::StorageDirectory(
-        database_info_, maybe_data_dir.ValueOrDie());
-
-    Serializer remote_serializer{database_info_.database_id()};
-
-    auto created = LevelDbPersistence::Create(
-        std::move(dir), LocalSerializer{std::move(remote_serializer)},
-        LruParams::WithCacheSize(settings.cache_size_bytes()));
+    auto created =
+        opener.Create(LruParams::WithCacheSize(settings.cache_size_bytes()));
     // If leveldb fails to start then just throw up our hands: the error is
     // unrecoverable. There's nothing an end-user can do and nearly all
     // failures indicate the developer is doing something grossly wrong so we
@@ -181,7 +188,9 @@ void FirestoreClient::Initialize(const User& user, const Settings& settings) {
     persistence_ = MemoryPersistence::WithEagerGarbageCollector();
   }
 
-  local_store_ = absl::make_unique<LocalStore>(persistence_.get(), user);
+  query_engine_ = absl::make_unique<IndexFreeQueryEngine>();
+  local_store_ = absl::make_unique<LocalStore>(persistence_.get(),
+                                               query_engine_.get(), user);
 
   auto datastore = std::make_shared<Datastore>(database_info_, worker_queue(),
                                                credentials_provider_);
@@ -214,9 +223,12 @@ void FirestoreClient::Initialize(const User& user, const Settings& settings) {
 void FirestoreClient::ScheduleLruGarbageCollection() {
   std::chrono::milliseconds delay =
       gc_has_run_ ? regular_gc_delay_ : initial_gc_delay_;
-  auto shared_this = shared_from_this();
+  std::weak_ptr<FirestoreClient> weak_this = shared_from_this();
   lru_callback_ = worker_queue()->EnqueueAfterDelay(
-      delay, TimerId::GarbageCollectionDelay, [shared_this] {
+      delay, TimerId::GarbageCollectionDelay, [weak_this] {
+        auto shared_this = weak_this.lock();
+        if (!shared_this) return;
+
         shared_this->local_store_->CollectGarbage(
             shared_this->lru_delegate_->garbage_collector());
         shared_this->gc_has_run_ = true;
@@ -246,28 +258,40 @@ void FirestoreClient::EnableNetwork(StatusCallback callback) {
   });
 }
 
-void FirestoreClient::Terminate(StatusCallback callback) {
+void FirestoreClient::TerminateAsync(StatusCallback callback) {
   auto shared_this = shared_from_this();
   worker_queue()->EnqueueAndInitiateShutdown([shared_this, callback] {
-    shared_this->credentials_provider_->SetCredentialChangeListener(nullptr);
+    shared_this->TerminateInternal();
 
-    // If we've scheduled LRU garbage collection, cancel it.
-    if (shared_this->lru_callback_) {
-      shared_this->lru_callback_.Cancel();
-    }
-    shared_this->remote_store_->Shutdown();
-    shared_this->persistence_->Shutdown();
-  });
-
-  // This separate enqueue ensures if `terminate` is called multiple times
-  // every time the callback is triggered. If it is in the above
-  // enqueue, it might not get executed because after first `terminate`
-  // all operations are not executed.
-  worker_queue()->EnqueueEvenAfterShutdown([shared_this, callback] {
     if (callback) {
       shared_this->user_executor()->Execute([=] { callback(Status::OK()); });
     }
   });
+}
+
+void FirestoreClient::Terminate() {
+  std::promise<void> signal_terminated;
+  worker_queue()->EnqueueAndInitiateShutdown([&, this] {
+    TerminateInternal();
+    signal_terminated.set_value();
+  });
+  signal_terminated.get_future().wait();
+}
+
+void FirestoreClient::TerminateInternal() {
+  if (!remote_store_) return;
+
+  credentials_provider_->SetCredentialChangeListener(nullptr);
+
+  // If we've scheduled LRU garbage collection, cancel it.
+  if (lru_callback_) {
+    lru_callback_.Cancel();
+  }
+  remote_store_->Shutdown();
+  persistence_->Shutdown();
+
+  // Clear the remote store to indicate terminate is complete.
+  remote_store_.reset();
 }
 
 void FirestoreClient::WaitForPendingWrites(StatusCallback callback) {
@@ -302,9 +326,7 @@ bool FirestoreClient::is_terminated() const {
 }
 
 std::shared_ptr<QueryListener> FirestoreClient::ListenToQuery(
-    Query query,
-    ListenOptions options,
-    ViewSnapshot::SharedListener&& listener) {
+    Query query, ListenOptions options, ViewSnapshotSharedListener&& listener) {
   VerifyNotTerminated();
 
   auto query_listener = QueryListener::Create(
@@ -332,7 +354,7 @@ void FirestoreClient::RemoveListener(
 }
 
 void FirestoreClient::GetDocumentFromLocalCache(
-    const DocumentReference& doc, DocumentSnapshot::Listener&& callback) {
+    const DocumentReference& doc, DocumentSnapshotListener&& callback) {
   VerifyNotTerminated();
 
   // TODO(c++14): move `callback` into lambda.
@@ -371,18 +393,19 @@ void FirestoreClient::GetDocumentFromLocalCache(
 }
 
 void FirestoreClient::GetDocumentsFromLocalCache(
-    const api::Query& query, QuerySnapshot::Listener&& callback) {
+    const api::Query& query, QuerySnapshotListener&& callback) {
   VerifyNotTerminated();
 
   // TODO(c++14): move `callback` into lambda.
   auto shared_callback = absl::ShareUniquePtr(std::move(callback));
   auto shared_this = shared_from_this();
   worker_queue()->Enqueue([shared_this, query, shared_callback] {
-    DocumentMap docs = shared_this->local_store_->ExecuteQuery(query.query());
+    QueryResult query_result = shared_this->local_store_->ExecuteQuery(
+        query.query(), /* use_previous_results= */ true);
 
-    View view(query.query(), DocumentKeySet{});
+    View view(query.query(), query_result.remote_keys());
     ViewDocumentChanges view_doc_changes =
-        view.ComputeDocumentChanges(docs.underlying_map());
+        view.ComputeDocumentChanges(query_result.documents().underlying_map());
     ViewChange view_change = view.ApplyChanges(view_doc_changes);
     HARD_ASSERT(
         view_change.limbo_changes().empty(),

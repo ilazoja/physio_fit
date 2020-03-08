@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>376720011033-c2l6rk5ng2rj6sf46482g8t79fhcq8pr.apps.googleusercontent.com</string>
+	<string>170009661959-1kbbemp4bo21o7djq2ccufcah9qgl7ja.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.376720011033-c2l6rk5ng2rj6sf46482g8t79fhcq8pr</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>376720011033-5bev7si72jr2ekogrqoj4bb72b8nod5v.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.170009661959-1kbbemp4bo21o7djq2ccufcah9qgl7ja</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDT4jcZc6RgmHdx_y6JTC4mEhRgkE-3jc4</string>
+	<string>AIzaSyAtkd2TxYkcDd2v-etDw0TaWYjCIBiZBlM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>376720011033</string>
+	<string>170009661959</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.xenonlabs.kiqbacks</string>
+	<string>com.example.physiotracker</string>
 	<key>PROJECT_ID</key>
-	<string>kickback-239215</string>
+	<string>physiotracker</string>
 	<key>STORAGE_BUCKET</key>
-	<string>kickback-239215.appspot.com</string>
+	<string>physiotracker.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:376720011033:ios:e429aece03d88a7e6e9f88</string>
+	<string>1:170009661959:ios:2ef9cb7bba3e4fdf4850a2</string>
 	<key>DATABASE_URL</key>
-	<string>https://kickback-239215.firebaseio.com</string>
+	<string>https://physiotracker.firebaseio.com</string>
 </dict>
 </plist>

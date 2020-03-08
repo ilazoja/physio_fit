@@ -1,6 +1,6 @@
 {
   "name": "permission_handler",
-  "version": "4.0.0",
+  "version": "4.2.0+hotfix.3",
   "summary": "Permission plugin for Flutter.",
   "description": "Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.",
   "homepage": "https://github.com/baseflowit/flutter-permission-handler",

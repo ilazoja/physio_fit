@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google
+ * Copyright 2018 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 
 #include "Firestore/core/src/firebase/firestore/remote/grpc_connection.h"
 #include "Firestore/core/src/firebase/firestore/remote/grpc_util.h"
+#include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/log.h"
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 
@@ -70,7 +71,7 @@ absl::optional<BufferedWrite> BufferedWriter::TryStartWrite() {
   has_active_write_ = true;
   BufferedWrite message = std::move(queue_.front());
   queue_.pop();
-  return std::move(message);
+  return {std::move(message)};
 }
 
 absl::optional<BufferedWrite> BufferedWriter::DequeueNextWrite() {
@@ -128,11 +129,11 @@ void GrpcStream::Read() {
     return;
   }
 
-  GrpcCompletion* completion =
-      NewCompletion(Type::Read, [this](const GrpcCompletion* completion) {
+  auto completion = NewCompletion(
+      Type::Read, [this](const std::shared_ptr<GrpcCompletion>& completion) {
         OnRead(*completion->message());
       });
-  call_->Read(completion->message(), completion);
+  call_->Read(completion->message(), completion.get());
 }
 
 void GrpcStream::Write(grpc::ByteBuffer&& message) {
@@ -151,11 +152,12 @@ void GrpcStream::MaybeWrite(absl::optional<BufferedWrite> maybe_write) {
   }
 
   BufferedWrite write = std::move(maybe_write).value();
-  GrpcCompletion* completion =
-      NewCompletion(Type::Write, [this](const GrpcCompletion*) { OnWrite(); });
+  auto completion = NewCompletion(
+      Type::Write,
+      [this](const std::shared_ptr<GrpcCompletion>&) { OnWrite(); });
   *completion->message() = write.message;
 
-  call_->Write(*completion->message(), write.options, completion);
+  call_->Write(*completion->message(), write.options, completion.get());
 }
 
 void GrpcStream::FinishImmediately() {
@@ -223,8 +225,8 @@ void GrpcStream::FinishGrpcCall(const OnSuccess& callback) {
   // All completions issued by this call must be taken off the queue before
   // finish operation can be enqueued.
   FastFinishCompletionsBlocking();
-  GrpcCompletion* completion = NewCompletion(Type::Finish, callback);
-  call_->Finish(completion->status(), completion);
+  auto completion = NewCompletion(Type::Finish, callback);
+  call_->Finish(completion->status(), completion.get());
 }
 
 void GrpcStream::FastFinishCompletionsBlocking() {
@@ -234,16 +236,19 @@ void GrpcStream::FastFinishCompletionsBlocking() {
   // TODO(varconst): reset buffered_writer_? Should not be necessary, because it
   // should never be called again after a call to Finish.
 
-  for (auto completion : completions_) {
+  for (const auto& completion : completions_) {
     // `GrpcStream` cannot actually remove any of the completions that already
     // have been enqueued on the worker queue, so instead turn them into no-ops.
     completion->Cancel();
   }
 
-  for (auto completion : completions_) {
+  for (const auto& completion : completions_) {
     // This is blocking.
     completion->WaitUntilOffQueue();
   }
+
+  // This will release all the shared pointers to GrpcCompletion, leaving it
+  // up to gRPC to actually call Complete and trigger deletion.
   completions_.clear();
 }
 
@@ -265,9 +270,10 @@ bool GrpcStream::TryLastWrite(grpc::ByteBuffer&& message) {
   }
 
   BufferedWrite last_write = std::move(maybe_write).value();
-  GrpcCompletion* completion = NewCompletion(Type::Write, {});
+  auto completion = NewCompletion(Type::Write, {});
   *completion->message() = last_write.message;
-  call_->WriteLast(*completion->message(), grpc::WriteOptions{}, completion);
+  call_->WriteLast(*completion->message(), grpc::WriteOptions{},
+                   completion.get());
 
   // Empirically, the write normally takes less than a millisecond to finish
   // (both with and without network connection), and never more than several
@@ -311,23 +317,25 @@ void GrpcStream::OnOperationFailed() {
     return;
   }
 
-  FinishGrpcCall([this](const GrpcCompletion* completion) {
+  FinishGrpcCall([this](const std::shared_ptr<GrpcCompletion>& completion) {
     Status status = ConvertStatus(*completion->status());
     FinishAndNotify(status);
   });
 }
 
-void GrpcStream::RemoveCompletion(const GrpcCompletion* to_remove) {
+void GrpcStream::RemoveCompletion(
+    const std::shared_ptr<GrpcCompletion>& to_remove) {
   auto found = std::find(completions_.begin(), completions_.end(), to_remove);
   HARD_ASSERT(found != completions_.end(), "Missing GrpcCompletion");
   completions_.erase(found);
 }
 
-GrpcCompletion* GrpcStream::NewCompletion(Type tag,
-                                          const OnSuccess& on_success) {
+std::shared_ptr<GrpcCompletion> GrpcStream::NewCompletion(
+    Type tag, const OnSuccess& on_success) {
   // Can't move into lambda until C++14.
   GrpcCompletion::Callback decorated =
-      [this, on_success](bool ok, const GrpcCompletion* completion) {
+      [this, on_success](bool ok,
+                         const std::shared_ptr<GrpcCompletion>& completion) {
         RemoveCompletion(completion);
 
         if (ok) {
@@ -344,8 +352,8 @@ GrpcCompletion* GrpcStream::NewCompletion(Type tag,
       };
 
   // For lifetime details, see `GrpcCompletion` class comment.
-  auto* completion =
-      new GrpcCompletion{tag, worker_queue_, std::move(decorated)};
+  auto completion =
+      GrpcCompletion::Create(tag, worker_queue_, std::move(decorated));
   completions_.push_back(completion);
   return completion;
 }

@@ -46,6 +46,12 @@
 @import firebase_storage;
 #endif
 
+#if __has_include(<flutter_blue/FlutterBluePlugin.h>)
+#import <flutter_blue/FlutterBluePlugin.h>
+#else
+@import flutter_blue;
+#endif
+
 #if __has_include(<flutter_facebook_login/FacebookLoginPlugin.h>)
 #import <flutter_facebook_login/FacebookLoginPlugin.h>
 #else
@@ -146,6 +152,7 @@
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FLTFirebaseStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseStoragePlugin"]];
+  [FlutterBluePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterBluePlugin"]];
   [FacebookLoginPlugin registerWithRegistrar:[registry registrarForPlugin:@"FacebookLoginPlugin"]];
   [FlutterImageCompressPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterImageCompressPlugin"]];
   [FlutterSmsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSmsPlugin"]];

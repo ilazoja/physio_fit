@@ -128,6 +128,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "day_selector",
+      "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/day_selector-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "dots_indicator",
       "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/dots_indicator-0.0.5+1",
       "packageUri": "lib/",
@@ -218,6 +224,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "flutter_cupertino_date_picker",
+      "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cupertino_date_picker-1.0.12",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
+    },
+    {
       "name": "flutter_cupertino_localizations",
       "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cupertino_localizations-1.0.1",
       "packageUri": "lib/",
@@ -252,6 +264,18 @@
       "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.7.4",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "flutter_localizations",
@@ -408,6 +432,12 @@
       "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/multi_image_picker-4.6.1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "multiselect_formfield",
+      "rootUri": "file:///Users/manindermatharoo/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/multiselect_formfield-0.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "overlay_support",
@@ -632,7 +662,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-03-08T03:17:36.812359Z",
+  "generated": "2020-03-08T23:30:59.840435Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

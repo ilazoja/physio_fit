@@ -17,11 +17,6 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
   // and display onboarding if so ...
   Future<void> checkFirstSeen() async {
     prefs = await SharedPreferences.getInstance();
-    final bool _seen =
-        prefs.getBool('onboarding-personalization-seen') ?? false;
-    if (!_seen) {
-      Navigator.pushReplacementNamed(context, '/onboarding');
-    }
   }
 
   @override

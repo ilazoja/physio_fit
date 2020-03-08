@@ -25,7 +25,7 @@ class ExerciseDialog {
                         Navigator.of(context).pop();
                       })),
               Container(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.fromLTRB(30,10,10,0),
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                     child: Icon(Icons.close, color: Colors.white, size: 30),

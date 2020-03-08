@@ -37,8 +37,13 @@ String addressDBKey = 'address';
 String dateDBKey = 'date';
 String durationDBKey = 'duration';
 // Exercise Keys
-String exerciseName = 'name';
-String repetitions = 'repetitions';
+String exerciseName = 'Name';
+String repetitions = 'Repetitions';
+String description = 'Description';
+String sets = 'Sets';
+String date = 'date';
+String patientId = 'patientId';
+String type = 'type';
 //Deprecated
 //String dateEndDBKey = 'dateEnd';
 //String dateCancelByDBKey = 'dateCancelBy';

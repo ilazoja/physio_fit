@@ -16,11 +16,10 @@ class Exercise {
 
   factory Exercise.fromFireStore(DocumentSnapshot doc) {
     final data = doc.data;
-    print(doc.data);
     return Exercise(
         id: doc.documentID,
         imageSrc: '',
-        date: data['date'].toDate(),
+        date: data['date'],
         name: data['Name'],
         repetitions: data['Repetitions'],
         type: data['type'],
@@ -31,7 +30,7 @@ class Exercise {
   final String id;
   final String imageSrc;
   final String name;
-  final DateTime date;
+  final dynamic date;
   final int repetitions;
   final int sets;
   final String type;

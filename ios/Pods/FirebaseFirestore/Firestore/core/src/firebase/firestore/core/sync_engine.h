@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,35 +27,24 @@
 #include "Firestore/core/src/firebase/firestore/core/query.h"
 #include "Firestore/core/src/firebase/firestore/core/target_id_generator.h"
 #include "Firestore/core/src/firebase/firestore/core/view.h"
-#include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
-#include "Firestore/core/src/firebase/firestore/local/local_store.h"
-#include "Firestore/core/src/firebase/firestore/local/query_data.h"
 #include "Firestore/core/src/firebase/firestore/local/reference_set.h"
-#include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
-#include "Firestore/core/src/firebase/firestore/model/maybe_document.h"
+#include "Firestore/core/src/firebase/firestore/model/model_fwd.h"
 #include "Firestore/core/src/firebase/firestore/remote/remote_store.h"
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 #include "absl/strings/string_view.h"
 
 namespace firebase {
 namespace firestore {
+
+namespace local {
+class LocalStore;
+class TargetData;
+}  // namespace local
+
 namespace core {
 
-/**
- * Interface implemented by `EventManager` to handle notifications from
- * `SyncEngine`.
- */
-class SyncEngineCallback {
- public:
-  virtual ~SyncEngineCallback() = default;
-
-  /** Handles a change in online state. */
-  virtual void HandleOnlineStateChange(model::OnlineState online_state) = 0;
-  /** Handles new view snapshots. */
-  virtual void OnViewSnapshots(std::vector<core::ViewSnapshot>&& snapshots) = 0;
-  /** Handles the failure of a query. */
-  virtual void OnError(const core::Query& query, const util::Status& error) = 0;
-};
+class SyncEngineCallback;
+class ViewSnapshot;
 
 /**
  * Interface implemented by `SyncEngine` to receive requests from
@@ -169,13 +158,9 @@ class SyncEngine : public remote::RemoteStoreCallback, public QueryEventSource {
    */
   class QueryView {
    public:
-    QueryView(Query query,
-              model::TargetId target_id,
-              nanopb::ByteString resume_token,
-              View view)
+    QueryView(Query query, model::TargetId target_id, View view)
         : query_(std::move(query)),
           target_id_(target_id),
-          resume_token_(std::move(resume_token)),
           view_(std::move(view)) {
     }
 
@@ -192,15 +177,6 @@ class SyncEngine : public remote::RemoteStoreCallback, public QueryEventSource {
     }
 
     /**
-     * An identifier from the datastore backend that indicates the last state of
-     * the results that was received. This can be used to indicate where to
-     * continue receiving new doc changes for the query.
-     */
-    const nanopb::ByteString& resume_token() const {
-      return resume_token_;
-    }
-
-    /**
      * The view is responsible for computing the final merged truth of what docs
      * are in the query. It gets notified of local and remote changes, and
      * applies the query filters and limits to determine the most correct
@@ -213,7 +189,6 @@ class SyncEngine : public remote::RemoteStoreCallback, public QueryEventSource {
    private:
     Query query_;
     model::TargetId target_id_;
-    nanopb::ByteString resume_token_;
     View view_;
   };
 
@@ -238,10 +213,10 @@ class SyncEngine : public remote::RemoteStoreCallback, public QueryEventSource {
 
   void AssertCallbackExists(absl::string_view source);
 
-  ViewSnapshot InitializeViewAndComputeSnapshot(
-      const local::QueryData& query_data);
+  ViewSnapshot InitializeViewAndComputeSnapshot(const Query& query,
+                                                model::TargetId target_id);
 
-  void RemoveAndCleanupQuery(const std::shared_ptr<QueryView>& query_view);
+  void RemoveAndCleanupTarget(model::TargetId target_id, util::Status status);
 
   void RemoveLimboTarget(const model::DocumentKey& key);
 
@@ -295,9 +270,8 @@ class SyncEngine : public remote::RemoteStoreCallback, public QueryEventSource {
   /** QueryViews for all active queries, indexed by query. */
   std::unordered_map<Query, std::shared_ptr<QueryView>> query_views_by_query_;
 
-  /** QueryViews for all active queries, indexed by target ID. */
-  std::unordered_map<model::TargetId, std::shared_ptr<QueryView>>
-      query_views_by_target_;
+  /** Queries mapped to Targets, indexed by target ID. */
+  std::unordered_map<model::TargetId, std::vector<Query>> queries_by_target_;
 
   /**
    * When a document is in limbo, we create a special listen to resolve it. This

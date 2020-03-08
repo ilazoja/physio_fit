@@ -1,0 +1,31 @@
+{
+  "name": "cloud_functions_web",
+  "version": "1.0.0",
+  "summary": "No-op implementation of cloud_functions_web plugin to avoid iOS build issues",
+  "description": "Stub/fake cloud_functions_web plugin",
+  "homepage": "https://github.com/FirebaseExtended/flutterfire/tree/master/packages/cloud_functions/cloud_functions_web",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Flutter Team": "flutter-dev@googlegroups.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "Flutter": [
+
+    ]
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES",
+    "VALID_ARCHS[sdk=iphonesimulator*]": "x86_64"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}

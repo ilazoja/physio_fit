@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:physio_tracker_app/widgets/events/getIconAndHeadingRow.dart';
 import 'package:physio_tracker_app/widgets/events/getItemTextRow.dart';
 import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseButton.dart';
-import 'performExercise.dart';
+import 'bleConnection.dart';
 
 import '../../../copyDeck.dart' as copy;
 import '../../../models/exercise.dart';
@@ -73,11 +73,15 @@ class EventDetailsItems extends StatelessWidget {
 //        }
 //      }
         listViewItems.add(AddExerciseButton(
-            buttonText: "Start Exercise",
+            buttonText: 'Start Exercise',
             callback: () {
               Navigator.of(context, rootNavigator: true)
                   .push<dynamic>(DefaultPageRoute<dynamic>(
-                  pageRoute: PerformExercise(buttonText: "Perform Exercise", callback: (){},)));
+                  pageRoute: BleConnection(exercise: exercise, angleMetadata: copy.angleMetaData)));
+              // Navigator.of(context).push(
+              //   MaterialPageRoute<void>(
+              //     builder: (context) =>
+              //   BleConnection()));
             }),);
       }
 

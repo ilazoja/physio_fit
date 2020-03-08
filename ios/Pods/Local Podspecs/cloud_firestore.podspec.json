@@ -30,5 +30,5 @@
     ]
   },
   "static_framework": true,
-  "prepare_command": "echo // Generated file, do not edit > Classes/UserAgent.h\necho \"#define LIBRARY_VERSION @\\\"0.13.0-1\\\"\" >> Classes/UserAgent.h\necho \"#define LIBRARY_NAME @\\\"flutter-fire-fst\\\"\" >> Classes/UserAgent.h"
+  "prepare_command": "echo // Generated file, do not edit > Classes/UserAgent.h\necho \"#define LIBRARY_VERSION @\\\"0.13.1-1\\\"\" >> Classes/UserAgent.h\necho \"#define LIBRARY_NAME @\\\"flutter-fire-fst\\\"\" >> Classes/UserAgent.h"
 }

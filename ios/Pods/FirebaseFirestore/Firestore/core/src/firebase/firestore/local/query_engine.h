@@ -17,22 +17,13 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_LOCAL_QUERY_ENGINE_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_LOCAL_QUERY_ENGINE_H_
 
-#include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
+#include "Firestore/core/src/firebase/firestore/model/model_fwd.h"
 
 namespace firebase {
 namespace firestore {
 
-namespace model {
-
-class DocumentMap;
-class SnapshotVersion;
-
-}  // namespace model
-
 namespace core {
-
 class Query;
-
 }  // namespace core
 
 namespace local {
@@ -45,6 +36,8 @@ class LocalDocumentsView;
  */
 class QueryEngine {
  public:
+  enum Type { Simple, IndexFree };
+
   virtual ~QueryEngine() = default;
 
   /**
@@ -60,6 +53,9 @@ class QueryEngine {
       const core::Query& query,
       const model::SnapshotVersion& last_limbo_free_snapshot_version,
       const model::DocumentKeySet& remote_keys) = 0;
+
+  /** Returns the underlying algorithm used by the query engine. */
+  virtual Type type() const = 0;
 };
 
 }  // namespace local

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +21,19 @@
 #include <string>
 #include <utility>
 
-#include "Firestore/core/src/firebase/firestore/api/listener_registration.h"
-#include "Firestore/core/src/firebase/firestore/api/query_snapshot.h"
-#include "Firestore/core/src/firebase/firestore/api/source.h"
-#include "Firestore/core/src/firebase/firestore/core/bound.h"
-#include "Firestore/core/src/firebase/firestore/core/direction.h"
-#include "Firestore/core/src/firebase/firestore/core/event_listener.h"
+#include "Firestore/core/src/firebase/firestore/api/api_fwd.h"
+#include "Firestore/core/src/firebase/firestore/core/core_fwd.h"
 #include "Firestore/core/src/firebase/firestore/core/filter.h"
-#include "Firestore/core/src/firebase/firestore/core/listen_options.h"
-#include "Firestore/core/src/firebase/firestore/model/field_value.h"
+#include "Firestore/core/src/firebase/firestore/core/query.h"
 
 namespace firebase {
 namespace firestore {
-namespace api {
 
-class Firestore;
+namespace model {
+class FieldValue;
+}  // namespace model
+
+namespace api {
 
 /**
  * A `Query` refers to a Firestore Query which you can read or listen to. You
@@ -66,7 +64,7 @@ class Query {
    * @param callback a callback to execute once the documents have been
    *     successfully read.
    */
-  void GetDocuments(Source source, QuerySnapshot::Listener&& callback);
+  void GetDocuments(Source source, QuerySnapshotListener&& callback);
 
   /**
    * Attaches a listener for QuerySnapshot events.
@@ -78,7 +76,7 @@ class Query {
    * @return A ListenerRegistration that can be used to remove this listener.
    */
   std::unique_ptr<ListenerRegistration> AddSnapshotListener(
-      core::ListenOptions options, QuerySnapshot::Listener&& listener);
+      core::ListenOptions options, QuerySnapshotListener&& listener);
 
   /**
    * Creates and returns a new `Query` with the additional filter that documents
@@ -121,14 +119,27 @@ class Query {
   Query OrderBy(model::FieldPath field_path, core::Direction direction) const;
 
   /**
-   * Creates and returns a new `Query` that's additionally limited to only
-   * return up to the specified number of documents.
+   * Creates and returns a new `Query` that only returns the first matching
+   * documents up to the specified number.
    *
    * @param limit The maximum number of items to return.
    *
    * @return The created `Query`.
    */
-  Query Limit(int32_t limit) const;
+  Query LimitToFirst(int32_t limit) const;
+
+  /**
+   * Creates and returns a new `Query` that only returns the last matching
+   * documents up to the specified number.
+   *
+   * You must specify at least one `OrderBy` clause for `LimitToLast` queries,
+   * it is an error otherwise when the query is executed.
+   *
+   * @param limit The maximum number of items to return.
+   *
+   * @return The created `Query`.
+   */
+  Query LimitToLast(int32_t limit) const;
 
   /**
    * Creates and returns a new `Query` that starts at the given bound.  The
@@ -164,6 +175,7 @@ class Query {
   void ValidateNewOrderByPath(const model::FieldPath& field_path) const;
   void ValidateOrderByField(const model::FieldPath& order_by_field,
                             const model::FieldPath& inequality_field) const;
+  void ValidateHasExplicitOrderByForLimitToLast() const;
   /**
    * Validates that the value passed into a disjunctive filter satisfies all
    * array requirements.

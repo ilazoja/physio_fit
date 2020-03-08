@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.xenonlabs.kiqbacks</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -45,6 +45,8 @@
 	<string>2515494605378556</string>
 	<key>FacebookDisplayName</key>
 	<string>KiQBack</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -54,12 +56,28 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Music!</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>BLE Needed to Connect to Sensors.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calendars</string>
 	<key>NSCameraUsageDescription</key>
-	<string>User can take a picture from their camera to set as their profile picture</string>
+	<string>camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>motion</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>User can identify their profile with their display picture</string>
+	<string>photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>reminders</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>speech</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -82,42 +100,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-  <!-- Permission options for the `mediaLibrary` group -->
-  <key>NSAppleMusicUsageDescription</key>
-  <string>Music!</string>
-  <key>kTCCServiceMediaLibrary</key>
-  <string>media</string>
-  <!-- Permission options for the `calendar` group -->
-  <key>NSCalendarsUsageDescription</key>
-  <string>Calendars</string>
-  <!-- Permission options for the `camera` group -->
-  <key>NSCameraUsageDescription</key>
-  <string>camera</string>
-  <!-- Permission options for the `contacts` group -->
-  <key>NSContactsUsageDescription</key>
-  <string>contacts</string>
-  <!-- Permission options for the `microphone` group -->
-  <key>NSMicrophoneUsageDescription</key>
-  <string>microphone</string>
-  <!-- Permission options for the `speech` group -->
-  <key>NSSpeechRecognitionUsageDescription</key>
-  <string>speech</string>
-  <!-- Permission options for the `sensors` group -->
-  <key>NSMotionUsageDescription</key>
-  <string>motion</string>
-  <!-- Permission options for the `photos` group -->
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>photos</string>
-  <!-- Permission options for the `reminder` group -->
-  <key>NSRemindersUsageDescription</key>
-  <string>reminders</string>
 	<key>UIUserInterfaceStyle</key>
-    <string>Light</string>
-    <key>UIViewControllerBasedStatusBarAppearance</key>
-    <true/>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
+	<string>Light</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>media</string>
 </dict>
 </plist>

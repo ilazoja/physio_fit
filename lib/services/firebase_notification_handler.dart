@@ -116,7 +116,7 @@ class FirebaseNotifications {
         const IosNotificationSettings(sound: true, badge: true, alert: true));
     _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {
-      print('Settings registered: $settings');
+      //print('Settings registered: $settings');
     });
   }
 

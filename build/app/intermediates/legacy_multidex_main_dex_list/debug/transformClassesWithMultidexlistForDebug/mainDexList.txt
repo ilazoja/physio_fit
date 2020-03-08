@@ -119,6 +119,7 @@ androidx/lifecycle/Lifecycle$Event.class
 androidx/lifecycle/OnLifecycleEvent.class
 androidx/media/AudioAttributesCompat$AttributeContentType.class
 androidx/media/AudioAttributesCompat$AttributeUsage.class
+androidx/media/AudioFocusRequestCompat$FocusGainType.class
 androidx/media/VolumeProviderCompat$ControlType.class
 androidx/multidex/MultiDex$V14$ElementConstructor.class
 androidx/multidex/MultiDex$V14$ICSElementConstructor.class

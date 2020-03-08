@@ -14,6 +14,7 @@ MERGED from [:cloud_firestore] C:\Users\emada\FYDP\physio_tracker_app\build\clou
 MERGED from [:flutter_sms] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_sms\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:geolocator] C:\Users\emada\FYDP\physio_tracker_app\build\geolocator\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:google_api_availability] C:\Users\emada\FYDP\physio_tracker_app\build\google_api_availability\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_local_notifications] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_image_compress] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_image_compress\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:google_sign_in] C:\Users\emada\FYDP\physio_tracker_app\build\google_sign_in\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:firebase_auth] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
@@ -22,8 +23,8 @@ MERGED from [:firebase_core] C:\Users\emada\FYDP\physio_tracker_app\build\fireba
 MERGED from [:firebase_core_web] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_core_web\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:multi_image_picker] C:\Users\emada\FYDP\physio_tracker_app\build\multi_image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:contacts_service] C:\Users\emada\FYDP\physio_tracker_app\build\contacts_service\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
-MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_auth_web] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_auth_web\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:shared_preferences] C:\Users\emada\FYDP\physio_tracker_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_messaging] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-20:12
 MERGED from [:url_launcher] C:\Users\emada\FYDP\physio_tracker_app\build\url_launcher\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-14:12
@@ -65,13 +66,13 @@ MERGED from [com.google.android.gms:play-services-basement:17.0.0] C:\Users\emad
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\material-1.0.0.aar\789400671ad1d5b60be9110f2540d23e\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\0daaafb23b0ca0cb4c57350358b13e6f\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\762a8fc90e86e5f3d2da578542740021\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.media:media:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\069266e6388e51dc14c633c01b133492\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\e811f0f7af0c1332e301070abb387d85\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\7e7eb4e529395c1a623e8e50fe496db8\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.browser:browser:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\browser-1.0.0.aar\6ebfebdbc7228b7cf867e100a3cce6ac\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\legacy-support-core-ui-1.0.0.aar\f840a1fda3dad49ced319e6b7605f950\AndroidManifest.xml:17:1-22:12
 MERGED from [com.facebook.android:facebook-core:5.5.1] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\jetified-facebook-core-5.5.1.aar\d94e065f61c5983d43576f53d00df60b\AndroidManifest.xml:21:1-61:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\c779d77fea0ef1a9985f9dcab1fb2053\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.1.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.1.0.aar\0dca9546d2049ffb9b7da9355ae162b7\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\8160e15f0fab1123db8df37ce21b0dfa\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\2796066f86b3d55ae3881e433d66c7cb\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-1.0.0.aar\625e2d12561dedbca6d0207e634de901\AndroidManifest.xml:17:1-22:12
@@ -370,6 +371,8 @@ MERGED from [:geolocator] C:\Users\emada\FYDP\physio_tracker_app\build\geolocato
 MERGED from [:geolocator] C:\Users\emada\FYDP\physio_tracker_app\build\geolocator\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_api_availability] C:\Users\emada\FYDP\physio_tracker_app\build\google_api_availability\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:google_api_availability] C:\Users\emada\FYDP\physio_tracker_app\build\google_api_availability\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_local_notifications\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_image_compress] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_image_compress\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-9:55
 MERGED from [:flutter_image_compress] C:\Users\emada\FYDP\physio_tracker_app\build\flutter_image_compress\intermediates\library_manifest\debug\AndroidManifest.xml:6:5-9:55
 MERGED from [:google_sign_in] C:\Users\emada\FYDP\physio_tracker_app\build\google_sign_in\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
@@ -386,10 +389,10 @@ MERGED from [:multi_image_picker] C:\Users\emada\FYDP\physio_tracker_app\build\m
 MERGED from [:multi_image_picker] C:\Users\emada\FYDP\physio_tracker_app\build\multi_image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:contacts_service] C:\Users\emada\FYDP\physio_tracker_app\build\contacts_service\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:contacts_service] C:\Users\emada\FYDP\physio_tracker_app\build\contacts_service\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:firebase_auth_web] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_auth_web\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:firebase_auth_web] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_auth_web\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:permission_handler] C:\Users\emada\FYDP\physio_tracker_app\build\permission_handler\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences] C:\Users\emada\FYDP\physio_tracker_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:shared_preferences] C:\Users\emada\FYDP\physio_tracker_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:firebase_messaging] C:\Users\emada\FYDP\physio_tracker_app\build\firebase_messaging\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
@@ -472,8 +475,6 @@ MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\emada\.gradle\caches\t
 MERGED from [androidx.appcompat:appcompat:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0.aar\0daaafb23b0ca0cb4c57350358b13e6f\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\762a8fc90e86e5f3d2da578542740021\AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\fragment-1.0.0.aar\762a8fc90e86e5f3d2da578542740021\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media:media:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\069266e6388e51dc14c633c01b133492\AndroidManifest.xml:20:5-44
-MERGED from [androidx.media:media:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\069266e6388e51dc14c633c01b133492\AndroidManifest.xml:20:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\e811f0f7af0c1332e301070abb387d85\AndroidManifest.xml:20:5-44
 MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\recyclerview-1.0.0.aar\e811f0f7af0c1332e301070abb387d85\AndroidManifest.xml:20:5-44
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\vectordrawable-animated-1.0.0.aar\7e7eb4e529395c1a623e8e50fe496db8\AndroidManifest.xml:20:5-44
@@ -486,6 +487,8 @@ MERGED from [com.facebook.android:facebook-core:5.5.1] C:\Users\emada\.gradle\ca
 MERGED from [com.facebook.android:facebook-core:5.5.1] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\jetified-facebook-core-5.5.1.aar\d94e065f61c5983d43576f53d00df60b\AndroidManifest.xml:24:5-26:41
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\c779d77fea0ef1a9985f9dcab1fb2053\AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\legacy-support-core-utils-1.0.0.aar\c779d77fea0ef1a9985f9dcab1fb2053\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.1.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.1.0.aar\0dca9546d2049ffb9b7da9355ae162b7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.1.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\media-1.1.0.aar\0dca9546d2049ffb9b7da9355ae162b7\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\8160e15f0fab1123db8df37ce21b0dfa\AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\loader-1.0.0.aar\8160e15f0fab1123db8df37ce21b0dfa\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\emada\.gradle\caches\transforms-1\files-1.1\viewpager-1.0.0.aar\2796066f86b3d55ae3881e433d66c7cb\AndroidManifest.xml:20:5-44

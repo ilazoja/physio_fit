@@ -254,6 +254,18 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///C:/Users/emada/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_localizations",
       "rootUri": "file:///C:/Users/emada/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
@@ -632,7 +644,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-03-08T00:35:59.694282Z",
+  "generated": "2020-03-08T07:50:49.471Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

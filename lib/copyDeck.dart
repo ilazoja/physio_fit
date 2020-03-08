@@ -324,3 +324,20 @@ String emailToHostBody(String guestName, String eventTitle, String date) =>
 //Settings
 String settingsHeadings = 'Settings';
 String preferencesSubHeading = 'Edit your event preferences';
+
+// Create 1 Map
+// Format for the List<<double>> value pair of the map
+// [Idle Threshold, Idle Range, Min Threshold, Min Range, Max Threshold, Max Range]
+
+Map<String, List<double>> angleMetaData = <String, List<double>>{
+  'back_XY': [0.0, 20.0, 0.0, 20.0, 0.0, 20.0],
+  'back_YZ': [0.0, 20.0, 0.0, 20.0, 0.0, 30.0],
+  'left_femur_XY': [0.0, 20.0, 0.0, 20.0, 0.0, 20.0],
+  'left_femur_YZ': [0.0, 20.0, 0.0, 20.0, 0.0, 20.0],
+  'left_femur_XZ': [0.0, 60.0, 0.0, 100.0, 0.0, 100.0],
+  'right_femur_XY': [0.0, 20.0, 0.0, 40.0, 0.0, 40.0],
+  'right_femur_YZ': [0.0, 40.0, 0.0, 40.0, 0.0, 40.0],
+  'right_femur_XZ': [0.0, 60.0, 0.0, 100.0, 0.0, 100.0],
+  'left_knee' : [0.0, 20.0, 0.0, 40.0, 0.0, 40.0],
+  'right_knee' : [0.0, 20.0, 0.0, 10.0, 80.0, 20.0]
+};

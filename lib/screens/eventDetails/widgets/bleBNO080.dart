@@ -5,10 +5,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:vector_math/vector_math.dart' as vector_math;
+import 'package:physio_tracker_app/models/exercise.dart';
 
 class BleBNO080 extends StatefulWidget {
-  const BleBNO080({Key key, this.device}) : super(key: key);
+  const BleBNO080({Key key, this.device, @required this.exercise, @required this.angleMetadata}) : super(key: key);
   final BluetoothDevice device;
+  final Exercise exercise;
+  final Map<String, List<double>> angleMetadata;
 
   @override
   State<StatefulWidget> createState() => BleBNO080State();
@@ -18,9 +21,15 @@ class BleBNO080State extends State<BleBNO080> {
   final String serviceUUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
   final String sensor1CharUUID = 'df67ff1a-718f-11e7-8cf7-a6006ad3dba0';
   final String sensor2CharUUID = '58f7db38-8ad9-4d58-98bd-135e3a656e59';
+  final String sensor3CharUUID = '677db79f-f2ff-4081-952f-1eb2d2e3409d';
+  final String sensor4CharUUID = 'efc8b65a-bbe0-4061-9862-671878bbe10a';
+  final String sensor5CharUUID = 'ee9fdbe4-d2fd-469a-afef-b8b75fd07dd1';
   bool isReady;
   Stream<List<int>> sensor1Stream;
   Stream<List<int>> sensor2Stream;
+  Stream<List<int>> sensor3Stream;
+  Stream<List<int>> sensor4Stream;
+  Stream<List<int>> sensor5Stream;
 
   @override
   void initState() {

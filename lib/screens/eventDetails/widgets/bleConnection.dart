@@ -5,14 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/bleBNO080.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/bleDisplay.dart';
+import 'package:physio_tracker_app/models/exercise.dart';
 
 import 'package:physio_tracker_app/widgets/shared/subHeading.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class BleConnection extends StatelessWidget {
+  const BleConnection(
+    {Key key, @required this.exercise, @required this.angleMetadata})
+    : super(key: key);
+
+  final Exercise exercise;
+  final Map<String, List<double>> angleMetadata;
+
   @override
   Widget build(BuildContext context) {
-    print('Ble connection established');
     return MaterialApp(
       color: Colors.lightBlue,
       home: StreamBuilder<BluetoothState>(
@@ -21,7 +28,7 @@ class BleConnection extends StatelessWidget {
           builder: (c, snapshot) {
             final state = snapshot.data;
             if (state == BluetoothState.on) {
-              return FindDevicesScreen();
+              return FindDevicesScreen(exercise: exercise, angleMetadata: angleMetadata);
             }
             return BluetoothOffScreen(state: state);
           }),
@@ -63,6 +70,12 @@ class BluetoothOffScreen extends StatelessWidget {
 
 // Shows the current devices on screen
 class FindDevicesScreen extends StatelessWidget {
+  const FindDevicesScreen(
+    {Key key, @required this.exercise, @required this.angleMetadata})
+    : super(key: key);
+
+  final Exercise exercise;
+  final Map<String, List<double>> angleMetadata;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +130,7 @@ class FindDevicesScreen extends StatelessWidget {
                           onTap: () => Navigator.of(context)
                               .push<dynamic>(MaterialPageRoute<dynamic>(builder: (context) {
                             r.device.connect();
-                            return BleBNO080(device: r.device);
+                            return BleBNO080(device: r.device, exercise: exercise, angleMetadata: angleMetadata);
                           })),
                         ),
                       )

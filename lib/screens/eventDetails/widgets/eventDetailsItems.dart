@@ -77,7 +77,7 @@ class EventDetailsItems extends StatelessWidget {
             callback: () {
               Navigator.of(context, rootNavigator: true)
                   .push<dynamic>(DefaultPageRoute<dynamic>(
-                  pageRoute: BleConnection()));
+                  pageRoute: BleConnection(exercise: exercise, angleMetadata: copy.angleMetaData)));
               // Navigator.of(context).push(
               //   MaterialPageRoute<void>(
               //     builder: (context) =>

@@ -14,7 +14,6 @@ class EventDetailsProviderWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("PROVIDER");
-    print(exercise.id);
     return StreamProvider<Exercise>.value(
       value: CloudDatabase.streamEvent(exercise.id),
       child: EventDetails(),

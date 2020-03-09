@@ -12,12 +12,13 @@ import 'package:physio_tracker_app/screens/eventFilter/filter.dart';
 import 'package:physio_tracker_app/screens/eventFilter/locationSwitch.dart';
 
 class PatientDetailStreamBuilder extends StatefulWidget {
-  PatientDetailStreamBuilder({this.showLess});
+  PatientDetailStreamBuilder({this.showLess, this.patient });
 
   static _PatientDetailStreamBuilder streamBuilderState;
   static int numEvents = 0;
   List<Exercise> exercises;
   bool showLess;
+  User patient;
 
   @override
   _PatientDetailStreamBuilder createState() => generateState();
@@ -70,6 +71,7 @@ class _PatientDetailStreamBuilder extends State<PatientDetailStreamBuilder> {
     }
 
     return GenericExerciseGrid(
+      patient: widget.patient,
       exercises: !widget.showLess
           ? filteredExercises
           : filteredExercises.sublist(0, min(filteredExercises.length, 4)),

@@ -8,8 +8,9 @@ import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseDia
 import 'exerciseBox.dart';
 
 class GenericExerciseGrid extends StatefulWidget {
-  const GenericExerciseGrid({Key key, @required this.exercises}) : super(key: key);
+  const GenericExerciseGrid({Key key, @required this.exercises, @required this.patient}) : super(key: key);
   final List<Exercise> exercises;
+  final User patient;
 
   @override
   _GenericExerciseGridState createState() => _GenericExerciseGridState();
@@ -40,7 +41,7 @@ class _GenericExerciseGridState extends State<GenericExerciseGrid> {
     eventBoxes.add(AddExerciseButton(
         buttonText: "Add Exercise",
         callback: () {
-            ExerciseDialog(context);
+            ExerciseDialog(context, widget.patient);
         },
     ));
 

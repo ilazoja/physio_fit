@@ -33,15 +33,16 @@ import 'package:physio_tracker_app/dbKeys.dart' as db_key;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-
+import 'package:physio_tracker_app/models/user.dart';
 
 typedef VoidCallback = void Function(
     bool isVerified, bool isNewUser, String uid);
 
 class AddExerciseWidget extends StatefulWidget {
-  const AddExerciseWidget({this.onLogin});
+  const AddExerciseWidget({this.onLogin, this.patient});
 
   final VoidCallback onLogin;
+  final User patient;
 
   @override
   State<StatefulWidget> createState() => _ExerciseWidgetState();
@@ -124,10 +125,11 @@ class _ExerciseWidgetState extends State<AddExerciseWidget> {
       db_key.repetitions: repetitions,
       db_key.date: DateTime.now(),
       db_key.sets: sets,
-      db_key.patientId: user.uid,
+      db_key.patientId: widget.patient.id,
       db_key.type: _type
     };
     print("EXERCISE");
+    print(widget.patient.id);
     children.add(
         AddExerciseButton(
             buttonText: "Add Exercise",

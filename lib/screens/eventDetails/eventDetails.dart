@@ -69,12 +69,9 @@ class _EventDetailsState extends State<EventDetails>
     _exercise = Provider.of<Exercise>(context);
     _user = Provider.of<FirebaseUser>(context);
     final List<dynamic> _allImages = <dynamic>[];
-    print("PATIENT");
-    print(_exercise.type);
     String imageUrl = "";
     if (_exercise != null) {
       _loggedIn = _user != null;
-      cancelByDate = _exercise.date;
       if (_exercise.type.toLowerCase() == "squat") {
         imageUrl = squat;
       }

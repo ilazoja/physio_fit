@@ -20,10 +20,12 @@ import 'package:physio_tracker_app/widgets/shared/subHeading.dart';
 import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseButton.dart';
 import 'package:physio_tracker_app/screens/explore/widgets/moreEventsButton.dart';
 import 'package:physio_tracker_app/screens/eventFilter/locationSwitch.dart';
+import 'package:physio_tracker_app/models/user.dart';
 
 class PatientDetails extends StatefulWidget {
-  PatientDetails({Key key, @required this.textController}) : super(key: key);
+  PatientDetails({Key key, @required this.textController, @required this.patient}) : super(key: key);
   final TextEditingController textController;
+  final User patient;
   bool showSubsections = false;
   bool issearching = false;
 
@@ -59,6 +61,7 @@ class _PatientDetailsState extends State<PatientDetails> {
   Widget build(BuildContext context) {
 
     final PatientDetailStreamBuilder allPatients = PatientDetailStreamBuilder(
+      patient: widget.patient,
       showLess: (showMoreButtonPressed == false) &&
           (widget.showSubsections == true)
     );

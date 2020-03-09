@@ -16,6 +16,6 @@ class PatientDetailsProviderWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamExercisesById(user.id),
-      child: PatientDetails(textController: textController),);
+      child: PatientDetails(textController: textController, patient: user),);
   }
 }

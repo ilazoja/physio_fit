@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/models/user.dart';
 
 class ExerciseDialog {
-  ExerciseDialog(BuildContext context) {
+  ExerciseDialog(BuildContext context, User patient) {
     showDialog<BuildContext>(
         barrierDismissible: true,
         context: context,
@@ -23,7 +23,9 @@ class ExerciseDialog {
                   child: AddExerciseWidget(
                       onLogin: (bool isVerified, bool isNewUser, String uid) {
                         Navigator.of(context).pop();
-                      })),
+                      },
+                      patient: patient
+                      )),
               Container(
                 padding: const EdgeInsets.fromLTRB(30,10,10,0),
                 alignment: Alignment.topLeft,

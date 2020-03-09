@@ -46,7 +46,7 @@ version
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
-.pub-cache/
+.pub-cache/e
 .pub/
 build/
 flutter_*.png

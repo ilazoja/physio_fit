@@ -21,7 +21,7 @@ class BleConnection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.lightBlue,
+      color: Colors.black,
       home: StreamBuilder<BluetoothState>(
           stream: FlutterBlue.instance.state,
           initialData: BluetoothState.unknown,
@@ -44,7 +44,7 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -81,7 +81,8 @@ class FindDevicesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Connect to IMU Sensors'),
+        title: const Text('Connect to IMU Sensors', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
         onRefresh: () =>
@@ -109,7 +110,7 @@ class FindDevicesScreen extends StatelessWidget {
                                     onPressed: () => Navigator.of(context).push<dynamic>(
                                         MaterialPageRoute<dynamic>(
                                             builder: (context) =>
-                                                DeviceScreen(device: d))),
+                                                BleBNO080(device: d, exercise: exercise, angleMetadata: angleMetadata))),
                                   );
                                 }
                                 return Text(snapshot.data.toString());

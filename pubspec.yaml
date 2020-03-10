@@ -59,6 +59,7 @@ dependencies:
   contacts_service: ^0.3.10
   flutter_sms: ^1.1.0
   flutter_blue: ^0.6.3+1
+  csv: ^4.0.3
 
   day_selector: ^1.0.0
   multiselect_formfield: ^0.1.2
@@ -70,8 +71,8 @@ dev_dependencies:
 
 flutter_icons:
   android: "launcher_icon"
-  ios: false
-  image_path: "assets/splashScreen/android_icon.png"
+  ios: true
+  image_path: "assets/splashScreen/exercise-icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -135,6 +136,13 @@ flutter:
     - assets/illustrations/noEventScreen.svg
     - assets/illustrations/noMessageScreen.svg
     - assets/illustrations/noNotificationScreen.svg
+    - assets/imuDonning/chest_sensor_location.png
+    - assets/imuDonning/left_shin_sensor_location.png
+    - assets/imuDonning/left_thigh_sensor_location.png
+    - assets/imuDonning/right_shin_sensor_location.png
+    - assets/imuDonning/right_thigh_sensor_location.png
+    - assets/imuDonning/right_thigh_three_sensor_location.png
+    - assets/imuDonning/right_shin_three_sensor_location.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

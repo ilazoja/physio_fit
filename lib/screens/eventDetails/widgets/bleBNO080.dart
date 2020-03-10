@@ -4,14 +4,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:vector_math/vector_math.dart' as vector_math;
+import 'package:physio_tracker_app/copyDeck.dart';
+import 'package:physio_tracker_app/screens/eventDetails/widgets/imuAlignment.dart';
+import 'package:vector_math/vector_math_64.dart' as vector_math;
 import 'package:physio_tracker_app/models/exercise.dart';
+import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
+import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
+import 'package:physio_tracker_app/widgets/shared/subHeading.dart';
+import 'package:physio_tracker_app/imu_processing/stationary_detector.dart';
+import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
+
 
 class BleBNO080 extends StatefulWidget {
-  const BleBNO080({Key key, this.device, @required this.exercise, @required this.angleMetadata}) : super(key: key);
+  BleBNO080({Key key, this.device, @required this.exercise, @required this.angleMetadata}) : super(key: key);
   final BluetoothDevice device;
   final Exercise exercise;
   final Map<String, List<double>> angleMetadata;
+  Stream<List<int>> sensor1Stream;
+  List<vector_math.Quaternion> sensorValues = <vector_math.Quaternion>[];
 
   @override
   State<StatefulWidget> createState() => BleBNO080State();
@@ -20,21 +30,31 @@ class BleBNO080 extends StatefulWidget {
 class BleBNO080State extends State<BleBNO080> {
   final String serviceUUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
   final String sensor1CharUUID = 'df67ff1a-718f-11e7-8cf7-a6006ad3dba0';
-  final String sensor2CharUUID = '58f7db38-8ad9-4d58-98bd-135e3a656e59';
-  final String sensor3CharUUID = '677db79f-f2ff-4081-952f-1eb2d2e3409d';
-  final String sensor4CharUUID = 'efc8b65a-bbe0-4061-9862-671878bbe10a';
-  final String sensor5CharUUID = 'ee9fdbe4-d2fd-469a-afef-b8b75fd07dd1';
+  // final String sensor2CharUUID = '58f7db38-8ad9-4d58-98bd-135e3a656e59';
+  // final String sensor3CharUUID = '677db79f-f2ff-4081-952f-1eb2d2e3409d';
+  // final String sensor4CharUUID = 'efc8b65a-bbe0-4061-9862-671878bbe10a';
+  // final String sensor5CharUUID = 'ee9fdbe4-d2fd-469a-afef-b8b75fd07dd1';
   bool isReady;
-  Stream<List<int>> sensor1Stream;
-  Stream<List<int>> sensor2Stream;
-  Stream<List<int>> sensor3Stream;
-  Stream<List<int>> sensor4Stream;
-  Stream<List<int>> sensor5Stream;
+  StationaryDetector stationaryDetector = StationaryDetector();
+  AlignmentProfile alignmentProfile;
+
+  bool userIsStationary;
+  bool globalStationaryFlag;
+  // Stream<List<int>> sensor2Stream;
+  // Stream<List<int>> sensor3Stream;
+  // Stream<List<int>> sensor4Stream;
+  // Stream<List<int>> sensor5Stream;
 
   @override
   void initState() {
     super.initState();
     isReady = false;
+    userIsStationary = false;
+    globalStationaryFlag = false;
+    for(int i = 0; i < 5; i++)
+    {
+      widget.sensorValues.add(vector_math.Quaternion.identity());
+    }
     connectToDevice();
   }
 
@@ -53,6 +73,7 @@ class BleBNO080State extends State<BleBNO080> {
 
     await widget.device.connect();
     discoverServices();
+    // _listen();
   }
 
   void disconnectFromDevice() {
@@ -76,23 +97,14 @@ class BleBNO080State extends State<BleBNO080> {
         for(BluetoothCharacteristic characteristic in service.characteristics) {
           if (characteristic.uuid.toString() == sensor1CharUUID) {
             characteristic.setNotifyValue(!characteristic.isNotifying);
-            sensor1Stream = characteristic.value;
-
-            setState(() {
-            isReady = true;
-            });
-          }
-          if (characteristic.uuid.toString() == sensor2CharUUID) {
-            characteristic.setNotifyValue(!characteristic.isNotifying);
-            sensor2Stream = characteristic.value;
-
+            widget.sensor1Stream = characteristic.value;
+            }
             setState(() {
             isReady = true;
             });
           }
         }
       }
-    }
 
     if (!isReady) {
       popToBefore();
@@ -130,15 +142,29 @@ class BleBNO080State extends State<BleBNO080> {
    return ((value * mod).round().toDouble()) / mod;
 }
 
-  vector_math.Quaternion _dataParser(List<int> dataFromDevice) {
+  // Order of the data list that will come through
+  // [Chest Quaternion, Left Femur Quaternion, Left Tibia Quaternion, Right Femur Quaternion, Right Tibia Quaternion]
+  void _dataParser(List<int> dataFromDevice) {
+    const int listFinalSize = 20;
+    double w;
+    double x;
+    double y;
+    double z;
+
     final String quatString = utf8.decode(dataFromDevice);
     final List<String> quatList = quatString.split(',');
-    final double w = roundDouble(double.tryParse(quatList[0]), 7) ?? 0;
-    final double x = roundDouble(double.tryParse(quatList[1]), 7) ?? 0;
-    final double y = roundDouble(double.tryParse(quatList[2]), 7) ?? 0;
-    final double z = roundDouble(double.tryParse(quatList[3]), 7) ?? 0;
-
-    return vector_math.Quaternion(x, y, z, w);
+    for(int j = 0; j < quatList.length / 4; j++)
+    {
+      for(int i = 0; i < quatList.length - 1; i += 4)
+      {
+        w = double.tryParse(quatList[i]) ?? 0;
+        x = double.tryParse(quatList[i+1]) ?? 0;
+        y = double.tryParse(quatList[i+2]) ?? 0;
+        z = double.tryParse(quatList[i+3]) ?? 0;
+        widget.sensorValues.insert(j, vector_math.Quaternion(x, y, z, w));
+        widget.sensorValues[j].normalize();
+      }
+    }
   }
 
   @override
@@ -151,49 +177,93 @@ class BleBNO080State extends State<BleBNO080> {
         ),
         body: Container(
             child: !isReady
-                ? Center(
-                    child: Text(
-                      "Waiting...",
-                      style: TextStyle(fontSize: 24, color: Colors.red),
-                    ),
-                  )
+                ? Container(child: Center(
+                    child: Stack(
+                        children: <Widget>[
+                          Column(children: <Widget>[
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
+                              child: SizedBox(
+                                child: CircularProgressIndicator(),
+                                height: 200.0,
+                                width: 200.0,
+                              )
+                            ),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Sensor Alignment Pending', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Please Stand Still', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Place Legs Shoulder Width Apart', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                    ])],
+                )))
                 : Container(
                     child: StreamBuilder<List<int>>(
-                      stream: sensor1Stream,
+                      stream: widget.sensor1Stream,
                       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot1) {
                         if (snapshot1.hasError)
                           return Text('Error: ${snapshot1.error}');
 
                         if (snapshot1.connectionState == ConnectionState.active) {
-                          final vector_math.Quaternion sensor1Values = _dataParser(snapshot1.data);
-
+                          _dataParser(snapshot1.data);
+                          userIsStationary = stationaryDetector.isUserStationary(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
+                          print(userIsStationary);
+                          if(userIsStationary || globalStationaryFlag)
+                          {
+                            globalStationaryFlag = true;
+                            alignmentProfile = AlignmentProfile(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
+                            isReady = true;
+                            return
+                              ImuAlignment(
+                                alignmentProfile: alignmentProfile,
+                                angleMetadata: angleMetaData,
+                                isReady: isReady,
+                                sensorValues: widget.sensorValues,
+                                exercise: widget.exercise
+                              );
+                          }
+                          else
+                          {
+                            return Text(snapshot1.data.toString());
+                          }
+                          } else {
                           return Center(
-                              child: Stack(
-                            children: <Widget>[
-                              Column(children: <Widget>[
-                                const Text('Current value from Sensor',
-                                    style: TextStyle(fontSize: 14)),
-                                Text('${roundDouble(sensor1Values.w, 7)}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                Text('${roundDouble(sensor1Values.x, 7)}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                Text('${roundDouble(sensor1Values.y, 7)}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                Text('${roundDouble(sensor1Values.z, 7)}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16))
-                              ]),
-                            ],
+                                  child: Stack(
+                                     children: <Widget>[
+                                       Column(children: <Widget>[
+                                          SubHeading(
+                                            heading: "Loading"
+                                          ),
+                                        CircularProgressIndicator(strokeWidth: 14),
+                                      ])],
                           ));
-                        } else {
-                          return Text('Check the stream');
                         }
                       },
                     ),
@@ -201,4 +271,99 @@ class BleBNO080State extends State<BleBNO080> {
       ),
     );
   }
+
+  void _onAfterBuild(BuildContext context){
+    Navigator.of(context)
+          .push<dynamic>(MaterialPageRoute<dynamic>(builder: (context) {
+            return ImuAlignment(
+              alignmentProfile: alignmentProfile,
+              angleMetadata: angleMetaData,
+              isReady: isReady,
+              sensorValues: widget.sensorValues,
+              exercise: widget.exercise,
+            );
+    }));
+  }
+
+  Widget createSubHeading(String subHeading) {
+    return SliverToBoxAdapter(
+        child: SubHeading(
+          heading: subHeading,
+        ));
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return WillPopScope(
+  //     onWillPop: _onWillPop,
+  //     child: Scaffold(
+  //       appBar: AppBar(
+  //         title: Text('BNO080 Sensor'),
+  //       ),
+  //       body: Container(
+  //           child: !isReady
+  //               ? Center(
+  //                   child: Text(
+  //                     "Waiting...",
+  //                     style: TextStyle(fontSize: 24, color: Colors.red),
+  //                   ),
+  //                 )
+  //               : Container(
+  //                   child: StreamBuilder<List<int>>(
+  //                     stream: sensor1Stream,
+  //                     builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot1) {
+  //                       if (snapshot1.hasError)
+  //                         return Text('Error: ${snapshot1.error}');
+
+  //                       if (snapshot1.connectionState == ConnectionState.active) {
+  //                         final vector_math.Quaternion sensor1Values = _dataParser(snapshot1.data);
+
+  //                         return StreamBuilder<List<int>>(
+  //                             stream: sensor2Stream,
+  //                             builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot2) {
+  //                               if (snapshot1.hasError)
+  //                                 return Text('Error: ${snapshot1.error}');
+
+  //                               if (snapshot2.connectionState == ConnectionState.active) {
+  //                                 final vector_math.Quaternion sensor2Values = _dataParser(snapshot2.data);
+
+  //                                 return Center(
+  //                                     child: Stack(
+  //                                   children: <Widget>[
+  //                                     Column(children: <Widget>[
+  //                                       const Text('Current value from Sensor',
+  //                                           style: TextStyle(fontSize: 14)),
+  //                                       Text('${roundDouble(sensor1Values.w, 7)}',
+  //                                           style: TextStyle(
+  //                                               fontWeight: FontWeight.bold,
+  //                                               fontSize: 16)),
+  //                                       Text('${roundDouble(sensor1Values.x, 7)}',
+  //                                           style: TextStyle(
+  //                                               fontWeight: FontWeight.bold,
+  //                                               fontSize: 16)),
+  //                                       Text('${roundDouble(sensor2Values.y, 7)}',
+  //                                           style: TextStyle(
+  //                                               fontWeight: FontWeight.bold,
+  //                                               fontSize: 16)),
+  //                                       Text('${roundDouble(sensor2Values.z, 7)}',
+  //                                           style: TextStyle(
+  //                                               fontWeight: FontWeight.bold,
+  //                                               fontSize: 16))
+  //                                     ]),
+  //                                   ],
+  //                                 ));
+  //                               } else {
+  //                                 return Text('Check the stream');
+  //                               }
+  //                             },
+  //                           );
+  //                       } else {
+  //                         return Text('Check the stream');
+  //                       }
+  //                     },
+  //                   ),
+  //                 )),
+  //     ),
+  //   );
+  // }
 }

@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:physio_tracker_app/screens/eventDetails/providerWrapper/guestListProviderWrapper.dart';
+import 'package:physio_tracker_app/screens/eventDetails/widgets/donning5Sensor1.dart';
+import 'package:physio_tracker_app/screens/eventDetails/widgets/donning3Sensor1.dart';
 import 'package:physio_tracker_app/screens/inbox/providerWrapper/chatScreenProviderWrapper.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/announcementDialog.dart';
 import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
@@ -77,11 +79,8 @@ class EventDetailsItems extends StatelessWidget {
             callback: () {
               Navigator.of(context, rootNavigator: true)
                   .push<dynamic>(DefaultPageRoute<dynamic>(
-                  pageRoute: BleConnection(exercise: exercise, angleMetadata: copy.angleMetaData)));
-              // Navigator.of(context).push(
-              //   MaterialPageRoute<void>(
-              //     builder: (context) =>
-              //   BleConnection()));
+                  pageRoute: Donning5Sensor1(exercise: exercise, angleMetadata: copy.angleMetaData)));
+                  // To use with only 3 sensors use Donning3Sensor1
             }),);
       }
 

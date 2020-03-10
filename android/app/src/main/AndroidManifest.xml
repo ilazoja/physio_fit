@@ -19,7 +19,7 @@
         android:name=".Application"
         android:icon="@mipmap/launcher_icon"
         android:roundIcon="@mipmap/circle_icon"
-        android:label="@string/app_name">
+        android:label="PhysioFit">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

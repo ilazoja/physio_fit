@@ -12,6 +12,7 @@ import 'dart:convert' show utf8;
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
+import 'package:physio_tracker_app/imu_processing/exercise_recognizer.dart';
 import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
 
 
@@ -52,6 +53,11 @@ class _ImuAlignmentState extends State<ImuAlignment> {
 
   @override
   Widget build(BuildContext context) {
+    ExerciseRecognizer exerciseRecognizer = ExerciseRecognizer(widget.alignmentProfile);
+    widget.sensorValues[0] = vector_math.Quaternion(0.007202148437500,-0.715820312500000,0.003295898437500, 0.698242187500000);
+    widget.sensorValues[1] = vector_math.Quaternion(0.006164550781250,0.016784667968750,0.709533691406250, 0.704467773437500);
+    int state = exerciseRecognizer.processIMU(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
+    print(exerciseRecognizer.quatLeftRootToFemur);
     if(widget.isReady) {
       //print(widget.sensorValues[0].x.toString());
       //print(widget.sensorValues[1].y.toString());
@@ -64,15 +70,23 @@ class _ImuAlignmentState extends State<ImuAlignment> {
               SubHeading(
                 heading: "IMU ALIGNMENT in Progress"
               ),
+              SubHeading(
+                heading: state.toString()
+              ),
             ],
         ));
     }
     else {
       return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: CustomScrollView(slivers: <Widget>[
-            createSubHeading(widget.sensorValues[1].x.toString()),
-      ]));
+          body: Stack(alignment: AlignmentDirectional.center, children:  <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                child: SubHeading(
+                heading: state.toString()
+              )),
+            ],
+      ));
     }
   }
 

@@ -12,8 +12,6 @@ import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
 import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
 import 'package:physio_tracker_app/widgets/shared/subHeading.dart';
 import 'package:physio_tracker_app/imu_processing/stationary_detector.dart';
-import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
-
 
 class BleBNO080 extends StatefulWidget {
   BleBNO080({Key key, this.device, @required this.exercise, @required this.angleMetadata}) : super(key: key);
@@ -63,13 +61,6 @@ class BleBNO080State extends State<BleBNO080> {
       popToBefore();
       return;
     }
-
-    Timer(const Duration(seconds: 15), () {
-      if (!isReady) {
-        disconnectFromDevice();
-        popToBefore();
-      }
-    });
 
     await widget.device.connect();
     discoverServices();
@@ -234,10 +225,11 @@ class BleBNO080State extends State<BleBNO080> {
                         if (snapshot1.connectionState == ConnectionState.active) {
                           _dataParser(snapshot1.data);
                           userIsStationary = stationaryDetector.isUserStationary(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
-                          print(userIsStationary);
                           if(userIsStationary || globalStationaryFlag)
                           {
                             globalStationaryFlag = true;
+                            widget.sensorValues[0] = vector_math.Quaternion(-0.461730957031250,-0.546997070312500,-0.453002929687500,0.531433105468750);
+                            widget.sensorValues[1] = vector_math.Quaternion(0.089477539062500,-0.704406738281250,0.070739746093750,0.700561523437500);
                             alignmentProfile = AlignmentProfile(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
                             isReady = true;
                             return

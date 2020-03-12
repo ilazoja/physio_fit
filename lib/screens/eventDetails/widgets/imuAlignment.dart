@@ -14,6 +14,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
 import 'package:physio_tracker_app/imu_processing/exercise_recognizer.dart';
 import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
+import 'package:oscilloscope/oscilloscope.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 
 class ImuAlignment extends StatefulWidget {
@@ -22,6 +27,8 @@ class ImuAlignment extends StatefulWidget {
           @required this.angleMetadata,
           @required this.isReady,
           @required this.alignmentProfile,
+          @required this.exerciseRecognizer,
+          @required this.state,
           @required this.sensorValues }) : super(key: key);
 
   Exercise exercise;
@@ -32,6 +39,8 @@ class ImuAlignment extends StatefulWidget {
 
   static _ImuAlignmentState imuAlignmentState;
   AlignmentProfile alignmentProfile;
+  ExerciseRecognizer exerciseRecognizer;
+  int state;
 
   @override
   _ImuAlignmentState createState() => generateState();
@@ -45,23 +54,58 @@ class ImuAlignment extends StatefulWidget {
 
 class _ImuAlignmentState extends State<ImuAlignment> {
   bool showMoreButtonPressed = false;
+  Timer _timer;
+  List<Angles> angles = List();
+  int counter = 0;
 
+  dynamic _generateTrace(Timer t) {
+    // generate our  values
+    // Add to the growing dataset
+    setState(() {
+      print("ANGLES");
+      print(angles);
+    });
+
+  }
   @override
   void setState(VoidCallback fn) {
+  }
+
+  @override
+  initState() {
+    super.initState();
+    // create our timer to generate test values
+    _timer = Timer.periodic(Duration(milliseconds: 60), _generateTrace);
   }
 
 
   @override
   Widget build(BuildContext context) {
-    ExerciseRecognizer exerciseRecognizer = ExerciseRecognizer(widget.alignmentProfile);
-    widget.sensorValues[0] = vector_math.Quaternion(0.007202148437500,-0.715820312500000,0.003295898437500, 0.698242187500000);
-    widget.sensorValues[1] = vector_math.Quaternion(0.006164550781250,0.016784667968750,0.709533691406250, 0.704467773437500);
-    int state = exerciseRecognizer.processIMU(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
-    print(exerciseRecognizer.quatLeftRootToFemur);
+    int state = widget.exerciseRecognizer.processIMU(widget.sensorValues[0], widget.sensorValues[3], widget.sensorValues[2], widget.sensorValues[1], widget.sensorValues[4]);
+    counter += 1;
+    angles.add(Angles(counter, widget.exerciseRecognizer.projXY_R_Femur_Ang));
+    print(widget.exerciseRecognizer.projXY_R_Femur_Ang);
+    double projXY_R_Femur_Ang = widget.exerciseRecognizer.projXY_R_Femur_Ang;
+    double projYZ_R_Femur_Ang = widget.exerciseRecognizer.projYZ_R_Femur_Ang;
+    double projXZ_R_Foot_Ang = widget.exerciseRecognizer.projXZ_R_Foot_Ang;
+    double projXY_Root_Ang = widget.exerciseRecognizer.projXY_Root_Ang;
+    double projYZ_Root_Ang = widget.exerciseRecognizer.projYZ_Root_Ang;
+    vector.Quaternion quatWorldToRoot = widget.exerciseRecognizer.quatWorldToRoot;
+    vector.Quaternion quatLeftRootToFemur = widget.exerciseRecognizer.quatLeftRootToFemur;
     if(widget.isReady) {
       //print(widget.sensorValues[0].x.toString());
       //print(widget.sensorValues[1].y.toString());
     }
+    
+    List<charts.Series<Angles, double>> graph = [
+      charts.Series<Angles, double>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (Angles ang, _) => ang.time.toDouble(),
+        measureFn: (Angles angle, _) => angle.angle,
+        data: angles,
+      )
+    ];
     if(!widget.isReady) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
@@ -79,14 +123,13 @@ class _ImuAlignmentState extends State<ImuAlignment> {
     else {
       return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Stack(alignment: AlignmentDirectional.center, children:  <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                child: SubHeading(
-                heading: state.toString()
-              )),
-            ],
-      ));
+          body: 
+              Column(
+                children: <Widget>[
+                  Expanded(child: charts.LineChart(graph, animate: true))
+                ],
+              )
+      );
     }
   }
 
@@ -97,8 +140,7 @@ class _ImuAlignmentState extends State<ImuAlignment> {
 
   vector_math.Quaternion _dataParser(List<int> dataFromDevice) {
     final String quatString = utf8.decode(dataFromDevice);
-    print("quatString");
-    print(quatString);
+
     final List<String> quatList = quatString.split(',');
     final double w = roundDouble(double.tryParse(quatList[0]), 7) ?? 0;
     final double x = roundDouble(double.tryParse(quatList[1]), 7) ?? 0;
@@ -117,4 +159,12 @@ class _ImuAlignmentState extends State<ImuAlignment> {
 
 
 
+
+}
+
+class Angles {
+  final int time;
+  final double angle;
+
+  Angles(this.time, this.angle);
 }

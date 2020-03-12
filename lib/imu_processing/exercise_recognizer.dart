@@ -10,8 +10,10 @@ import 'stationary_detector.dart';
 
 
 class ExerciseRecognizer {
-  vector.Vector3 rightRootToHip = vector.Vector3(-6.5, -0.25, 3.5701).scaled(0.01);
-  vector.Vector3 leftRootToHip = vector.Vector3(6.5, -0.25, 3.5701).scaled(0.01);
+  //vector.Vector3 rightRootToHip = vector.Vector3(-6.5, -0.25, 3.5701).scaled(0.01);
+  //vector.Vector3 leftRootToHip = vector.Vector3(6.5, -0.25, 3.5701).scaled(0.01);
+  vector.Vector3 rightRootToHip = vector.Vector3(3.5701,-6.5, -0.25);
+  vector.Vector3 leftRootToHip = vector.Vector3(3.5701, 6.5, -0.25);
 
   ExerciseRecognizer(AlignmentProfile alignmentProfile) {
     this.alignmentProfile = alignmentProfile;
@@ -326,7 +328,7 @@ class ExerciseRecognizer {
     vector.Quaternion quatGlobalToRightFemur = alignmentProfile.quatRightFemurImuToBody*rightFemurImuQuat.conjugated();
     vector.Quaternion quatGlobalToRightTibia = alignmentProfile.quatRightTibiaImuToBody*rightTibiaImuQuat.conjugated();
 
-    quatWorldToRoot = quatWorldToRoot;
+    this.quatWorldToRoot = quatWorldToRoot;
     quatLeftRootToFemur = quatGlobalToLeftFemur*quatWorldToRoot.conjugated();
     quatRightRootToFemur = quatGlobalToRightFemur*quatWorldToRoot.conjugated();
     quatLeftFemurToTibia = quatGlobalToLeftTibia*quatGlobalToLeftFemur.conjugated();
@@ -334,9 +336,9 @@ class ExerciseRecognizer {
   }
 
   void calculateProjectionJointAngles() {
-    vector.Vector3 down = vector.Vector3(0, -1, 0);
-    vector.Vector3 forward = vector.Vector3(0, 0, 1);
-    vector.Vector3 up = vector.Vector3(0, 1, 0);
+    vector.Vector3 down = vector.Vector3(0, 0, -1);
+    vector.Vector3 forward = vector.Vector3(1, 0, 0);
+    vector.Vector3 up = vector.Vector3(0, 0, 1);
 
 
     vector.Vector3 relativeLeftRootToHip = leftRootToHip.clone();
@@ -348,11 +350,15 @@ class ExerciseRecognizer {
 
     vector.Vector3 relativeHipVector = relativeLeftRootToHip - relativeRightRootToHip;
     relativeHipVector[1] = 0; // get rid of y axis
-    double correctionAngle = acos(relativeHipVector[1]/relativeHipVector.length);
-    vector.Quaternion faceStraightQuat = vector.Quaternion.euler(0, correctionAngle, 0);
+    double correctionAngle = acos(relativeHipVector[0]/relativeHipVector.length);
+    vector.Quaternion faceStraightQuat = vector.Quaternion.euler(correctionAngle, 0, 0);
+
+    //vector.Vector3 backBody = up.clone();
+    //backBody.applyQuaternion(faceStraightQuat*quatWorldToRoot);
 
     vector.Vector3 backBody = up.clone();
-    backBody.applyQuaternion(faceStraightQuat*quatWorldToRoot);
+    backBody.applyQuaternion(quatWorldToRoot);
+    backBody.applyQuaternion(faceStraightQuat);
     projXY_Root_Ang = acos(backBody[1]/(vector.Vector2(backBody[0], backBody[1]).length))*180/pi;
     projYZ_Root_Ang = acos(backBody[1]/(vector.Vector2(backBody[1], backBody[2]).length))*180/pi;
 

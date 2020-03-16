@@ -4,6 +4,7 @@ import 'package:physio_tracker_app/services/cloud_database.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/screens/eventDetails/eventDetails.dart';
+import 'package:physio_tracker_app/screens/eventDetails/exerciseStartScreen.dart';
 
 class EventDetailsProviderWrapper extends StatelessWidget {
 
@@ -16,7 +17,8 @@ class EventDetailsProviderWrapper extends StatelessWidget {
     print("PROVIDER");
     return StreamProvider<Exercise>.value(
       value: CloudDatabase.streamEvent(exercise.id),
-      child: EventDetails(),
+      child: ExerciseStartScreen(),
+      // child: EventDetails(),
     );
   }
 }

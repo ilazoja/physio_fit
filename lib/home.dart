@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:physio_tracker_app/widgets/shared/app_navigation.dart';
+import 'loginScreen.dart';
 
 class MyHome extends StatefulWidget {
   @override
@@ -34,6 +35,6 @@ class MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AppNavigation();
+    return LoginScreen();
   }
 }

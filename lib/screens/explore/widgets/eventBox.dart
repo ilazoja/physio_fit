@@ -63,6 +63,7 @@ class EventBox extends StatelessWidget {
         onTap: () {
           //Change event model only when going to event, or will change
           // current page date as well
+          print('this is starting15');
           Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
               pageRoute: EventDetailsProviderWrapper(exercise: exercise)));
         },

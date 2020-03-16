@@ -60,6 +60,7 @@ dependencies:
   flutter_sms: ^1.1.0
   flutter_blue: ^0.6.3+1
   csv: ^4.0.3
+  flare_flutter: ^2.0.1
 
   day_selector: ^1.0.0
   multiselect_formfield: ^0.1.2
@@ -127,6 +128,9 @@ flutter:
     - assets/images/beauty.jpeg
     - assets/images/default.jpg
     - assets/images/squats.png
+    - assets/images/squat.png
+    - assets/images/knee.png
+    - assets/images/hip.png
     - assets/images/hip_adduction.png
     - assets/images/knee_flexion_extension.jpg
     - assets/illustrations/onboardingScreen1.svg
@@ -143,6 +147,9 @@ flutter:
     - assets/imuDonning/right_thigh_sensor_location.png
     - assets/imuDonning/right_thigh_three_sensor_location.png
     - assets/imuDonning/right_shin_three_sensor_location.png
+    - assets/imuDonning/Component-1.png
+    - assets/lottie/test.flr
+    - assets/images/PhysioFitLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

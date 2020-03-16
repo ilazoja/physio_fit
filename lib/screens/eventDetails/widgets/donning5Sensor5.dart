@@ -1,7 +1,10 @@
+import 'package:physio_tracker_app/screens/exercise-starting/doneButton.dart';
 import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
-import 'addDoneImuButton.dart';
+import 'package:physio_tracker_app/screens/exercise-starting/circles_with_images.dart';
+import 'package:physio_tracker_app/screens/exercise-starting/assetsImages.dart';
+import 'package:physio_tracker_app/screens/exercise-starting/nextButton.dart';
 import 'bleConnection.dart';
 
 class Donning5Sensor5 extends StatelessWidget
@@ -15,39 +18,70 @@ class Donning5Sensor5 extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold
-    (
-      appBar: AppBar(
-        title: const Text('Place IMU Straps on Body'),
-        backgroundColor: Colors.white,
-      ),
-      body: Container (
-        child: Center(
-          child: Column (
-            children: <Widget>[
-              Image.asset(
-                'assets/imuDonning/right_shin_sensor_location.png',
-                fit: BoxFit.fill,
-                width: (MediaQuery.of(context).size.width) * 0.6,
-                height: (MediaQuery.of(context).size.height) * 0.65,
-              ),
-              const Card (
-                child: ListTile(
-                  title: Text('5. Put the IMU sensor on your right shin'),
-                ),
-              ),
-              AddDoneImuButton (
-                buttonText: 'Done',
-                 callback:() {
-                  Navigator.of(context, rootNavigator: true)
-                  .push<dynamic>(DefaultPageRoute<dynamic>(
-                  pageRoute: BleConnection(exercise: exercise, angleMetadata: angleMetadata)));
-                }
+    return Stack(
+        children: <Widget>[
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0xFF73AEF5),
+                  const Color(0xFF61A4F1),
+                  const Color(0xFF478DE0),
+                  const Color(0xFF398AE5),
+                ],
+               begin: const Alignment(0.5, -1.0),
+                end: const Alignment(0.5, 1.0)
               )
-            ],
+            ),
+          ),
+          Positioned(
+            child: CircleWithImage(Assets.pose6),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Positioned.fill(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: (MediaQuery.of(context).size.height)*0.04,
+                ),
+                SizedBox(
+                  child: Image(
+                    image: AssetImage(Assets.pose6),
+                    fit: BoxFit.fitHeight,
+                  ),
+                  height: IMAGE_SIZE*2.0,
+                  width: IMAGE_SIZE*2.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,(MediaQuery.of(context).size.height)*0.01,0,(MediaQuery.of(context).size.height)*0.01),
+                  child: Text('Place the IMU sensor \n on your right shin.',
+                              style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white),
+                              textAlign: TextAlign.center,
+                              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 200,
+                    height: 100,
+                    child: DoneButton(
+                      buttonText: 'Completed',
+                      scaleFactor: 1.4,
+                      callback: () =>
+                            Navigator.of(context, rootNavigator: true).push<dynamic>(DefaultPageRoute<dynamic>(
+                            pageRoute: BleConnection(exercise: exercise, angleMetadata: angleMetadata))),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
-        ),
-      )
-    );
+        ],
+        alignment: FractionalOffset.center,
+      );
   }
 }

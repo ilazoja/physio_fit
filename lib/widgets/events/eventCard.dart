@@ -19,6 +19,7 @@ class EventCard extends StatelessWidget {
         child: Center(
             child: GestureDetector(
           onTap: () {
+            print('this is starting12');
             Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
                 pageRoute: EventDetailsProviderWrapper(exercise: exercise)));
           },

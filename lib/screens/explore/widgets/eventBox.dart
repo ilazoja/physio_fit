@@ -25,7 +25,7 @@ class EventBox extends StatelessWidget {
   bool detailsPage;
   static const String squat = 'assets/images/squats.png';
   static const String flexion = 'assets/images/knee_flexion_extension.jpg';
-  static const String adduction = 'assets/images/hip_adduction.jpg';
+  static const String adduction = 'assets/images/hip_adduction.png';
 
   @override
   Widget build(BuildContext context) {

@@ -9,6 +9,7 @@ import 'package:physio_tracker_app/screens/eventDetails/widgets/imuAlignment.dar
 import 'package:vector_math/vector_math_64.dart' as vector_math;
 import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
+import 'package:physio_tracker_app/imu_processing/exercise_recognizer.dart';
 import 'package:physio_tracker_app/imu_processing/alignment_profile.dart';
 import 'package:physio_tracker_app/widgets/shared/subHeading.dart';
 import 'package:physio_tracker_app/imu_processing/stationary_detector.dart';
@@ -35,9 +36,11 @@ class BleBNO080State extends State<BleBNO080> {
   bool isReady;
   StationaryDetector stationaryDetector = StationaryDetector();
   AlignmentProfile alignmentProfile;
+  ExerciseRecognizer exerciseRecognizer;
 
   bool userIsStationary;
   bool globalStationaryFlag;
+  bool isAligned = false;
   // Stream<List<int>> sensor2Stream;
   // Stream<List<int>> sensor3Stream;
   // Stream<List<int>> sensor4Stream;
@@ -144,22 +147,22 @@ class BleBNO080State extends State<BleBNO080> {
 
     final String quatString = utf8.decode(dataFromDevice);
     final List<String> quatList = quatString.split(',');
-    for(int j = 0; j < quatList.length / 4; j++)
+    int i = 0;
+    for(int j = 0; j < quatList.length-1; j += 4)
     {
-      for(int i = 0; i < quatList.length - 1; i += 4)
-      {
-        w = double.tryParse(quatList[i]) ?? 0;
-        x = double.tryParse(quatList[i+1]) ?? 0;
-        y = double.tryParse(quatList[i+2]) ?? 0;
-        z = double.tryParse(quatList[i+3]) ?? 0;
-        widget.sensorValues.insert(j, vector_math.Quaternion(x, y, z, w));
-        widget.sensorValues[j].normalize();
-      }
+        w = double.tryParse(quatList[j]) ?? 0;
+        x = double.tryParse(quatList[j+1]) ?? 0;
+        y = double.tryParse(quatList[j+2]) ?? 0;
+        z = double.tryParse(quatList[j+3]) ?? 0;
+        widget.sensorValues[i] =  vector_math.Quaternion(x, y, z, w);
+        widget.sensorValues[i].normalize();
+        i++;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print("BLEBN");
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -224,22 +227,39 @@ class BleBNO080State extends State<BleBNO080> {
 
                         if (snapshot1.connectionState == ConnectionState.active) {
                           _dataParser(snapshot1.data);
-                          userIsStationary = stationaryDetector.isUserStationary(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
-                          if(userIsStationary || globalStationaryFlag)
+                          userIsStationary = stationaryDetector.isUserStationary(widget.sensorValues[0], widget.sensorValues[3], widget.sensorValues[2], widget.sensorValues[1], widget.sensorValues[4]);
+                          if(userIsStationary || globalStationaryFlag )
                           {
                             globalStationaryFlag = true;
-                            widget.sensorValues[0] = vector_math.Quaternion(-0.461730957031250,-0.546997070312500,-0.453002929687500,0.531433105468750);
-                            widget.sensorValues[1] = vector_math.Quaternion(0.089477539062500,-0.704406738281250,0.070739746093750,0.700561523437500);
-                            alignmentProfile = AlignmentProfile(widget.sensorValues[0], widget.sensorValues[1], widget.sensorValues[2], widget.sensorValues[3], widget.sensorValues[4]);
-                            isReady = true;
-                            return
-                              ImuAlignment(
-                                alignmentProfile: alignmentProfile,
-                                angleMetadata: angleMetaData,
-                                isReady: isReady,
-                                sensorValues: widget.sensorValues,
-                                exercise: widget.exercise
-                              );
+                            if (isAligned == false) {
+                              alignmentProfile = AlignmentProfile(widget.sensorValues[0], widget.sensorValues[3], widget.sensorValues[2], widget.sensorValues[1], widget.sensorValues[4]);
+                              exerciseRecognizer = ExerciseRecognizer(alignmentProfile);
+                              isAligned = true;
+                            }
+                            else {
+                                  int state = exerciseRecognizer.processIMU(widget.sensorValues[0], widget.sensorValues[3], widget.sensorValues[2], widget.sensorValues[1], widget.sensorValues[4]);
+                                  isReady = true;
+                                  return
+                                  ImuAlignment(
+                                    alignmentProfile: alignmentProfile,
+                                    angleMetadata: angleMetaData,
+                                    isReady: isReady,
+                                    sensorValues: widget.sensorValues,
+                                    exercise: widget.exercise,
+                                    exerciseRecognizer: exerciseRecognizer,
+                                    state: state
+                                  );
+                            }
+                            return Center(
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Column(children: <Widget>[
+                                            SubHeading(
+                                              heading: "Loading"
+                                            ),
+                                          CircularProgressIndicator(strokeWidth: 14),
+                                        ])],
+                            ));
                           }
                           else
                           {

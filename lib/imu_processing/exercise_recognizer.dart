@@ -23,49 +23,49 @@ class ExerciseRecognizer {
   // idle thresholds
 
   double back_XY_Idle_Threshold = 0;
-  double back_XY_Idle_Range = 20;
+  double back_XY_Idle_Range = 300;
   double back_YZ_Idle_Threshold = 0;
-  double back_YZ_Idle_Range = 20;
+  double back_YZ_Idle_Range = 300;
 
   double L_Femur_XY_Idle_Threshold = 0;
-  double L_Femur_XY_Idle_Range = 20;
+  double L_Femur_XY_Idle_Range = 300;
   double L_Femur_YZ_Idle_Threshold = 0;
-  double L_Femur_YZ_Idle_Range = 20;
+  double L_Femur_YZ_Idle_Range = 300;
   double L_Femur_XZ_Idle_Threshold = 0;
-  double L_Femur_XZ_Idle_Range = 60;
+  double L_Femur_XZ_Idle_Range = 300;
 
   double R_Femur_XY_Idle_Threshold = 0;
   double R_Femur_XY_Idle_Range = 20;
   double R_Femur_YZ_Idle_Threshold = 0;
   double R_Femur_YZ_Idle_Range = 40;
   double R_Femur_XZ_Idle_Threshold = 0;
-  double R_Femur_XZ_Idle_Range = 60;
+  double R_Femur_XZ_Idle_Range = 300;
 
   double L_Knee_Idle_Threshold = 0;
-  double L_Knee_Idle_Range = 20;
+  double L_Knee_Idle_Range = 300;
   double R_Knee_Idle_Threshold = 0;
-  double R_Knee_Idle_Range = 20;
+  double R_Knee_Idle_Range = 300;
 
   // low thresholds
 
   double back_XY_Exercise_Min_Threshold = 0;
-  double back_XY_Exercise_Min_Range = 20;
+  double back_XY_Exercise_Min_Range = 200;
   double back_YZ_Exercise_Min_Threshold = 0;
-  double back_YZ_Exercise_Min_Range = 20;
+  double back_YZ_Exercise_Min_Range = 200;
 
   double L_Femur_XY_Exercise_Min_Threshold = 0;
-  double L_Femur_XY_Exercise_Min_Range = 20;
+  double L_Femur_XY_Exercise_Min_Range = 200;
   double L_Femur_YZ_Exercise_Min_Threshold = 0;
-  double L_Femur_YZ_Exercise_Min_Range = 20;
+  double L_Femur_YZ_Exercise_Min_Range = 200;
   double L_Femur_XZ_Exercise_Min_Threshold = 0;
-  double L_Femur_XZ_Exercise_Min_Range = 100;
+  double L_Femur_XZ_Exercise_Min_Range = 200;
 
   double R_Femur_XY_Exercise_Min_Threshold = 0;
-  double R_Femur_XY_Exercise_Min_Range = 40;
+  double R_Femur_XY_Exercise_Min_Range = 200;
   double R_Femur_YZ_Exercise_Min_Threshold = 0;
-  double R_Femur_YZ_Exercise_Min_Range = 40;
+  double R_Femur_YZ_Exercise_Min_Range = 200;
   double R_Femur_XZ_Exercise_Min_Threshold = 0;
-  double R_Femur_XZ_Exercise_Min_Range = 100;
+  double R_Femur_XZ_Exercise_Min_Range = 200;
 
   double L_Knee_Exercise_Min_Threshold = 0;
   double L_Knee_Exercise_Min_Range = 40;
@@ -75,28 +75,28 @@ class ExerciseRecognizer {
   // high thresholds
 
   double back_XY_Exercise_Max_Threshold = 0;
-  double back_XY_Exercise_Max_Range = 20;
+  double back_XY_Exercise_Max_Range = 140;
   double back_YZ_Exercise_Max_Threshold = 0;
-  double back_YZ_Exercise_Max_Range = 30;
+  double back_YZ_Exercise_Max_Range = 140;
 
   double L_Femur_XY_Exercise_Max_Threshold = 0;
-  double L_Femur_XY_Exercise_Max_Range = 20;
+  double L_Femur_XY_Exercise_Max_Range = 200;
   double L_Femur_YZ_Exercise_Max_Threshold = 0;
-  double L_Femur_YZ_Exercise_Max_Range = 20;
+  double L_Femur_YZ_Exercise_Max_Range = 200;
   double L_Femur_XZ_Exercise_Max_Threshold = 0;
-  double L_Femur_XZ_Exercise_Max_Range = 100;
+  double L_Femur_XZ_Exercise_Max_Range = 200;
 
-  double R_Femur_XY_Exercise_Max_Threshold = 0;
-  double R_Femur_XY_Exercise_Max_Range = 40;
+  double R_Femur_XY_Exercise_Max_Threshold = 30;
+  double R_Femur_XY_Exercise_Max_Range = 20;
   double R_Femur_YZ_Exercise_Max_Threshold = 0;
-  double R_Femur_YZ_Exercise_Max_Range = 40;
+  double R_Femur_YZ_Exercise_Max_Range = 200;
   double R_Femur_XZ_Exercise_Max_Threshold = 0;
-  double R_Femur_XZ_Exercise_Max_Range = 100;
+  double R_Femur_XZ_Exercise_Max_Range = 200;
 
   double L_Knee_Exercise_Max_Threshold = 0;
-  double L_Knee_Exercise_Max_Range = 40;
-  double R_Knee_Exercise_Max_Threshold = 80;
-  double R_Knee_Exercise_Max_Range = 20;
+  double L_Knee_Exercise_Max_Range = 200;
+  double R_Knee_Exercise_Max_Threshold = 0;
+  double R_Knee_Exercise_Max_Range = 200;
 
 
   List<vector.Vector3> weights = [vector.Vector3(1,1,1),
@@ -197,7 +197,7 @@ class ExerciseRecognizer {
 
   // outputs, read these depending on state
 
-  String message;
+  String message = "";
   List<double> accuracyRatings = List<double>();
 
   int processIMU(vector.Quaternion backImuQuat, vector.Quaternion leftFemurImuQuat, vector.Quaternion leftTibiaImuQuat,  vector.Quaternion rightFemurImuQuat, vector.Quaternion rightTibiaImuQuat) {
@@ -230,11 +230,16 @@ class ExerciseRecognizer {
         }
         break;
         case 2: { // End Exercise
+        
           calculateQuatJointAngles(backImuQuat, leftFemurImuQuat, leftTibiaImuQuat, rightFemurImuQuat, rightTibiaImuQuat);
           calculateProjectionJointAngles();
+          updateAngleDistributions();
           if (userIsStationary) {
-            assessExercise();
+
+            List<vector.Vector3> errors = assessExercise();
+            assignScoreAndGiveFeedback(errors);
             repetitionsCompleted++;
+            resetAngleDistributions();
             if (repetitionsCompleted >= number_of_repetitions) {
               setsCompleted++;
               if (setsCompleted >= number_of_sets) {
@@ -384,7 +389,7 @@ class ExerciseRecognizer {
     proj_R_Femur_R_Tibia = quatRightFemurToTibia.radians*180/pi;
   }
 
-  void assessExercise() {
+  List<vector.Vector3> assessExercise() {
     List<vector.Vector3> differencesFromThreshold = List<vector.Vector3>();
 
     differencesFromThreshold.add(assessAngle(minProjXY_Root_Ang, maxProjXY_Root_Ang, projXY_Root_Ang,
@@ -419,28 +424,30 @@ class ExerciseRecognizer {
       R_Femur_XZ_Exercise_Min_Threshold, R_Femur_XZ_Exercise_Max_Threshold, R_Femur_XZ_Idle_Threshold,
       R_Femur_XZ_Exercise_Min_Range, R_Femur_XZ_Exercise_Max_Range, R_Femur_XZ_Idle_Range));
 
+      return differencesFromThreshold;
+
   }
 
   vector.Vector3 assessAngle(double minAngle, double maxAngle, double idleAngle, double minThreshold, double maxThreshold, double idleThreshold, double minRange, double maxRange, double idleRange) {
     vector.Vector3 differenceFromThreshold = vector.Vector3.zero();
 
     if (minAngle < minThreshold - minRange/2) {
-      differenceFromThreshold[0] = (minAngle - (minThreshold - minRange)).abs();
+      differenceFromThreshold[0] = (minAngle - (minThreshold - minRange));//.abs();
     }
     else if (minAngle > minThreshold + minRange/2) {
-       differenceFromThreshold[0] = (minAngle - (minThreshold + minRange)).abs();
+       differenceFromThreshold[0] = (minAngle - (minThreshold + minRange));//.abs();
     }
     if (maxAngle < maxThreshold - maxRange/2) {
-      differenceFromThreshold[1] = (maxAngle - (maxThreshold - maxRange)).abs();
+      differenceFromThreshold[1] = (maxAngle - (maxThreshold - maxRange));//.abs();
     }
     else if (maxAngle > maxThreshold + maxRange/2) {
-       differenceFromThreshold[1] = (maxAngle - (maxThreshold + maxRange)).abs();
+       differenceFromThreshold[1] = (maxAngle - (maxThreshold + maxRange));//.abs();
     }
     if (idleAngle < idleThreshold - idleRange/2) {
-      differenceFromThreshold[2] = (idleAngle - (idleThreshold - idleRange)).abs();
+      differenceFromThreshold[2] = (idleAngle - (idleThreshold - idleRange));//.abs();
     }
     else if (idleAngle > idleThreshold + idleRange/2) {
-       differenceFromThreshold[2] = (idleAngle - (idleThreshold + idleRange)).abs();
+       differenceFromThreshold[2] = (idleAngle - (idleThreshold + idleRange));//.abs();
     }
 
     return differenceFromThreshold;
@@ -449,6 +456,32 @@ class ExerciseRecognizer {
 
   void assignScoreAndGiveFeedback(List<vector.Vector3> errors) {
     double weightedSum = 0;
+    message = "Great!";
+
+    if (errors[0].length != 0) {
+      message = "Keep back straight";
+
+    }
+    else if (errors[1].length != 0) {
+      message = "Keep back straight";
+    }
+    else if (errors[2].length != 0) {
+     // message = "Keep back straight";
+    }
+    else if (errors[3].length != 0) {
+     // message = "Keep back straight";
+    }
+    else if (errors[4].length != 0) {
+     // message = "Keep back straight";
+    }
+    else if (errors[5][1] < 0) {
+      message = "Raise hip lower next time";
+    }
+    else if (errors[5][1] > 0) {
+      message = "Raise hip higher next time";
+    }
+
+
 
     //for (int i = 0; i)
 

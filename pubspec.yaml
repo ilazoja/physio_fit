@@ -62,6 +62,9 @@ dependencies:
   csv: ^4.0.3
   oscilloscope: ^0.0.3
   charts_flutter: ^0.9.0
+  arkit_plugin: ^0.4.1
+  ml_linalg: ^12.7.1
+  data: ^0.2.0
 
   day_selector: ^1.0.0
   multiselect_formfield: ^0.1.2
@@ -145,6 +148,8 @@ flutter:
     - assets/imuDonning/right_thigh_sensor_location.png
     - assets/imuDonning/right_thigh_three_sensor_location.png
     - assets/imuDonning/right_shin_three_sensor_location.png
+    - assets/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

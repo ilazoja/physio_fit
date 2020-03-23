@@ -167,7 +167,7 @@ class BleBNO080State extends State<BleBNO080> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('BNO080 Sensor'),
+          title: Text('PhysioFit'),
         ),
         body: Container(
             child: !isReady
@@ -263,7 +263,53 @@ class BleBNO080State extends State<BleBNO080> {
                           }
                           else
                           {
-                            return Text(snapshot1.data.toString());
+                            return Container(child: Center(
+                    child: Stack(
+                        children: <Widget>[
+                          Column(children: <Widget>[
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(0, 30, 0, 10),
+                              child: SizedBox(
+                                child: CircularProgressIndicator(),
+                                height: 200.0,
+                                width: 200.0,
+                              )
+                            ),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Sensor Alignment Pending', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Please Stand Still', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                            Padding (
+                              padding: EdgeInsets.fromLTRB(20, 30, 0, 10),
+                              child: const
+                              Text('Place Legs Shoulder Width Apart', style:
+                                TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20
+                                )
+                            )),
+                    ])],
+                )));
                           }
                           } else {
                           return Center(

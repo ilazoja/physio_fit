@@ -102,9 +102,9 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>kTCCServiceMediaLibrary</key>
-	<string>media</string>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>media</string>
 </dict>
 </plist>

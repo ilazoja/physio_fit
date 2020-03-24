@@ -1,10 +1,10 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/emadahmed/Desktop/flutter
-FLUTTER_APPLICATION_PATH=/Users/emadahmed/Documents/physio_tracker
-FLUTTER_TARGET=/Users/emadahmed/Documents/physio_tracker/lib/main.dart
+FLUTTER_ROOT=/Users/manindermatharoo/FlutterDev/flutter
+FLUTTER_APPLICATION_PATH=/Users/manindermatharoo/Documents/physio_tracker
+FLUTTER_TARGET=/Users/manindermatharoo/Documents/physio_tracker/lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
-FLUTTER_FRAMEWORK_DIR=/Users/emadahmed/Desktop/flutter/bin/cache/artifacts/engine/ios
+FLUTTER_FRAMEWORK_DIR=/Users/manindermatharoo/FlutterDev/flutter/bin/cache/artifacts/engine/ios
 FLUTTER_BUILD_NAME=1.2.0
 FLUTTER_BUILD_NUMBER=1
 TRACK_WIDGET_CREATION=true

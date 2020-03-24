@@ -18,8 +18,10 @@ import 'package:vector_math/vector_math_64.dart' as vector;
 import 'package:oscilloscope/oscilloscope.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import "package:physio_tracker_app/screens/eventDetails/widgets/body_detection_page.dart";
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
+import 'home_widget.dart';
 
 class ImuAlignment extends StatefulWidget {
   ImuAlignment({Key key,
@@ -92,6 +94,8 @@ class _ImuAlignmentState extends State<ImuAlignment> {
     double projYZ_Root_Ang = widget.exerciseRecognizer.projYZ_Root_Ang;
     vector.Quaternion quatWorldToRoot = widget.exerciseRecognizer.quatWorldToRoot;
     vector.Quaternion quatLeftRootToFemur = widget.exerciseRecognizer.quatLeftRootToFemur;
+    print("State");
+    print(state.toString());
     if(widget.isReady) {
       //print(widget.sensorValues[0].x.toString());
       //print(widget.sensorValues[1].y.toString());
@@ -121,15 +125,14 @@ class _ImuAlignmentState extends State<ImuAlignment> {
         ));
     }
     else {
-      return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: 
-              Column(
-                children: <Widget>[
-                  Expanded(child: charts.LineChart(graph, animate: true))
-                ],
-              )
-      );
+      return BodyDetectionPage(
+        storage: Storage(),
+        totalSets: 1,
+        totalReps: 5,
+        currentSets: widget.exerciseRecognizer.repetitionsCompleted,
+        currentReps: widget.exerciseRecognizer.repetitionsCompleted,
+        message: widget.exerciseRecognizer.message
+        );       
     }
   }
 

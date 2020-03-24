@@ -6,7 +6,7 @@ class StationaryDetector {
 
   StationaryDetector();
 
-  static const int framesToWait = 50;
+  static const int framesToWait = 30;
 
   int frameCount = 0;
   vector.Quaternion backImuQuatInitial = vector.Quaternion.identity();
@@ -15,7 +15,7 @@ class StationaryDetector {
   vector.Quaternion leftTibiaImuQuatInitial= vector.Quaternion.identity();
   vector.Quaternion rightFemurImuQuatInitial = vector.Quaternion.identity();
 
-  double radiansThreshold = 0.0524; // 3 degrees
+  double radiansThreshold = 0.0824; // 3 degrees
 
   bool isUserStationary(vector.Quaternion backImuQuat, vector.Quaternion leftFemurImuQuat, vector.Quaternion leftTibiaImuQuat,
     vector.Quaternion rightFemurImuQuat, vector.Quaternion rightTibiaImuQuat) {

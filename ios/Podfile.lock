@@ -163,6 +163,8 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.3.0)
   - AppAuth/Core (1.3.0)
   - AppAuth/ExternalUserAgent (1.3.0)
+  - arkit_plugin (0.0.1):
+    - Flutter
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
     - BoringSSL-GRPC/Interface (= 0.0.3)
@@ -445,6 +447,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - arkit_plugin (from `.symlinks/plugins/arkit_plugin/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - cloud_functions_web (from `.symlinks/plugins/cloud_functions_web/ios`)
@@ -524,6 +527,8 @@ SPEC REPOS:
     - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
+  arkit_plugin:
+    :path: ".symlinks/plugins/arkit_plugin/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_functions:
@@ -596,6 +601,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
+  arkit_plugin: bac4df15d3c0bcafd4acaf323acefdeee1ccf224
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
   BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
@@ -671,4 +677,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ffe1cd32cd14bffe709f855914c554433242099d
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.8.4

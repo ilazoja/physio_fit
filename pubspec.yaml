@@ -63,6 +63,9 @@ dependencies:
   flare_flutter: ^2.0.1
   oscilloscope: ^0.0.3
   charts_flutter: ^0.9.0
+  arkit_plugin: ^0.4.1
+  ml_linalg: ^12.7.1
+  data: ^0.2.0
 
   day_selector: ^1.0.0
   multiselect_formfield: ^0.1.2
@@ -152,6 +155,8 @@ flutter:
     - assets/imuDonning/Component-1.png
     - assets/lottie/test.flr
     - assets/images/PhysioFitLogo.png
+    - assets/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

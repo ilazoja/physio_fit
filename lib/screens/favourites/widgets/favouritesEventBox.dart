@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
+import 'package:physio_tracker_app/models/completed_exercise.dart';
 import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/favouriteButton.dart';
@@ -10,11 +11,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart';
-
+import 'package:physio_tracker_app/screens/results/providerWrapper/resultsProviderWrapper.dart';
 class FavouritesEventBox extends StatelessWidget {
   const FavouritesEventBox({@required this.event});
 
-  final Exercise event;
+  final CompletedExercise event;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class FavouritesEventBox extends StatelessWidget {
           onTap: () {
             print('this is starting14');
             Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
-                pageRoute: EventDetailsProviderWrapper(exercise: event)));
+                pageRoute: ResultsProviderWrapper(exercise: event)));
           },
           child: Column(
             children: <Widget>[
@@ -47,7 +48,7 @@ class FavouritesEventBox extends StatelessWidget {
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     child: CachedNetworkImage(
-                      imageUrl: event.imageSrc,
+                      imageUrl: '',
                       placeholder: (BuildContext context, String url) =>
                           const Center(
                           heightFactor: 0.4,

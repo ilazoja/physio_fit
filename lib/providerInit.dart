@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'models/event.dart';
 import 'models/exercise.dart';
+import 'models/completed_exercise.dart';
 import 'routes.dart';
 import 'services/cloud_database.dart';
 
@@ -14,7 +15,8 @@ class ProviderInit extends StatelessWidget {
           value: FirebaseAuth.instance.onAuthStateChanged),
       // TODO(some1): Below provider should be moved to as wrapper on top fav
       //  and cal
-      StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamEvents())
+      StreamProvider<List<Exercise>>.value(value: CloudDatabase.streamEvents()),
+      StreamProvider<List<CompletedExercise>>.value(value: CloudDatabase.streamCompletedExercises())
     ], child: Routes());
   }
 }

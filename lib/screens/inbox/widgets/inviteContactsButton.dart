@@ -62,8 +62,7 @@ class InviteContactsButton extends StatelessWidget {
   Future<PermissionStatus> _getPermission() async {
     final PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.contacts);
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.disabled) {
+    if (permission != PermissionStatus.granted) {
       final Map<PermissionGroup, PermissionStatus> permisionStatus =
       await PermissionHandler()
           .requestPermissions([PermissionGroup.contacts]);

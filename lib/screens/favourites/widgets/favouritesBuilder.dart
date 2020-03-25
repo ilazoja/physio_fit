@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
+import 'package:physio_tracker_app/models/completed_exercise.dart';
 import 'package:physio_tracker_app/models/user.dart';
 import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/screens/favourites/widgets/favouritesEventBox'
@@ -105,9 +106,10 @@ class _FavouritesBuilderState extends State<FavouritesBuilder> {
       BuildContext context, User user, bool pastEvents) {
     final List<Widget> eventBoxes = <Widget>[];
 
-    final List<Exercise> _allEvents = Provider.of<List<Exercise>>(context);
+    final List<CompletedExercise> _allEvents = Provider.of<List<CompletedExercise>>(context);
+    print(_allEvents);
       if (_allEvents != null) {
-          for (Exercise _event in _allEvents) {
+          for (CompletedExercise _event in _allEvents) {
             eventBoxes.add(FavouritesEventBox(event: _event));
           }
       }
@@ -117,9 +119,9 @@ class _FavouritesBuilderState extends State<FavouritesBuilder> {
   List<Widget> _getSearchedWidgets(BuildContext context, User user) {
     final List<Widget> eventBoxes = <Widget>[];
 
-    final List<Exercise> _allEvents = Provider.of<List<Exercise>>(context);
+    final List<CompletedExercise> _allEvents = Provider.of<List<CompletedExercise>>(context);
     if (_allEvents != null) {
-      for (Exercise _event in _allEvents) {
+      for (CompletedExercise _event in _allEvents) {
         eventBoxes.add(FavouritesEventBox(event: _event));
       }
     }

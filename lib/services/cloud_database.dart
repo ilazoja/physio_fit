@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:physio_tracker_app/dbKeys.dart' as db_key;
 import 'package:physio_tracker_app/models/announcement.dart';
+import 'package:physio_tracker_app/models/completed_exercise.dart';
 import 'package:physio_tracker_app/models/physiotherapist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/convo.dart';
@@ -302,6 +303,14 @@ class CloudDatabase {
         .map((DocumentSnapshot snap) => Exercise.fromFireStore(snap));
   }
 
+  static Stream<CompletedExercise> streamResult(String resultId) {
+    return _db
+        .collection('completed_exercises')
+        .document(resultId)
+        .snapshots()
+        .map((DocumentSnapshot snap) => CompletedExercise.fromFireStore(snap));
+  }
+
   static Stream<List<Exercise>> streamEventsFromMultiDateKey(String multiDateKey) {
     return _db
         .collection('exercises')
@@ -317,6 +326,15 @@ class CloudDatabase {
     return ref.snapshots().map(
             (QuerySnapshot list) => list.documents
             .map((DocumentSnapshot doc) => Exercise.fromFireStore(doc))
+            .toList());
+  }
+
+  static Stream<List<CompletedExercise>> streamCompletedExercises() {
+    final CollectionReference ref = _db.collection('completed_exercises');
+    // print(ref.snapshots().map((QuerySnapshot list) => list.documents.map((DocumentSnapshot doc) => doc)).toList());
+    return ref.snapshots().map(
+            (QuerySnapshot list) => list.documents
+            .map((DocumentSnapshot doc) => CompletedExercise.fromFireStore(doc))
             .toList());
   }
 

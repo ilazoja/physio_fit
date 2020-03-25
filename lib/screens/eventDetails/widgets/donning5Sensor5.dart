@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/screens/exercise-starting/circles_with_images.dart';
 import 'package:physio_tracker_app/screens/exercise-starting/assetsImages.dart';
-import 'package:physio_tracker_app/screens/exercise-starting/nextButton.dart';
-import 'bleConnection.dart';
+import 'alignmentLoading.dart';
 
 class Donning5Sensor5 extends StatelessWidget
 {
@@ -73,7 +72,7 @@ class Donning5Sensor5 extends StatelessWidget
                       scaleFactor: 1.4,
                       callback: () =>
                             Navigator.of(context, rootNavigator: true).push<dynamic>(DefaultPageRoute<dynamic>(
-                            pageRoute: BleConnection(exercise: exercise, angleMetadata: angleMetadata))),
+                            pageRoute: AlignmentLoading(exercise: exercise, angleMetadata: angleMetadata))),
                     ),
                   ),
                 ),

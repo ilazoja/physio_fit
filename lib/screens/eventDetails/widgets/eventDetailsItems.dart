@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:physio_tracker_app/screens/eventDetails/providerWrapper/guestListProviderWrapper.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/donning5Sensor1.dart';
-import 'package:physio_tracker_app/screens/eventDetails/widgets/donning3Sensor1.dart';
+import 'package:physio_tracker_app/screens/exercise-starting/explainIMU.dart';
 import 'package:physio_tracker_app/screens/inbox/providerWrapper/chatScreenProviderWrapper.dart';
 import 'package:physio_tracker_app/screens/eventDetails/widgets/announcementDialog.dart';
 import 'package:physio_tracker_app/widgets/shared/circular_progress.dart';
@@ -14,7 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:physio_tracker_app/widgets/events/getIconAndHeadingRow.dart';
 import 'package:physio_tracker_app/widgets/events/getItemTextRow.dart';
 import 'package:physio_tracker_app/screens/patientDetails/widgets/addExerciseButton.dart';
-import 'bleConnection.dart';
 
 import '../../../copyDeck.dart' as copy;
 import '../../../models/exercise.dart';
@@ -79,8 +78,7 @@ class EventDetailsItems extends StatelessWidget {
             callback: () {
               Navigator.of(context, rootNavigator: true)
                   .push<dynamic>(DefaultPageRoute<dynamic>(
-                  pageRoute: Donning5Sensor1(exercise: exercise, angleMetadata: copy.angleMetaData)));
-                  // To use with only 3 sensors use Donning3Sensor1
+                  pageRoute: ExplainImu(exercise: exercise, angleMetadata: copy.angleMetaData)));
             }),);
       }
 

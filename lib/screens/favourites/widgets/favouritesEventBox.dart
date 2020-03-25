@@ -35,6 +35,7 @@ class FavouritesEventBox extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.transparent,
           onTap: () {
+            print('this is starting14');
             Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
                 pageRoute: EventDetailsProviderWrapper(exercise: event)));
           },

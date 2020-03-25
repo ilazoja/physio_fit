@@ -9,7 +9,6 @@ import io.flutter.plugins.firebaseauth.FirebaseAuthPlugin;
 import io.flutter.plugins.firebase.core.FirebaseCorePlugin;
 import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin;
 import io.flutter.plugins.firebase.storage.FirebaseStoragePlugin;
-import com.pauldemarco.flutter_blue.FlutterBluePlugin;
 import com.roughike.facebooklogin.facebooklogin.FacebookLoginPlugin;
 import com.example.flutterimagecompress.FlutterImageCompressPlugin;
 import com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin;
@@ -44,7 +43,6 @@ public final class GeneratedPluginRegistrant {
     FirebaseCorePlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebase.core.FirebaseCorePlugin"));
     FirebaseMessagingPlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
     FirebaseStoragePlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebase.storage.FirebaseStoragePlugin"));
-    FlutterBluePlugin.registerWith(registry.registrarFor("com.pauldemarco.flutter_blue.FlutterBluePlugin"));
     FacebookLoginPlugin.registerWith(registry.registrarFor("com.roughike.facebooklogin.facebooklogin.FacebookLoginPlugin"));
     FlutterImageCompressPlugin.registerWith(registry.registrarFor("com.example.flutterimagecompress.FlutterImageCompressPlugin"));
     FlutterLocalNotificationsPlugin.registerWith(registry.registrarFor("com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin"));

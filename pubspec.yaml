@@ -58,8 +58,8 @@ dependencies:
   permission_handler: ^4.0.0
   contacts_service: ^0.3.10
   flutter_sms: ^1.1.0
-  flutter_blue: ^0.6.3+1
   csv: ^4.0.3
+  flare_flutter: ^2.0.1
   oscilloscope: ^0.0.3
   charts_flutter: ^0.9.0
   arkit_plugin: ^0.4.1
@@ -120,6 +120,7 @@ flutter:
 
 
   assets:
+    - assets/
     - assets/images/kiqback_logo.png
     - assets/images/login_background.jpg
     - assets/images/default_profile_image.png
@@ -132,6 +133,9 @@ flutter:
     - assets/images/beauty.jpeg
     - assets/images/default.jpg
     - assets/images/squats.png
+    - assets/images/squat.png
+    - assets/images/knee.png
+    - assets/images/hip.png
     - assets/images/hip_adduction.png
     - assets/images/knee_flexion_extension.jpg
     - assets/illustrations/onboardingScreen1.svg
@@ -148,8 +152,8 @@ flutter:
     - assets/imuDonning/right_thigh_sensor_location.png
     - assets/imuDonning/right_thigh_three_sensor_location.png
     - assets/imuDonning/right_shin_three_sensor_location.png
-    - assets/
-
+    - assets/imuDonning/Component-1.png
+    - assets/images/PhysioFitLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

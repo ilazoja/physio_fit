@@ -49,6 +49,7 @@ class AnnouncementListItem extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
+        print('this is starting13');
         Navigator.of(context).push<dynamic>(DefaultPageRoute<dynamic>(
             pageRoute: EventDetailsProviderWrapper(), arguments: event.id));
       },

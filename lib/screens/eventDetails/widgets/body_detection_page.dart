@@ -21,7 +21,7 @@ import 'package:csv/csv.dart' show CsvToListConverter;
 class BodyDetectionPage extends StatefulWidget {
   final Storage storage;
 
-  BodyDetectionPage({Key key, 
+  BodyDetectionPage({Key key,
   @required this.storage,
   @required this.currentSets,
   @required this.currentReps,
@@ -29,7 +29,7 @@ class BodyDetectionPage extends StatefulWidget {
   @required this.totalReps,
   @required this.message
   }) : super(key: key);
-  
+
   double currentSets;
   double currentReps;
   int totalSets;
@@ -43,7 +43,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   ARKitConfiguration configuration = ARKitConfiguration.bodyTracking;
 
   ARKitAnchor constantBodyAnchor;
-  
+
   ARKitController arkitController;
   ARKitNode node;
   String anchorId;
@@ -91,7 +91,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   vector.Vector3 rightRootToHip = vector.Vector3(-6.5, -0.25, 3.5701).scaled(0.01);
   vector.Vector3 leftRootToHip = vector.Vector3(6.5, -0.25, 3.5701).scaled(0.01);
   vector.Quaternion faceStraightQuat;
-  
+
   double footLength = 0.257; // in m
   double tibiaLength = 0.343677; // use formula
   double femurLength = 0.429181;
@@ -129,7 +129,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
         List<dynamic> firstFrame = allAngles[1];
         vector.Vector3 startingPosition = vector.Vector3(firstFrame[18], firstFrame[19], firstFrame[20]);
 
-        vector.Vector3 startingOrientation = vector.Vector3(firstFrame[15], firstFrame[16], firstFrame[17]); 
+        vector.Vector3 startingOrientation = vector.Vector3(firstFrame[15], firstFrame[16], firstFrame[17]);
         vector.Vector3 relativeLeftRootToHip = leftRootToHip.clone();
         relativeLeftRootToHip.applyQuaternion(eulers2Quat(startingOrientation.scaled(pi/180)));
         vector.Vector3 relativeRightRootToHip = rightRootToHip.clone();
@@ -149,12 +149,12 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
 
           print(frame.toString());
 
-          
+
           skelAngCurrentFrame.add((vector.Vector3(currentFrame[18], currentFrame[19], currentFrame[20]) - startingPosition).scaled(0.001)); // World_Root_Pos
           skelAngCurrentFrame.add(vector.Vector3(currentFrame[15], currentFrame[16], currentFrame[17])); // World_Root_Ang
           //skelAngCurrentFrame.add(vector.Vector3(currentFrame[15], currentFrame[16], currentFrame[17])); // World_Root_Ang
 
-          
+
           skelAngCurrentFrame.add(vector.Vector3(currentFrame[9], currentFrame[10], currentFrame[11])); // Root_L_Femur
           skelAngCurrentFrame.add(vector.Vector3(currentFrame[12], currentFrame[13], currentFrame[14])); // Root_R_Femur
 
@@ -179,14 +179,39 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
     super.dispose();
   }
 
+  Future<bool> navigateBack() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+              title: const Text('Are you sure?'),
+              content: const Text('Do you want to skip your exercises?'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('No')),
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    },
+                    child: const Text('Yes')),
+              ],
+            ) ??
+            false);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         //appBar: AppBar(title: const Text('Face Detection Sample')),
         appBar: AppBar(
-          title: Text("Reps Completed: " + widget.currentReps.toString()),
+          title: const Text('Exercise Session'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => navigateBack(),
+          ),
           actions: <Widget>[
             FlatButton(
-              textColor: Colors.white,
+              textColor: Colors.red,
               onPressed: () {
                 //configuration = ARKitConfiguration.worldTracking;
 
@@ -194,7 +219,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
 
                 startExercise = true;
                 addAveragedBodyAnchor();
-                
+
               },
               child: Text("Start"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
@@ -244,7 +269,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
               ),
             ),
           ),
-        ]) 
+        ])
       );
 
   void onARKitViewCreated(ARKitController arkitController) {
@@ -256,13 +281,13 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   }
 
   void _handleAddAnchor(ARKitAnchor anchor) {
-    
+
     if (!(anchor is ARKitBodyAnchor)) {
       return;
     }
     final material = ARKitMaterial(fillMode: ARKitFillMode.lines);
     final ARKitBodyAnchor faceAnchor = anchor;
-    
+
     //faceAnchor.geometry.materials.value = [material];
 
     anchorId = anchor.identifier;
@@ -339,7 +364,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
 
     final material = ARKitMaterial(
       diffuse: ARKitMaterialProperty(color: Colors.white),
-      
+
     );
 
     final line = ARKitLine(
@@ -352,15 +377,15 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   }
 
   ARKitNode _createCylinder(vector.Vector3 p, vector.Vector4 r, double h) => ARKitNode(
-    
+
       geometry: ARKitCylinder(
           radius: 0.05,//0.05,
           height: h,
           materials: _createLimbMaterial()),
        position: p,
        rotation: r,
-       
-       //eulerAngles: 
+
+       //eulerAngles:
     );
 
   List<ARKitMaterial> _createLimbMaterial() {
@@ -389,7 +414,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   void addAveragedBodyAnchor() {
     //ARKitAnchor averagedBodyAnchor = ARKitAnchor(averageBodyAnchorName,averageBodyAnchorId, )
     //TransformAverager transformAverager = TransformAverager();
-    //transformAverager.computeAverageTransform(); 
+    //transformAverager.computeAverageTransform();
     node = ARKitNode();
     constantBodyAnchor = ARKitAnchor(averageBodyAnchorName,averageBodyAnchorId, latestBodyAnchorTransform);
     node.position.value = latestBodyAnchorTransform.getTranslation();
@@ -410,7 +435,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
     arkitController.add(leftHeel, parentNodeName: node.name);
     leftToe = _createEye(Matrix4.identity(), Colors.black);
     arkitController.add(leftToe, parentNodeName: node.name);
-    
+
     rightHip = _createEye(Matrix4.identity(), Colors.red);
     arkitController.add(rightHip, parentNodeName: node.name);
     rightKnee = _createEye(Matrix4.identity(), Colors.green);
@@ -445,7 +470,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
     arkitController.add(rightKneeHeel, parentNodeName: node.name);
     rightHeelToe = _createCylinder(vector.Vector3.zero(),vector.Vector4.zero(), footLength);
     arkitController.add(rightHeelToe, parentNodeName: node.name);
-    
+
   }
 
   void updateBodyAnchorDistributions(Matrix4 currentBodyAnchorTransform) {
@@ -455,7 +480,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
     if (bodyAnchorTransformQueue.length >= initialCapacity) {
       bodyAnchorTransformSum -= bodyAnchorTransformQueue.removeLast();
     }
-    
+
     bodyAnchorTransformQueue.add(currentBodyAnchorTransform); */
     latestBodyAnchorTransform = currentBodyAnchorTransform;
   }
@@ -474,19 +499,19 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   void _updateEye(ARKitNode node, Matrix4 transform) {
     final scale = vector.Vector3(1, 1, 1);
     node.scale.value = scale;
-    
+
   }
 
 void _updateRootHip(ARKitNode node, Matrix4 transform) {
 
-    
+
    // print(transform.getColumn(0).x.toString() + " " + transform.getColumn(0).y.toString()  + " " + transform.getColumn(0).z.toString() );
    // print(transform.getColumn(1).x.toString() + " " + transform.getColumn(1).y.toString()  + " " + transform.getColumn(1).z.toString() );
    // print(transform.getColumn(2).x.toString() + " " + transform.getColumn(2).y.toString()  + " " + transform.getColumn(2).z.toString() );
    // print(transform.getColumn(3).x.toString() + " " + transform.getColumn(3).y.toString()  + " " + transform.getColumn(3).z.toString() );
     if (startExercise){
       //vector.Vector4 rootHipAxisAngle = rootHip.rotation.value;
-      _updateOverlay(vector.Vector3(transform.getColumn(3).x, transform.getColumn(3).y,transform.getColumn(3).z));  
+      _updateOverlay(vector.Vector3(transform.getColumn(3).x, transform.getColumn(3).y,transform.getColumn(3).z));
       //vector.Quaternion.axisAngle(vector.Vector3(rootHipAxisAngle[0], rootHipAxisAngle[1], rootHipAxisAngle[2]), rootHipAxisAngle[3]));
     }
     else {
@@ -497,7 +522,7 @@ void _updateRootHip(ARKitNode node, Matrix4 transform) {
     );
 
     }
-    
+
   }
 
 void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQuat) {
@@ -513,7 +538,7 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   vector.Quaternion l_Root_Hip = vector.Quaternion.fromTwoVectors(leftRootToHip, vector.Vector3(0,1,0));
   vector.Quaternion r_Root_Hip = vector.Quaternion.fromTwoVectors(rightRootToHip, vector.Vector3(0,1,0));
 
-  
+
   vector.Quaternion world_rootQuat = eulers2Quat(jointAngles[1].scaled(pi/180));
   vector.Quaternion l_Root_FemurQuat = eulers2Quat(jointAngles[2].scaled(pi/180));
   vector.Quaternion l_Femur_TibiaQuat = eulers2Quat(jointAngles[4].scaled(pi/180));
@@ -591,7 +616,7 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   leftKneeHeel.rotation.value = vector.Vector4(leftTibiaOrientation.axis[0], leftTibiaOrientation.axis[1], leftTibiaOrientation.axis[2], leftTibiaOrientation.radians);
   leftHeelToe.position.value = leftHeelJoint + (leftToeJoint - leftHeelJoint)/2;
   leftHeelToe.rotation.value = vector.Vector4(leftFootOrientation.axis[0], leftFootOrientation.axis[1], leftFootOrientation.axis[2], leftFootOrientation.radians);
-  
+
   rightRootHip.position.value = bodyRootPos + (rightHipJoint - bodyRootPos)/2;
   rightRootHip.rotation.value = vector.Vector4(rightHipOrientation.axis[0], rightHipOrientation.axis[1], rightHipOrientation.axis[2], rightHipOrientation.radians);
   rightHipKnee.position.value = rightHipJoint + (rightKneeJoint - rightHipJoint)/2;
@@ -609,7 +634,7 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   if (currentIndex >= skeletonAng.length) {
     currentIndex = 0;
   }
-  
+
 }
 
 vector.Quaternion eulers2Quat(vector.Vector3 eAngles){
@@ -675,14 +700,14 @@ void _updateRightShoulder(ARKitNode node, Matrix4 transform) {
       transform.getColumn(3).y,
       transform.getColumn(3).z,
     );
-    
+
   }
 }
 
 class Storage {
   Future<String> loadPositions() async {
     return await rootBundle.loadString('assets/m06_s01_e01_positions.txt');
-  } 
+  }
 
   Future<String> loadAngles() async {
     return await rootBundle.loadString('assets/m06_s01_e01_angles.txt');

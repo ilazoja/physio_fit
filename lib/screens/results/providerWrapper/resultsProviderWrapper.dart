@@ -18,7 +18,7 @@ class ResultsProviderWrapper extends StatelessWidget {
     print("PROVIDER");
     return StreamProvider<CompletedExercise>.value(
       value: CloudDatabase.streamResult(exercise.id),
-      child: Result(),
+      child: Result(exercise: exercise),
       // child: EventDetails(),
     );
   }

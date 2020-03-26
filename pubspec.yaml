@@ -65,6 +65,7 @@ dependencies:
   arkit_plugin: ^0.4.1
   ml_linalg: ^12.7.1
   data: ^0.2.0
+  fl_chart: ^0.8.7
 
   day_selector: ^1.0.0
   multiselect_formfield: ^0.1.2

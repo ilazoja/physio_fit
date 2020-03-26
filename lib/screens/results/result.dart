@@ -50,7 +50,9 @@ class _Result extends State<Result> {
     var items = <BarChartGroupData>[];
 
     for (int i = 0; i < widget.exercise.correct_reps_array.length; i++) {
-      items.add(makeGroupData(0, widget.exercise.correct_reps_array[i].toDouble(), widget.exercise.total_reps_array[i].toDouble()));
+      double correct_percentage = (widget.exercise.correct_reps_array[i].toDouble() / widget.exercise.total_reps_array[i])*100;
+      double attempt_percentage = (widget.exercise.total_reps_array[i].toDouble() / widget.exercise.total_reps)*100;
+      items.add(makeGroupData(0, correct_percentage, attempt_percentage));
     }
 
     rawBarGroups = items;
@@ -130,7 +132,7 @@ class _Result extends State<Result> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: BarChart(
                     BarChartData(
-                      maxY: 50,
+                      maxY: 115,
                       barTouchData: BarTouchData(
                           touchTooltipData: BarTouchTooltipData(
                             tooltipBgColor: Colors.transparent,
@@ -228,6 +230,42 @@ class _Result extends State<Result> {
                             }
                             else if (value == 40) {
                               return '40';
+                            }
+                            else if (value == 45) {
+                              return '45';
+                            }
+                            else if (value == 50) {
+                              return '50';
+                            }
+                            else if (value == 55) {
+                              return '55';
+                            }
+                            else if (value == 60) {
+                              return '60';
+                            }
+                            else if (value == 65) {
+                              return '65';
+                            }
+                            else if (value == 70) {
+                              return '70';
+                            }
+                            else if (value == 75) {
+                              return '75';
+                            }
+                            else if (value == 80) {
+                              return '80';
+                            }
+                            else if (value == 85) {
+                              return '85';
+                            }
+                            else if (value == 90) {
+                              return '90';
+                            }
+                            else if (value == 95) {
+                              return '95';
+                            }
+                            else if (value == 100) {
+                              return '100';
                             }
                             else {
                               return '';

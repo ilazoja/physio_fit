@@ -64,23 +64,23 @@ class _FavouritesBuilderState extends State<FavouritesBuilder> {
               )
             : Column(
                 children: <Widget>[
-                  SizedBox(
-                      width: double.infinity,
-                      child: CupertinoSegmentedControl<int>(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 7),
-                        selectedColor: Theme.of(context).accentColor,
-                        pressedColor: Theme.of(context).splashColor,
-                        borderColor: Theme.of(context).accentColor,
-                        children: WidgetHelpers.getTabWidgets(
-                            copy.favouritesTabBar[0],
-                            copy.favouritesTabBar[1],
-                            context),
-                        groupValue: _selectedIndexValue,
-                        onValueChanged: (int value) {
-                          setState(() => _selectedIndexValue = value);
-                        },
-                      )),
+                  // SizedBox(
+                  //     width: double.infinity,
+                  //     child: CupertinoSegmentedControl<int>(
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: 5, vertical: 7),
+                  //       selectedColor: Theme.of(context).accentColor,
+                  //       pressedColor: Theme.of(context).splashColor,
+                  //       borderColor: Theme.of(context).accentColor,
+                  //       children: WidgetHelpers.getTabWidgets(
+                  //           copy.favouritesTabBar[0],
+                  //           copy.favouritesTabBar[1],
+                  //           context),
+                  //       groupValue: _selectedIndexValue,
+                  //       onValueChanged: (int value) {
+                  //         setState(() => _selectedIndexValue = value);
+                  //       },
+                  //     )),
                   const Padding(
                     padding: EdgeInsets.all(2),
                   ),
@@ -106,20 +106,22 @@ class _FavouritesBuilderState extends State<FavouritesBuilder> {
       BuildContext context, User user, bool pastEvents) {
     final List<Widget> eventBoxes = <Widget>[];
 
-    final List<CompletedExercise> _allEvents = Provider.of<List<CompletedExercise>>(context);
+    final List<CompletedExercise> _allEvents =
+        Provider.of<List<CompletedExercise>>(context);
     print(_allEvents);
-      if (_allEvents != null) {
-          for (CompletedExercise _event in _allEvents) {
-            eventBoxes.add(FavouritesEventBox(event: _event));
-          }
+    if (_allEvents != null) {
+      for (CompletedExercise _event in _allEvents) {
+        eventBoxes.add(FavouritesEventBox(event: _event));
       }
-      return eventBoxes;
+    }
+    return eventBoxes;
   }
 
   List<Widget> _getSearchedWidgets(BuildContext context, User user) {
     final List<Widget> eventBoxes = <Widget>[];
 
-    final List<CompletedExercise> _allEvents = Provider.of<List<CompletedExercise>>(context);
+    final List<CompletedExercise> _allEvents =
+        Provider.of<List<CompletedExercise>>(context);
     if (_allEvents != null) {
       for (CompletedExercise _event in _allEvents) {
         eventBoxes.add(FavouritesEventBox(event: _event));

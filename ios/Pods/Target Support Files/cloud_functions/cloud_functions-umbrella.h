@@ -11,7 +11,6 @@
 #endif
 
 #import "CloudFunctionsPlugin.h"
-#import "UserAgent.h"
 
 FOUNDATION_EXPORT double cloud_functionsVersionNumber;
 FOUNDATION_EXPORT const unsigned char cloud_functionsVersionString[];

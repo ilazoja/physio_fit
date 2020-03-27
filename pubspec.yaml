@@ -155,6 +155,7 @@ flutter:
     - assets/imuDonning/right_shin_three_sensor_location.png
     - assets/imuDonning/Component-1.png
     - assets/images/PhysioFitLogo.png
+    - assets/images/bars.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

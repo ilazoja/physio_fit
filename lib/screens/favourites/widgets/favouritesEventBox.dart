@@ -12,14 +12,72 @@ import 'package:provider/provider.dart';
 import 'package:physio_tracker_app/models/event.dart';
 import 'package:physio_tracker_app/screens/eventDetails/providerWrapper/eventDetailsProviderWrapper.dart';
 import 'package:physio_tracker_app/screens/results/providerWrapper/resultsProviderWrapper.dart';
+
 class FavouritesEventBox extends StatelessWidget {
   const FavouritesEventBox({@required this.event});
 
   final CompletedExercise event;
 
+  static const String squat = 'assets/images/squats.png';
+  static const String flexion = 'assets/images/knee_flexion_extension.jpg';
+  static const String adduction = 'assets/images/hip_adduction.png';
+
   @override
   Widget build(BuildContext context) {
     final FirebaseUser _currUser = Provider.of<FirebaseUser>(context);
+
+    String imageurl = "";
+    if (event.name.toLowerCase() == "squat") {
+      imageurl = squat;
+    } else if (event.name.toLowerCase() == "flexion") {
+      imageurl = flexion;
+    } else {
+      imageurl = adduction;
+    }
+
+    Widget createCard() {
+      return Padding(
+          padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.99,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).push<dynamic>(
+                    DefaultPageRoute<dynamic>(
+                        pageRoute: ResultsProviderWrapper(exercise: event))),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  color: const Color.fromRGBO(35, 35, 63, 1.0),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    child: Center(
+                        child: Column(
+                      children: <Widget>[
+                        const ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0)),
+                            child: Image(
+                                image: AssetImage('assets/images/bars.png'))),
+                        const SizedBox(height: 8),
+                        Text(
+                          'View Weekly Summary',
+                          style: TextStyle(
+                            color: const Color.fromRGBO(255, 255, 255, 1.0),
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    )),
+                  ),
+                ),
+              )));
+    }
+
+    return createCard();
 
     return SafeArea(
       child: Card(
@@ -45,20 +103,9 @@ class FavouritesEventBox extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    child: CachedNetworkImage(
-                      imageUrl: '',
-                      placeholder: (BuildContext context, String url) =>
-                          const Center(
-                          heightFactor: 0.4,
-                          child: CircularProgressIndicator()),
-                      errorWidget:
-                          (BuildContext context, String url, Object error) =>
-                              Icon(Icons.error),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Image(image: AssetImage(imageurl))),
                   Container(
                     padding: const EdgeInsets.only(top: 5.0),
                     alignment: Alignment.topRight,

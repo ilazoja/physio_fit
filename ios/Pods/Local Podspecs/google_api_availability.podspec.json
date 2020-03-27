@@ -1,6 +1,6 @@
 {
   "name": "google_api_availability",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "summary": "A Flutter plugin to check the availability of Google Play Services on an Android device.",
   "description": "A Flutter plugin to check the availability of Google Play Services on an Android device.",
   "homepage": "https://github.com/baseflowit/flutter-google-api-availability",

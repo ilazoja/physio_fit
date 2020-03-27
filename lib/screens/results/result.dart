@@ -16,8 +16,6 @@ class Result extends StatefulWidget {
   _Result createState() => _Result();
 }
 
-
-
 class _Result extends State<Result> {
   final Color leftBarColor = const Color(0xff53fdd7);
   final Color rightBarColor = const Color(0xffff5182);
@@ -31,7 +29,10 @@ class _Result extends State<Result> {
   TextEditingController passwordController = TextEditingController();
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
-    return BarChartGroupData(barsSpace: 4, x: x,  showingTooltipIndicators: [0, 1], barRods: [
+    return BarChartGroupData(barsSpace: 4, x: x, showingTooltipIndicators: [
+      0,
+      1
+    ], barRods: [
       BarChartRodData(
         y: y1,
         color: leftBarColor,
@@ -44,14 +45,25 @@ class _Result extends State<Result> {
       ),
     ]);
   }
+
   @override
   void initState() {
     super.initState();
     var items = <BarChartGroupData>[];
 
-    for (int i = 0; i < widget.exercise.correct_reps_array.length; i++) {
-      double correct_percentage = (widget.exercise.correct_reps_array[i].toDouble() / widget.exercise.total_reps_array[i])*100;
-      double attempt_percentage = (widget.exercise.total_reps_array[i].toDouble() / widget.exercise.total_reps)*100;
+    for (int i = 0; i < widget.exercise.correct_reps_h.length; i++) {
+      double correct_percentage =
+          ((widget.exercise.correct_reps_h[i].toDouble() +
+                      widget.exercise.correct_reps_k[i].toDouble() +
+                      widget.exercise.correct_reps_s[i].toDouble()) /
+                  (widget.exercise.attempted_h[i] +
+                      widget.exercise.attempted_k[i] +
+                      widget.exercise.attempted_s[i])) *
+              100;
+      double attempt_percentage =
+          (widget.exercise.total_reps_array[i].toDouble() /
+                  widget.exercise.total_reps) *
+              100;
       items.add(makeGroupData(0, correct_percentage, attempt_percentage));
     }
 
@@ -61,237 +73,297 @@ class _Result extends State<Result> {
     showingBarGroups = rawBarGroups;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print(widget.exercise);
-    Widget makeTransactionsIcon() {
-      const double width = 4.5;
-      const double space = 3.5;
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: width,
-            height: 10,
-            color: Colors.white.withOpacity(0.4),
-          ),
-          const SizedBox(
-            width: space,
-          ),
-          Container(
-            width: width,
-            height: 28,
-            color: Colors.white.withOpacity(0.8),
-          ),
-          const SizedBox(
-            width: space,
-          ),
-          Container(
-            width: width,
-            height: 42,
-            color: Colors.white.withOpacity(1),
-          ),
-          const SizedBox(
-            width: space,
-          ),
-          Container(
-            width: width,
-            height: 28,
-            color: Colors.white.withOpacity(0.8),
-          ),
-          const SizedBox(
-            width: space,
-          ),
-          Container(
-            width: width,
-            height: 10,
-            color: Colors.white.withOpacity(0.4),
-          ),
-        ],
-      );
-    }
-
-    print(showingBarGroups);
-
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: const Color(0xff2c4260),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: BarChart(
-                    BarChartData(
-                      maxY: 115,
-                      barTouchData: BarTouchData(
-                          touchTooltipData: BarTouchTooltipData(
-                            tooltipBgColor: Colors.transparent,
-                            tooltipPadding: const EdgeInsets.all(0),
-                            tooltipBottomMargin: 8,
-                            getTooltipItem: (
-                                BarChartGroupData group,
-                                int groupIndex,
-                                BarChartRodData rod,
-                                int rodIndex,
-                                ) {
-                              return BarTooltipItem(
-                                rod.y.round().toString(),
-                                TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              );
-                            },
-                          ),
-                          touchCallback: (response) {
-                            if (response.spot == null) {
-                              setState(() {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                              });
-                              return;
-                            }
-
-                            touchedGroupIndex = response.spot.touchedBarGroupIndex;
-                            //touchedGroupIndex = response.spot.touchedBarGroupIndex;
-                            Navigator.of(context)
-                                .push<dynamic>(DefaultPageRoute<dynamic>(
-                                pageRoute: ResultDetail(exercise: widget.exercise, index: touchedGroupIndex, )));
-                          }),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        bottomTitles: SideTitles(
-                          showTitles: true,
-                          textStyle: TextStyle(
-                              color: const Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 20,
-                          getTitles: (double value) {
-                            switch (value.toInt()) {
-                              case 0:
-                                return 'Mon';
-                              case 1:
-                                return 'Tue';
-                              case 2:
-                                return 'Wed';
-                              case 3:
-                                return 'Thu';
-                              case 4:
-                                return 'Fri';
-                              case 5:
-                                return 'Sat';
-                              case 6:
-                                return 'Sun';
-                              default:
-                                return '';
-                            }
-                          },
-                        ),
-                        leftTitles: SideTitles(
-                          showTitles: true,
-                          textStyle: TextStyle(
-                              color: const Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 32,
-                          reservedSize: 14,
-                          getTitles: (value) {
-                            if (value == 0) {
-                              return '0';
-                            } else if (value == 5) {
-                              return '5';
-                            } else if (value == 10) {
-                              return '10';
-                            } else if (value == 15) {
-                              return '15';
-                            }
-                            else if (value == 20) {
-                              return '20';
-                            }
-                            else if (value == 25) {
-                              return '25';
-                            }
-                            else if (value == 30) {
-                              return '30';
-                            }
-                            else if (value == 35) {
-                              return '35';
-                            }
-                            else if (value == 40) {
-                              return '40';
-                            }
-                            else if (value == 45) {
-                              return '45';
-                            }
-                            else if (value == 50) {
-                              return '50';
-                            }
-                            else if (value == 55) {
-                              return '55';
-                            }
-                            else if (value == 60) {
-                              return '60';
-                            }
-                            else if (value == 65) {
-                              return '65';
-                            }
-                            else if (value == 70) {
-                              return '70';
-                            }
-                            else if (value == 75) {
-                              return '75';
-                            }
-                            else if (value == 80) {
-                              return '80';
-                            }
-                            else if (value == 85) {
-                              return '85';
-                            }
-                            else if (value == 90) {
-                              return '90';
-                            }
-                            else if (value == 95) {
-                              return '95';
-                            }
-                            else if (value == 100) {
-                              return '100';
-                            }
-                            else {
-                              return '';
-                            }
-                          },
-                        ),
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
-          ),
+  Widget _appBar() {
+    return AppBar(
+      title: Text(
+        'Results',
+        style: TextStyle(
+          color: const Color.fromRGBO(160, 187, 227, 1.0),
+          fontFamily: 'OpenSans',
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
         ),
       ),
+      backgroundColor: const Color(0xff2c4260),
+      elevation: 0.0,
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _appBar(),
+      backgroundColor: const Color(0xff2c4260),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width * 0.99,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1)),
+              color: const Color(0xff2c4260),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                        child: BarChart(
+                          BarChartData(
+                            maxY: 115,
+                            barTouchData: BarTouchData(
+                                touchTooltipData: BarTouchTooltipData(
+                                  tooltipBgColor: Colors.transparent,
+                                  tooltipPadding: const EdgeInsets.all(0),
+                                  tooltipBottomMargin: 8,
+                                  getTooltipItem: (
+                                    BarChartGroupData group,
+                                    int groupIndex,
+                                    BarChartRodData rod,
+                                    int rodIndex,
+                                  ) {
+                                    return BarTooltipItem(
+                                      rod.y.round().toString(),
+                                      TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                touchCallback: (response) {
+                                  if (response.spot == null) {
+                                    setState(() {
+                                      touchedGroupIndex = -1;
+                                      showingBarGroups = List.of(rawBarGroups);
+                                    });
+                                    return;
+                                  }
 
+                                  touchedGroupIndex =
+                                      response.spot.touchedBarGroupIndex;
+                                  //touchedGroupIndex = response.spot.touchedBarGroupIndex;
+                                  Navigator.of(context)
+                                      .push<dynamic>(DefaultPageRoute<dynamic>(
+                                          pageRoute: ResultDetail(
+                                    exercise: widget.exercise,
+                                    index: touchedGroupIndex,
+                                  )));
+                                }),
+                            axisTitleData: FlAxisTitleData(
+                              show: true,
+                              bottomTitle: AxisTitle(
+                                showTitle: true,
+                                titleText: 'Day',
+                                textStyle: TextStyle(
+                                    color: const Color.fromRGBO(
+                                        160, 187, 227, 1.0),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                              leftTitle: AxisTitle(
+                                showTitle: true,
+                                titleText: 'Percentage (%)',
+                                margin: 20,
+                                textStyle: TextStyle(
+                                    color: const Color.fromRGBO(
+                                        160, 187, 227, 1.0),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                              topTitle: AxisTitle(
+                                showTitle: true,
+                                titleText: 'Weekly Summary',
+                                margin: -10,
+                                textStyle: TextStyle(
+                                    color: const Color.fromRGBO(
+                                        160, 187, 227, 1.0),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            titlesData: FlTitlesData(
+                              show: true,
+                              bottomTitles: SideTitles(
+                                showTitles: true,
+                                textStyle: TextStyle(
+                                    color: const Color(0xff7589a2),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                margin: 20,
+                                getTitles: (double value) {
+                                  switch (value.toInt()) {
+                                    case 0:
+                                      return 'Mon';
+                                    case 1:
+                                      return 'Tue';
+                                    case 2:
+                                      return 'Wed';
+                                    case 3:
+                                      return 'Thu';
+                                    case 4:
+                                      return 'Fri';
+                                    case 5:
+                                      return 'Sat';
+                                    case 6:
+                                      return 'Sun';
+                                    default:
+                                      return '';
+                                  }
+                                },
+                              ),
+                              leftTitles: SideTitles(
+                                showTitles: true,
+                                textStyle: TextStyle(
+                                    color: const Color(0xff7589a2),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
+                                reservedSize: 14,
+                                getTitles: (value) {
+                                  if (value == 0) {
+                                    return '0';
+                                  } else if (value == 5) {
+                                    return '5';
+                                  } else if (value == 10) {
+                                    return '10';
+                                  } else if (value == 15) {
+                                    return '15';
+                                  } else if (value == 20) {
+                                    return '20';
+                                  } else if (value == 25) {
+                                    return '25';
+                                  } else if (value == 30) {
+                                    return '30';
+                                  } else if (value == 35) {
+                                    return '35';
+                                  } else if (value == 40) {
+                                    return '40';
+                                  } else if (value == 45) {
+                                    return '45';
+                                  } else if (value == 50) {
+                                    return '50';
+                                  } else if (value == 55) {
+                                    return '55';
+                                  } else if (value == 60) {
+                                    return '60';
+                                  } else if (value == 65) {
+                                    return '65';
+                                  } else if (value == 70) {
+                                    return '70';
+                                  } else if (value == 75) {
+                                    return '75';
+                                  } else if (value == 80) {
+                                    return '80';
+                                  } else if (value == 85) {
+                                    return '85';
+                                  } else if (value == 90) {
+                                    return '90';
+                                  } else if (value == 95) {
+                                    return '95';
+                                  } else if (value == 100) {
+                                    return '100';
+                                  } else {
+                                    return '';
+                                  }
+                                },
+                              ),
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            barGroups: showingBarGroups,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(60.0, 0.0, 0.0, 0.0),
+                child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.height * 0.35,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 3,
+                          color: const Color.fromRGBO(160, 187, 227, 1.0),
+                          style: BorderStyle.solid),
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                        child: Row(
+                          children: <Widget>[
+                            Center(
+                                child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xff53fdd7),
+                                        shape: BoxShape.rectangle))),
+                            const SizedBox(width: 10.0),
+                            const Center(
+                                child: Text(
+                              'Accuracy',
+                              style: TextStyle(
+                                color: Color.fromRGBO(160, 187, 227, 1.0),
+                                fontFamily: 'OpenSans',
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                            const SizedBox(width: 10.0),
+                            const Center(
+                                child: Text(
+                              '|',
+                              style: TextStyle(
+                                color: Color.fromRGBO(160, 187, 227, 1.0),
+                                fontFamily: 'OpenSans',
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                            const SizedBox(width: 10.0),
+                            Center(
+                                child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: const BoxDecoration(
+                                        color: Color(0xffff5182),
+                                        shape: BoxShape.rectangle))),
+                            const SizedBox(width: 10.0),
+                            const Center(
+                                child: Text(
+                              'Completion',
+                              style: TextStyle(
+                                color: Color.fromRGBO(160, 187, 227, 1.0),
+                                fontFamily: 'OpenSans',
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                          ],
+                        )))),
+            //Center(child: Text("Hello"))))),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class Day {

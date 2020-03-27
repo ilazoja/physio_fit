@@ -66,13 +66,13 @@ class _AppNavState extends State<AppNavigation> {
           .document(_user.uid)
           .get()
           .then((DocumentSnapshot ds) {
-            // use ds as a snapshot
-            final data = ds.data;
-            if (data['email'] == null) {
-              isUser = false;
-            } else {
-              isUser = true;
-            }
+        // use ds as a snapshot
+        final data = ds.data;
+        if (data['email'] == null) {
+          isUser = false;
+        } else {
+          isUser = true;
+        }
       });
     }
     final PreferredSize appBar = PreferredSize(
@@ -93,70 +93,70 @@ class _AppNavState extends State<AppNavigation> {
       ),
     );
 
-    return isUser ? Scaffold(
-      resizeToAvoidBottomInset : false,
-      appBar:
-      _selectedIndex == accountPageIndex ? null : appBar,
-      body: <Widget>[
-        ExploreProviderWrapper(
-          textController: exploreTextController,
-        ),
-        Favourites(textController: favouriteTextController),
-        Planner(
-          textController: plannerTextController,
-        ),
-        Connections(),
-        Account(),
-      ].elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).primaryColor,
-        backgroundColor: Theme.of(context).appBarTheme.color,
-        unselectedItemColor: Theme.of(context).primaryColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              title: Text('Home'), icon: Icon(Icons.explore)),
-          BottomNavigationBarItem(
-              title: Text('Exercises'), icon: Icon(Icons.accessibility)),
-          BottomNavigationBarItem(
-              title: Text('Results'), icon: Icon(Icons.show_chart)),
-          BottomNavigationBarItem(
-              title: Text('Messages'), icon: Icon(Icons.message)),
-          BottomNavigationBarItem(
-              title: Text('Options'), icon: Icon(Icons.settings))
-        ],
-        onTap: _onBarItemTap,
-        currentIndex: _selectedIndex,
-      ),
-    ) : Scaffold(
-      resizeToAvoidBottomInset : false,
-      appBar:
-      _selectedIndex == 3 ? null : appBar,
-      body: <Widget>[
-        PhysioHomeProviderWrapper(
-          textController: exploreTextController,
-        ),
-        Favourites(textController: favouriteTextController),
-        Connections(),
-        Account(),
-      ].elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).primaryColor,
-        backgroundColor: Theme.of(context).appBarTheme.color,
-        unselectedItemColor: Theme.of(context).primaryColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              title: Text('Home - Physio'), icon: Icon(Icons.explore)),
-          BottomNavigationBarItem(
-              title: Text('Results'), icon: Icon(Icons.show_chart)),
-          BottomNavigationBarItem(
-              title: Text('Messages'), icon: Icon(Icons.message)),
-          BottomNavigationBarItem(
-              title: Text('Options'), icon: Icon(Icons.settings))
-        ],
-        onTap: _onBarItemTap,
-        currentIndex: _selectedIndex,
-      ),
-    );
+    return isUser
+        ? Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: _selectedIndex == accountPageIndex ? null : appBar,
+            body: <Widget>[
+              ExploreProviderWrapper(
+                textController: exploreTextController,
+              ),
+              Favourites(textController: favouriteTextController),
+              Planner(
+                textController: plannerTextController,
+              ),
+              Connections(),
+              Account(),
+            ].elementAt(_selectedIndex),
+            bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).appBarTheme.color,
+              unselectedItemColor: Theme.of(context).primaryColor,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    title: Text('Home'), icon: Icon(Icons.explore)),
+                BottomNavigationBarItem(
+                    title: Text('Results'), icon: Icon(Icons.accessibility)),
+                BottomNavigationBarItem(
+                    title: Text('Calendar'), icon: Icon(Icons.show_chart)),
+                BottomNavigationBarItem(
+                    title: Text('Messages'), icon: Icon(Icons.message)),
+                BottomNavigationBarItem(
+                    title: Text('Options'), icon: Icon(Icons.settings))
+              ],
+              onTap: _onBarItemTap,
+              currentIndex: _selectedIndex,
+            ),
+          )
+        : Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: _selectedIndex == 3 ? null : appBar,
+            body: <Widget>[
+              PhysioHomeProviderWrapper(
+                textController: exploreTextController,
+              ),
+              Favourites(textController: favouriteTextController),
+              Connections(),
+              Account(),
+            ].elementAt(_selectedIndex),
+            bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).appBarTheme.color,
+              unselectedItemColor: Theme.of(context).primaryColor,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    title: Text('Home - Physio'), icon: Icon(Icons.explore)),
+                BottomNavigationBarItem(
+                    title: Text('Results'), icon: Icon(Icons.show_chart)),
+                BottomNavigationBarItem(
+                    title: Text('Messages'), icon: Icon(Icons.message)),
+                BottomNavigationBarItem(
+                    title: Text('Options'), icon: Icon(Icons.settings))
+              ],
+              onTap: _onBarItemTap,
+              currentIndex: _selectedIndex,
+            ),
+          );
   }
 
   @override

@@ -30,5 +30,7 @@
     ]
   },
   "static_framework": true,
-  "prepare_command": "echo // Generated file, do not edit > Classes/UserAgent.h\necho \"#define LIBRARY_VERSION @\\\"0.13.1-1\\\"\" >> Classes/UserAgent.h\necho \"#define LIBRARY_NAME @\\\"flutter-fire-fst\\\"\" >> Classes/UserAgent.h"
+  "pod_target_xcconfig": {
+    "GCC_PREPROCESSOR_DEFINITIONS": "LIBRARY_VERSION=\\@\\\"0.13.4-2\\\" LIBRARY_NAME=\\@\\\"flutter-fire-fst\\\""
+  }
 }

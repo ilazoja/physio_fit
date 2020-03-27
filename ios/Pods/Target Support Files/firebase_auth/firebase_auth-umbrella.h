@@ -11,7 +11,6 @@
 #endif
 
 #import "FLTFirebaseAuthPlugin.h"
-#import "UserAgent.h"
 
 FOUNDATION_EXPORT double firebase_authVersionNumber;
 FOUNDATION_EXPORT const unsigned char firebase_authVersionString[];

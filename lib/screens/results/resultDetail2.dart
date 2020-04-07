@@ -22,8 +22,8 @@ import 'package:physio_tracker_app/models/user.dart';
 import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
 import 'package:physio_tracker_app/screens/results/result.dart';
 
-class ResultDetail extends StatelessWidget {
-  ResultDetail({Key key, @required this.exercise, @required this.index})
+class ResultDetail2 extends StatelessWidget {
+  ResultDetail2({Key key, @required this.exercise, @required this.index})
       : super(key: key);
 
   final CompletedExercise exercise;
@@ -226,18 +226,18 @@ class ResultDetail extends StatelessWidget {
                         exercise.h_sets.toString()),
                 createSmallCards(
                     'Correct Reps',
-                    (exercise.correct_reps_h[index].toString() +
+                    (exercise.correct_reps_h_2[index].toString() +
                             '/' +
-                            exercise.attempted_h[index].toString())
+                            exercise.attempted_h_2[index].toString())
                         .toString()),
                 createSmallCards(
                     'Attemped Reps',
-                    (exercise.attempted_h[index].toString() +
+                    (exercise.attempted_h_2[index].toString() +
                             '/' +
-                            exercise.attempted_h[index].toString())
+                            exercise.attempted_h_2[index].toString())
                         .toString()),
                 createSmallCards('Score',
-                    (exercise.score_h[index].toString() + '%').toString()),
+                    (exercise.score_h_2[index].toString() + '%').toString()),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.19),
                 threeDots(0),
               ])),
@@ -255,18 +255,18 @@ class ResultDetail extends StatelessWidget {
                         exercise.k_sets.toString()),
                 createSmallCards(
                     'Correct Reps',
-                    (exercise.correct_reps_k[index].toString() +
+                    (exercise.correct_reps_k_2[index].toString() +
                             '/' +
-                            exercise.attempted_k[index].toString())
+                            exercise.attempted_k_2[index].toString())
                         .toString()),
                 createSmallCards(
                     'Attemped Reps',
-                    (exercise.attempted_k[index].toString() +
+                    (exercise.attempted_k_2[index].toString() +
                             '/' +
-                            exercise.attempted_k[index].toString())
+                            exercise.attempted_k_2[index].toString())
                         .toString()),
                 createSmallCards('Score',
-                    (exercise.score_k[index].toString() + '%').toString()),
+                    (exercise.score_k_2[index].toString() + '%').toString()),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.19),
                 threeDots(1),
               ])),
@@ -284,18 +284,18 @@ class ResultDetail extends StatelessWidget {
                         exercise.s_sets.toString()),
                 createSmallCards(
                     'Correct Reps',
-                    (exercise.correct_reps_s[index].toString() +
+                    (exercise.correct_reps_s_2[index].toString() +
                             '/' +
-                            exercise.attempted_s[index].toString())
+                            exercise.attempted_s_2[index].toString())
                         .toString()),
                 createSmallCards(
                     'Attemped Reps',
-                    (exercise.attempted_s[index].toString() +
+                    (exercise.attempted_s_2[index].toString() +
                             '/' +
-                            exercise.attempted_s[index].toString())
+                            exercise.attempted_s_2[index].toString())
                         .toString()),
                 createSmallCards('Score',
-                    (exercise.score_s[index].toString() + '%').toString()),
+                    (exercise.score_s_2[index].toString() + '%').toString()),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.19),
                 threeDots(2),
               ])),

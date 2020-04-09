@@ -204,14 +204,14 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   Widget build(BuildContext context) => Scaffold(
         //appBar: AppBar(title: const Text('Face Detection Sample')),
         appBar: AppBar(
-          title: const Text('Exercise Session'),
+          title: const Text('Hip Abduction'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => navigateBack(),
           ),
           actions: <Widget>[
             FlatButton(
-              textColor: Colors.red,
+              textColor: Colors.teal,
               onPressed: () {
                 //configuration = ARKitConfiguration.worldTracking;
 
@@ -221,7 +221,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
                 addAveragedBodyAnchor();
 
               },
-              child: Text("Start"),
+              child: Text("Sets: 1/3"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
           ],
@@ -234,13 +234,16 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
             ),
           ),
           Positioned(
-            left: 10,
-            top: 10,
+            left: 320,
+            top: -50,
             child: Container(
               transform: latestBodyAnchorTransform,
               width: 200,
               height: 200,
-              child: AutoSizeText (
+              decoration: BoxDecoration( 
+                color: Colors.white, 
+                shape: BoxShape.circle),
+              /*child: AutoSizeText (
                 '# of Reps: ' + widget.currentReps.toString(),
                 style: TextStyle(
                   color: Colors.red,
@@ -248,10 +251,33 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
                   fontFamily: 'Open Sans',
                   fontSize: 40
                 )
-              ),
+              ), */
             ),
           ),
           Positioned(
+            left: 0,
+            top: 0,
+            child: Container(
+              transform: latestBodyAnchorTransform,
+              width: 335,
+              height: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration( 
+                color: Colors.white, 
+                shape: BoxShape.rectangle),
+              child: AutoSizeText (
+                'Great!',
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Open Sans',
+                  fontSize: 30
+                )
+                
+              ), 
+            ),
+          ),
+         /* Positioned(
             left: 10,
             top: 500,
             child: Container(
@@ -265,6 +291,78 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
                   fontWeight: FontWeight.w900,
                   fontFamily: 'Open Sans',
                   fontSize: 40
+                )
+              ),
+            ),
+          ),*/
+          Positioned(
+            left: 350,
+            top: 90,
+            child: Container(
+              transform: latestBodyAnchorTransform,
+              width: 200,
+              height: 200,
+              child: AutoSizeText (
+                'Reps' + widget.message,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Open Sans',
+                  fontSize: 25
+                )
+              ),
+            ),
+          ),
+          Positioned(
+            left: 340,
+            top: 0,
+            child: Container(
+              transform: latestBodyAnchorTransform,
+              width: 200,
+              height: 200,
+              child: AutoSizeText (
+                '3' + widget.message,
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Open Sans',
+                  fontSize: 50
+                )
+              ),
+            ),
+          ),
+          Positioned(
+            left: 365,
+            top: 20,
+            child: Container(
+              transform: latestBodyAnchorTransform,
+              width: 200,
+              height: 200,
+              child: AutoSizeText (
+                '/' + widget.message,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Open Sans',
+                  fontSize: 50
+                )
+              ),
+            ),
+          ),
+          Positioned(
+            left: 375,
+            top: 48,
+            child: Container(
+              transform: latestBodyAnchorTransform,
+              width: 200,
+              height: 200,
+              child: AutoSizeText (
+                '10' + widget.message,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Open Sans',
+                  fontSize: 30
                 )
               ),
             ),

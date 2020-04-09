@@ -150,16 +150,14 @@ class _AccountState extends State<Account> {
                             padding: EdgeInsets.symmetric(vertical: 6.0)),
                         Container(
                           alignment: const Alignment(-1.0, 0.0),
-                          child: Text(copy.aboutMe,
+                          child: Text("Exercise Reminder Time",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
                         ),
                         Container(
                           alignment: const Alignment(-1.0, 0.0),
                           child: AutoSizeText(
-                            (user.biography == null || user.biography.isEmpty)
-                                ? copy.biographyEditingText
-                                : user.biography,
+                            '8:30 PM'
                           ),
                         ),
                         const Padding(

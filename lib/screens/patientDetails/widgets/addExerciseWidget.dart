@@ -233,7 +233,7 @@ class _ExerciseWidgetState extends State<AddExerciseWidget> {
                   decoration: InputDecoration(
                     fillColor: Colors.white12,
                     filled: true,
-                    hintText: "Flexion/Adduction/Squat",
+                    hintText: "Flexion/Abduction/Squat",
                     hintStyle: loginTheme.hintStyle,
                     errorStyle: TextStyle(
                         color: Colors.redAccent,
@@ -280,33 +280,6 @@ class _ExerciseWidgetState extends State<AddExerciseWidget> {
                 },
               ),
             ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Icon(
-                          Icons.access_time,
-                          color: Colors.white,
-                          size: 24.0,
-                          semanticLabel: 'Text to announce in accessibility modes',
-                        ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: RaisedButton(
-                        onPressed: () => _selectTime(context),
-                        child: Text('Select Time'),
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(20, 10, 10, 5),
-                        child: AutoSizeText(hour + ":" + selectedTime.minute.toString() + " " + amOrPm , style: TextStyle(color: Colors.white, fontSize: 22, )),
-                    )
-                  ],
-                ),
                 TextField(
                   decoration: InputDecoration(
                     fillColor: Colors.white12,
@@ -357,7 +330,61 @@ class _ExerciseWidgetState extends State<AddExerciseWidget> {
                     });
                   },
                 )
-            )
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child:  TextField(
+                  decoration: InputDecoration(
+                    fillColor: Colors.white12,
+                    filled: true,
+                    hintText: "Target Angle",
+                    hintStyle: loginTheme.hintStyle,
+                    errorStyle: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold
+                    ),
+                    icon: Icon(Icons.perm_data_setting, color: Colors.white),
+                    border: InputBorder.none,
+                  ),
+                  cursorColor: Theme.of(context).cursorColor,
+                  style: Theme.of(context)
+                      .textTheme
+                      .body2
+                      .copyWith(color: loginTheme.primaryColor),
+                  onChanged: (String val) {
+                    setState(() {
+                      repetitions = int.parse(val);
+                    });
+                  },
+                )
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child:  TextField(
+                  decoration: InputDecoration(
+                    fillColor: Colors.white12,
+                    filled: true,
+                    hintText: "Time to Complete Rep",
+                    hintStyle: loginTheme.hintStyle,
+                    errorStyle: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold
+                    ),
+                    icon: Icon(Icons.timer, color: Colors.white),
+                    border: InputBorder.none,
+                  ),
+                  cursorColor: Theme.of(context).cursorColor,
+                  style: Theme.of(context)
+                      .textTheme
+                      .body2
+                      .copyWith(color: loginTheme.primaryColor),
+                  onChanged: (String val) {
+                    setState(() {
+                      repetitions = int.parse(val);
+                    });
+                  },
+                )
+            ),
           ]
       ),
     ]);

@@ -1,5 +1,13 @@
 # Physio Tracker
 
+Demos:
+
+![](demo.gif)
+
+![](ARDemo.gif)
+
+
+
 Steps to build on ios.
 1) Add signing capabilities
 2) Go to Runner on left hand menu -> Targets -> Runner -> Build Settings -> Signing -> Delete Code Signing Entitlements 

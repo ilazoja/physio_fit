@@ -27,6 +27,16 @@ class CompletedExercise {
     this.score_h,
     this.score_k,
     this.score_s,
+    this.correct_reps_h_2,
+    this.correct_reps_k_2,
+    this.correct_reps_s_2,
+    this.total_reps_array_2,
+    this.attempted_h_2,
+    this.attempted_k_2,
+    this.attempted_s_2,
+    this.score_h_2,
+    this.score_k_2,
+    this.score_s_2,
   });
 
   factory CompletedExercise.fromFireStore(DocumentSnapshot doc) {
@@ -55,6 +65,16 @@ class CompletedExercise {
       score_h: data['score_h'],
       score_k: data['score_k'],
       score_s: data['score_s'],
+      correct_reps_h_2: data['correct_reps_h_2'],
+      correct_reps_k_2: data['correct_reps_k_2'],
+      correct_reps_s_2: data['correct_reps_s_2'],
+      total_reps_array_2: data['total_reps_array_2'],
+      attempted_h_2: data['attempted_h_2'],
+      attempted_k_2: data['attempted_k_2'],
+      attempted_s_2: data['attempted_s_2'],
+      score_h_2: data['score_h_2'],
+      score_k_2: data['score_k_2'],
+      score_s_2: data['score_s_2'],
     );
   }
   final String id;
@@ -80,4 +100,14 @@ class CompletedExercise {
   final dynamic score_h;
   final dynamic score_k;
   final dynamic score_s;
+  final dynamic correct_reps_h_2;
+  final dynamic correct_reps_k_2;
+  final dynamic correct_reps_s_2;
+  final dynamic total_reps_array_2;
+  final dynamic attempted_h_2;
+  final dynamic attempted_k_2;
+  final dynamic attempted_s_2;
+  final dynamic score_h_2;
+  final dynamic score_k_2;
+  final dynamic score_s_2;
 }

@@ -6,6 +6,7 @@ import 'package:physio_tracker_app/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:physio_tracker_app/models/completed_exercise.dart';
 import 'package:physio_tracker_app/screens/results/resultDetail.dart';
+import 'package:physio_tracker_app/screens/results/resultDetail2.dart';
 import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -18,10 +19,13 @@ class Result extends StatefulWidget {
 
 class _Result extends State<Result> {
   final Color leftBarColor = const Color(0xff53fdd7);
-  final Color rightBarColor = const Color(0xffff5182);
+  final Color rightBarColor = const Color.fromRGBO(3, 127, 252, 1.0);
   final double width = 14;
   List<BarChartGroupData> rawBarGroups;
   List<BarChartGroupData> showingBarGroups;
+
+  List<BarChartGroupData> rawBarGroupsSecondDay;
+  List<BarChartGroupData> showingBarGroupsSecondDay;
 
   int touchedGroupIndex;
   bool _rememberMe = false;
@@ -49,6 +53,7 @@ class _Result extends State<Result> {
   @override
   void initState() {
     super.initState();
+    print('hello im here');
     var items = <BarChartGroupData>[];
 
     for (int i = 0; i < widget.exercise.correct_reps_h.length; i++) {
@@ -64,13 +69,41 @@ class _Result extends State<Result> {
           (widget.exercise.total_reps_array[i].toDouble() /
                   widget.exercise.total_reps) *
               100;
-      items.add(makeGroupData(0, correct_percentage, attempt_percentage));
+      if (widget.exercise.correct_reps_h[i].toDouble() == 0) {
+        items.add(makeGroupData(0, 0.0, 0.0));
+      } else {
+        items.add(makeGroupData(0, correct_percentage, attempt_percentage));
+      }
     }
 
     rawBarGroups = items;
-    print(rawBarGroups.toString());
-
     showingBarGroups = rawBarGroups;
+
+    var itemsSecondDay = <BarChartGroupData>[];
+
+    for (int i = 0; i < widget.exercise.correct_reps_h_2.length; i++) {
+      double correct_percentage =
+          ((widget.exercise.correct_reps_h_2[i].toDouble() +
+                      widget.exercise.correct_reps_k_2[i].toDouble() +
+                      widget.exercise.correct_reps_s_2[i].toDouble()) /
+                  (widget.exercise.attempted_h_2[i] +
+                      widget.exercise.attempted_k_2[i] +
+                      widget.exercise.attempted_s_2[i])) *
+              100;
+      double attempt_percentage =
+          (widget.exercise.total_reps_array_2[i].toDouble() /
+                  widget.exercise.total_reps) *
+              100;
+      if (widget.exercise.correct_reps_h_2[i].toDouble() == 0) {
+        itemsSecondDay.add(makeGroupData(0, 0.0, 0.0));
+      } else {
+        itemsSecondDay
+            .add(makeGroupData(0, correct_percentage, attempt_percentage));
+      }
+    }
+
+    rawBarGroupsSecondDay = itemsSecondDay;
+    showingBarGroupsSecondDay = rawBarGroupsSecondDay;
   }
 
   Widget _appBar() {
@@ -86,11 +119,17 @@ class _Result extends State<Result> {
       ),
       backgroundColor: const Color(0xff2c4260),
       elevation: 0.0,
+      leading: IconButton(
+        iconSize: 40,
+        icon: Icon(Icons.chevron_left),
+        onPressed: () =>
+            Navigator.of(context).popUntil((route) => route.isFirst),
+      ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget graphScreen(String title, List<BarChartGroupData> raw,
+      List<BarChartGroupData> showing) {
     return Scaffold(
       appBar: _appBar(),
       backgroundColor: const Color(0xff2c4260),
@@ -122,7 +161,7 @@ class _Result extends State<Result> {
                                 touchTooltipData: BarTouchTooltipData(
                                   tooltipBgColor: Colors.transparent,
                                   tooltipPadding: const EdgeInsets.all(0),
-                                  tooltipBottomMargin: 8,
+                                  tooltipBottomMargin: 4,
                                   getTooltipItem: (
                                     BarChartGroupData group,
                                     int groupIndex,
@@ -142,7 +181,7 @@ class _Result extends State<Result> {
                                   if (response.spot == null) {
                                     setState(() {
                                       touchedGroupIndex = -1;
-                                      showingBarGroups = List.of(rawBarGroups);
+                                      showingBarGroups = List.of(raw);
                                     });
                                     return;
                                   }
@@ -150,12 +189,22 @@ class _Result extends State<Result> {
                                   touchedGroupIndex =
                                       response.spot.touchedBarGroupIndex;
                                   //touchedGroupIndex = response.spot.touchedBarGroupIndex;
-                                  Navigator.of(context)
-                                      .push<dynamic>(DefaultPageRoute<dynamic>(
-                                          pageRoute: ResultDetail(
-                                    exercise: widget.exercise,
-                                    index: touchedGroupIndex,
-                                  )));
+                                  if (title ==
+                                      'Weekly Summary: March 16 - 20') {
+                                    Navigator.of(context).push<dynamic>(
+                                        DefaultPageRoute<dynamic>(
+                                            pageRoute: ResultDetail2(
+                                      exercise: widget.exercise,
+                                      index: touchedGroupIndex,
+                                    )));
+                                  } else {
+                                    Navigator.of(context).push<dynamic>(
+                                        DefaultPageRoute<dynamic>(
+                                            pageRoute: ResultDetail(
+                                      exercise: widget.exercise,
+                                      index: touchedGroupIndex,
+                                    )));
+                                  }
                                 }),
                             axisTitleData: FlAxisTitleData(
                               show: true,
@@ -167,6 +216,7 @@ class _Result extends State<Result> {
                                         160, 187, 227, 1.0),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15),
+                                textAlign: TextAlign.center,
                               ),
                               leftTitle: AxisTitle(
                                 showTitle: true,
@@ -180,7 +230,7 @@ class _Result extends State<Result> {
                               ),
                               topTitle: AxisTitle(
                                 showTitle: true,
-                                titleText: 'Weekly Summary',
+                                titleText: title,
                                 margin: -10,
                                 textStyle: TextStyle(
                                     color: const Color.fromRGBO(
@@ -278,7 +328,7 @@ class _Result extends State<Result> {
                             borderData: FlBorderData(
                               show: false,
                             ),
-                            barGroups: showingBarGroups,
+                            barGroups: showing,
                           ),
                         ),
                       ),
@@ -293,10 +343,11 @@ class _Result extends State<Result> {
           ),
           Container(
             child: Padding(
-                padding: const EdgeInsets.fromLTRB(60.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.15, 0.0, 0.0, 0.0),
                 child: Container(
                     height: 50,
-                    width: MediaQuery.of(context).size.height * 0.35,
+                    width: 250,
                     decoration: BoxDecoration(
                       border: Border.all(
                           width: 3,
@@ -343,7 +394,7 @@ class _Result extends State<Result> {
                                     width: 10,
                                     height: 10,
                                     decoration: const BoxDecoration(
-                                        color: Color(0xffff5182),
+                                        color: Color.fromRGBO(3, 127, 252, 1.0),
                                         shape: BoxShape.rectangle))),
                             const SizedBox(width: 10.0),
                             const Center(
@@ -362,6 +413,19 @@ class _Result extends State<Result> {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView(
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        graphScreen('Weekly Summary: March 16 - 20', rawBarGroupsSecondDay,
+            showingBarGroupsSecondDay),
+        graphScreen(
+            'Weekly Summary: March 23 - 27', rawBarGroups, showingBarGroups),
+      ],
     );
   }
 }

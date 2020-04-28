@@ -12,6 +12,7 @@ class ExerciseStartScreen extends StatefulWidget {
 }
 
 class _ExerciseStartScreenState extends State<ExerciseStartScreen> {
+  final TextEditingController _textFieldController = TextEditingController();
   Exercise _exercise;
   static const String squat = 'assets/images/squat.png';
   static const String flexion = 'assets/images/knee.png';
@@ -22,17 +23,23 @@ class _ExerciseStartScreenState extends State<ExerciseStartScreen> {
         context: context,
         builder: (BuildContext context) =>
             AlertDialog(
-              title: const Text('Are you sure?'),
-              content: const Text('Do you want to skip your exercises?'),
+              title: const Text('Do you want to skip scheduled exercise?'),
+              content: TextField(
+                controller: _textFieldController,
+                decoration: const InputDecoration(
+                    hintText: 'Provide reason if skipping exercise'),
+              ),
               actions: <Widget>[
                 FlatButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('No')),
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    child: const Text('Cancel')),
                 FlatButton(
                     onPressed: () {
-                      Navigator.of(context).pop(true);
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     },
-                    child: const Text('Yes')),
+                    child: const Text('Done')),
               ],
             ) ??
             false);
@@ -125,18 +132,42 @@ class _ExerciseStartScreenState extends State<ExerciseStartScreen> {
   Widget _playButton() {
     return RawMaterialButton(
       onPressed: () {
-        Navigator.of(context, rootNavigator: true)
-        .push<dynamic>(DefaultPageRoute<dynamic>(
-        pageRoute: ExplainImu(exercise: _exercise, angleMetadata: copy.angleMetaData)));},
+        Navigator.of(context, rootNavigator: true).push<dynamic>(
+            DefaultPageRoute<dynamic>(
+                pageRoute: ExplainImu(
+                    exercise: _exercise, angleMetadata: copy.angleMetaData)));
+      },
       child: Icon(
         Icons.play_arrow,
         color: Colors.white,
-        size: 60.0,
+        size: 50.0,
       ),
       shape: const CircleBorder(),
       elevation: 2.0,
       fillColor: Colors.green,
       padding: const EdgeInsets.all(15.0),
+    );
+  }
+
+  Widget _skipExerciseButton() {
+    return RaisedButton(
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(1.0),
+          side: BorderSide(color: Colors.lightGreen, width: 2.0)),
+      onPressed: () {
+        navigateBack();
+      },
+      color: const Color(0xFF398AE5),
+      textColor: Colors.white,
+      child: Text(
+        'Skip Exercise',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w900,
+          fontSize: 29.0,
+        ),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
@@ -148,81 +179,73 @@ class _ExerciseStartScreenState extends State<ExerciseStartScreen> {
     if (_exercise != null) {
       if (_exercise.type.toLowerCase() == "squat") {
         imageUrl = squat;
-      }
-      else if (_exercise.type.toLowerCase() == "flexion") {
+      } else if (_exercise.type.toLowerCase() == "flexion") {
         imageUrl = flexion;
-      }
-      else {
+      } else {
         imageUrl = adduction;
       }
     }
-    return WillPopScope(
-      onWillPop: navigateBack,
-      child: Scaffold(
+    return Scaffold(
         appBar: _appBar(),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        const Color(0xFF73AEF5),
-                        const Color(0xFF61A4F1),
-                        const Color(0xFF478DE0),
-                        const Color(0xFF398AE5),
-                      ],
-                      stops: [0.1, 0.4, 0.7, 0.9],
+            value: SystemUiOverlayStyle.light,
+            child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(children: <Widget>[
+                  Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          const Color(0xFF73AEF5),
+                          const Color(0xFF61A4F1),
+                          const Color(0xFF478DE0),
+                          const Color(0xFF398AE5),
+                        ],
+                        stops: [0.1, 0.4, 0.7, 0.9],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 10.0,
+                  Container(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                        vertical: 10.0,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const SizedBox(height: 20.0),
+                          Center(
+                            child: _topText(),
+                          ),
+                          const SizedBox(height: 15.0),
+                          Center(
+                            child: _exerciseType(),
+                          ),
+                          const SizedBox(height: 20.0),
+                          Center(
+                            child: _exerciseInfo(),
+                          ),
+                          const SizedBox(height: 50.0),
+                          Container(
+                            width: 200.0,
+                            height: 200.0,
+                            child: Image(image: AssetImage(imageUrl)),
+                          ),
+                          const SizedBox(height: 20.0),
+                          _playButton(),
+                          const SizedBox(height: 20.0),
+                          _skipExerciseButton(),
+                        ],
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const SizedBox(height: 20.0),
-                      Center(
-                        child: _topText(),
-                      ),
-                      const SizedBox(height: 15.0),
-                      Center(
-                        child: _exerciseType(),
-                      ),
-                      const SizedBox(height: 20.0),
-                      Center(
-                        child: _exerciseInfo(),
-                      ),
-                      const SizedBox(height: 50.0),
-                      Container(
-                        width: 200.0,
-                        height: 200.0,
-                        child: Image(image: AssetImage(imageUrl)),
-                      ),
-                      const SizedBox(height: 50.0),
-                      _playButton(),
-                    ],
-                  ),
-                ),
-              ),
-              ]
-            )
-          )
-        )
-      )
-    );
+                ]))));
   }
 }

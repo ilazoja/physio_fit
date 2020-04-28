@@ -333,6 +333,8 @@ class ExerciseRecognizer {
     vector.Quaternion quatGlobalToRightFemur = alignmentProfile.quatRightFemurImuToBody*rightFemurImuQuat.conjugated();
     vector.Quaternion quatGlobalToRightTibia = alignmentProfile.quatRightTibiaImuToBody*rightTibiaImuQuat.conjugated();
 
+    // TODO: Need to check whole system, need to check conjugates.
+
     this.quatWorldToRoot = quatWorldToRoot;
     quatLeftRootToFemur = quatGlobalToLeftFemur*quatWorldToRoot.conjugated();
     quatRightRootToFemur = quatGlobalToRightFemur*quatWorldToRoot.conjugated();

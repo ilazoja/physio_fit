@@ -35,6 +35,9 @@ class BodyDetectionPage extends StatefulWidget {
   int totalSets;
   int totalReps;
   String message;
+  Color feedbackColor = Colors.teal;
+  String feedbackStr = "";
+  int repCount = 0;
   @override
   _BodyDetectionPageState createState() => _BodyDetectionPageState();
 }
@@ -101,7 +104,7 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
   bool startExercise = false;
 
   int currentIndex = 0;
-  int incrementor = 2;
+  int incrementor = 1;
 
   String averageBodyAnchorId = "50A123";
   String averageBodyAnchorName = "AverageBodyAnchor";
@@ -109,7 +112,19 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
 
   Matrix4 latestBodyAnchorTransform = Matrix4.identity();
 
+  bool foundPerson = false;
 
+  int framesToBeStationary = 180;
+  int stationaryFrameCount = 180;
+  vector.Vector3 positionToCompare = vector.Vector3.zero();
+  double positionDiff = 0.50; // m 
+  bool userIsStationary = false;
+
+  bool switchFeedback = false;
+  Color feedbackColor1 = Colors.teal;
+  Color feedbackColor2 = Colors.orange;
+  String feedbackStr1 = "Great!";
+  String feedbackStr2 = "Keep Back Straight";
 
   @override
   void initState(){
@@ -216,9 +231,25 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
                 //configuration = ARKitConfiguration.worldTracking;
 
                 print("Container pressed");
-
-                startExercise = true;
-                addAveragedBodyAnchor();
+                currentIndex = 0;
+                switchFeedback = !switchFeedback;
+                setState(() {
+                widget.repCount++;
+                widget.feedbackStr = feedbackStr1;
+                /*if (switchFeedback) {
+                  widget.feedbackColor = feedbackColor2;
+                  widget.feedbackStr = feedbackStr2;
+                  widget.repCount = "2";
+                }
+                else {
+                  widget.feedbackColor = feedbackColor1;
+                  widget.feedbackStr = feedbackStr1;
+                  widget.repCount = "1";
+                }*/
+                    });
+                
+                
+                //addAveragedBodyAnchor();
 
               },
               child: Text("Sets: 1/3"),
@@ -266,9 +297,9 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
                 color: Colors.white, 
                 shape: BoxShape.rectangle),
               child: AutoSizeText (
-                'Great!',
+                widget.feedbackStr,
                 style: TextStyle(
-                  color: Colors.teal,
+                  color: widget.feedbackColor,
                   fontWeight: FontWeight.w900,
                   fontFamily: 'Open Sans',
                   fontSize: 30
@@ -321,9 +352,9 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
               width: 200,
               height: 200,
               child: AutoSizeText (
-                '3' + widget.message,
+                widget.repCount.toString() + widget.message,
                 style: TextStyle(
-                  color: Colors.teal,
+                  color: widget.feedbackColor,
                   fontWeight: FontWeight.w900,
                   fontFamily: 'Open Sans',
                   fontSize: 50
@@ -589,7 +620,8 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
       //arkitController.updateFaceGeometry(node, anchor.identifier);
 
       updateBodyAnchorDistributions(anchor.transform);
-      _updateRootHip(rootHip, faceAnchor.skeleton.modelTransforms["root"]);
+      _updateRootHip(rootHip, faceAnchor.skeleton.modelTransforms["root"], anchor.transform);
+
       //_updateRightShoulder(rightShoulder, faceAnchor.skeleton.modelTransforms["rightShoulder"]);
     }
   }
@@ -600,28 +632,72 @@ class _BodyDetectionPageState extends State<BodyDetectionPage> {
 
   }
 
-void _updateRootHip(ARKitNode node, Matrix4 transform) {
+void _updateRootHip(ARKitNode node, Matrix4 rootTransform, Matrix4 anchorTransform) {
 
 
    // print(transform.getColumn(0).x.toString() + " " + transform.getColumn(0).y.toString()  + " " + transform.getColumn(0).z.toString() );
    // print(transform.getColumn(1).x.toString() + " " + transform.getColumn(1).y.toString()  + " " + transform.getColumn(1).z.toString() );
    // print(transform.getColumn(2).x.toString() + " " + transform.getColumn(2).y.toString()  + " " + transform.getColumn(2).z.toString() );
    // print(transform.getColumn(3).x.toString() + " " + transform.getColumn(3).y.toString()  + " " + transform.getColumn(3).z.toString() );
+    if (!foundPerson) {
+      //node = ARKitNode();
+      //constantBodyAnchor = ARKitAnchor(averageBodyAnchorName,averageBodyAnchorId, anchorTransform);
+      //node.position.value = anchorTransform.getTranslation();
+      //vector.Quaternion latestBodyAnchorQuat = vector.Quaternion.fromRotation(anchorTransform.getRotation());
+      //node.rotation.value = vector.Vector4(latestBodyAnchorQuat.axis[0], latestBodyAnchorQuat.axis[1], latestBodyAnchorQuat.axis[2], latestBodyAnchorQuat.radians);
+      //arkitController.add(node);
+      addAveragedBodyAnchor();
+      foundPerson = true;
+    }
+    else {
+      if (!startExercise) {
+        this.node.position.value = anchorTransform.getTranslation();
+        vector.Quaternion latestBodyAnchorQuat = vector.Quaternion.fromRotation(anchorTransform.getRotation());
+        this.node.rotation.value = vector.Vector4(latestBodyAnchorQuat.axis[0], latestBodyAnchorQuat.axis[1], latestBodyAnchorQuat.axis[2], latestBodyAnchorQuat.radians);
+        _checkIfUserIsStationary(anchorTransform);
+      }
+    }
+   
     if (startExercise){
       //vector.Vector4 rootHipAxisAngle = rootHip.rotation.value;
-      _updateOverlay(vector.Vector3(transform.getColumn(3).x, transform.getColumn(3).y,transform.getColumn(3).z));
+      _updateOverlay(vector.Vector3(rootTransform.getColumn(3).x, rootTransform.getColumn(3).y,rootTransform.getColumn(3).z));
       //vector.Quaternion.axisAngle(vector.Vector3(rootHipAxisAngle[0], rootHipAxisAngle[1], rootHipAxisAngle[2]), rootHipAxisAngle[3]));
     }
     else {
       rootHip.position.value = vector.Vector3(
-      transform.getColumn(3).x,
-      transform.getColumn(3).y,
-      transform.getColumn(3).z,
+      rootTransform.getColumn(3).x,
+      rootTransform.getColumn(3).y,
+      rootTransform.getColumn(3).z,
     );
 
     }
 
   }
+
+void _checkIfUserIsStationary(Matrix4 anchorTransform) {
+  
+  vector.Vector3 currentPosition = anchorTransform.getTranslation();
+  if (stationaryFrameCount < framesToBeStationary) {
+    
+    if ((currentPosition[0] - positionToCompare[0]).abs() > positionDiff || 
+      (currentPosition[1] - positionToCompare[1]).abs() > positionDiff || 
+      (currentPosition[2] - positionToCompare[2]).abs() > positionDiff) {
+
+      userIsStationary = false;
+    }
+    stationaryFrameCount++;
+  }
+  else {
+    if (userIsStationary) startExercise = true;
+    stationaryFrameCount = 0;
+    positionToCompare = currentPosition;
+    userIsStationary = true;
+
+  }
+  
+
+
+}
 
 void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQuat) {
 
@@ -660,11 +736,11 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   leftKneeJoint.applyQuaternion(leftFemurOrientation);
   leftKneeJoint = leftHipJoint + leftKneeJoint.scaled(femurLength);
   vector.Vector3 leftHeelJoint = down.clone();
-  vector.Quaternion leftTibiaOrientation = recordingToBodyQuat*l_Femur_TibiaQuat*l_Root_FemurQuat;//*flipQuat;
+  vector.Quaternion leftTibiaOrientation = recordingToBodyQuat*l_Root_FemurQuat*l_Femur_TibiaQuat;//*flipQuat;
   leftHeelJoint.applyQuaternion(leftTibiaOrientation);
   leftHeelJoint = leftKneeJoint + leftHeelJoint.scaled(tibiaLength);
   vector.Vector3 leftToeJoint = up.clone();
-  vector.Quaternion leftFootOrientation = recordingToBodyQuat*l_Femur_TibiaQuat*l_Root_FemurQuat*ytozQuat;//*l_Femur_TibiaQuat*l_Tibia_FootQuat;//*flipQuat;
+  vector.Quaternion leftFootOrientation = recordingToBodyQuat*l_Root_FemurQuat*l_Femur_TibiaQuat*ytozQuat;//*l_Femur_TibiaQuat*l_Tibia_FootQuat;//*flipQuat;
   leftToeJoint.applyQuaternion(leftFootOrientation);
   leftToeJoint = leftHeelJoint + leftToeJoint.scaled(footLength);
 
@@ -677,11 +753,11 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   rightKneeJoint.applyQuaternion(rightFemurOrientation);
   rightKneeJoint = rightHipJoint + rightKneeJoint.scaled(femurLength);
   vector.Vector3 rightHeelJoint = up.clone();
-  vector.Quaternion rightTibiaOrientation = recordingToBodyQuat*r_Femur_TibiaQuat*r_Root_FemurQuat*flipQuat;
+  vector.Quaternion rightTibiaOrientation = recordingToBodyQuat*r_Root_FemurQuat*r_Femur_TibiaQuat*flipQuat;
   rightHeelJoint.applyQuaternion(rightTibiaOrientation);
   rightHeelJoint = rightKneeJoint + rightHeelJoint.scaled(tibiaLength);
   vector.Vector3 rightToeJoint = up.clone();
-  vector.Quaternion rightFootOrientation = recordingToBodyQuat*r_Femur_TibiaQuat*r_Root_FemurQuat*ytozQuat; //*r_Femur_TibiaQuat*r_Tibia_FootQuat*flipQuat;
+  vector.Quaternion rightFootOrientation = recordingToBodyQuat*r_Root_FemurQuat*r_Femur_TibiaQuat*ytozQuat; //*r_Femur_TibiaQuat*r_Tibia_FootQuat*flipQuat;
   rightToeJoint.applyQuaternion(rightFootOrientation);
   rightToeJoint = rightHeelJoint + rightToeJoint.scaled(footLength);
 
@@ -728,8 +804,11 @@ void _updateOverlay(vector.Vector3 bodyRootPos)  {// vector.Quaternion bodyRootQ
   rootSpine.rotation.value = vector.Vector4(recordingToBodyQuat.axis[0], recordingToBodyQuat.axis[1], recordingToBodyQuat.axis[2], recordingToBodyQuat.radians);
 
 
-  currentIndex += incrementor;
-  if (currentIndex >= skeletonAng.length) {
+  if (currentIndex < skeletonAng.length - incrementor) {
+    currentIndex += incrementor;
+  }
+
+  if (currentIndex >= skeletonAng.length - incrementor) {
     currentIndex = 0;
   }
 
@@ -813,5 +892,6 @@ class Storage {
 
   Future<String> loadData() async {
     return await rootBundle.loadString('assets/clean_hip_good_1.csv');
+   //return await rootBundle.loadString('assets/clean_squat_good_1.csv');
   }
 }

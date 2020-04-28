@@ -76,6 +76,28 @@ class EventBox extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Image(image: AssetImage(imageurl))
                 ),
+                exercise.type.toLowerCase() == "squat" ?
+                new Positioned(
+                  left:40.0,
+                  top: 20.0,
+                  right: 40.0,
+                  child: new Icon(Icons.check_circle, color: Colors.green, size: 125.0, semanticLabel: 'Score: 88%',),
+                ): Container(),
+                exercise.type.toLowerCase() == "squat" ?
+                new Positioned(
+                  left:55.0,
+                  top: 129.0,
+                  child:
+                    Text(
+                      'Score: 88%',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontFamily: 'OpenSans',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ): Container(),
                 !detailsPage
                     ? Container(
                         padding: const EdgeInsets.only(top: 5.0),

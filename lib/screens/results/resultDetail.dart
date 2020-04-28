@@ -20,6 +20,7 @@ import 'package:physio_tracker_app/models/exercise.dart';
 import 'package:physio_tracker_app/models/completed_exercise.dart';
 import 'package:physio_tracker_app/models/user.dart';
 import 'package:physio_tracker_app/widgets/shared/defaultPageRoute.dart';
+import 'package:physio_tracker_app/screens/results/result.dart';
 
 class ResultDetail extends StatelessWidget {
   ResultDetail({Key key, @required this.exercise, @required this.index})
@@ -43,6 +44,15 @@ class ResultDetail extends StatelessWidget {
       ),
       backgroundColor: const Color(0xff2c4260),
       elevation: 0.0,
+      leading: IconButton(
+        iconSize: 40,
+        icon: Icon(Icons.chevron_left),
+        onPressed: () => Navigator.of(context)
+            .pushReplacement<dynamic, dynamic>(MaterialPageRoute<dynamic>(
+                builder: (BuildContext context) => Result(
+                      exercise: exercise,
+                    ))),
+      ),
     );
   }
 

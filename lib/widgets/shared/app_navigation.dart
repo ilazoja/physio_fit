@@ -96,7 +96,6 @@ class _AppNavState extends State<AppNavigation> {
     return isUser
         ? Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: _selectedIndex == accountPageIndex ? null : appBar,
             body: <Widget>[
               ExploreProviderWrapper(
                 textController: exploreTextController,
@@ -130,7 +129,6 @@ class _AppNavState extends State<AppNavigation> {
           )
         : Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: _selectedIndex == 3 ? null : appBar,
             body: <Widget>[
               PhysioHomeProviderWrapper(
                 textController: exploreTextController,
